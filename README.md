@@ -1,8 +1,9 @@
+
+<h1>PROYECTO 2: API+SQL Danza Fénix</h1>
+
 <p align="center">
   <img src="https://www.fenixdanza.com.mx/wp-content/uploads/2019/10/logo-fenix-danza.png" alt="" width="300" height="200">
 </p>
-
-<h1>PROYECTO 2: API+SQL Danza Fénix</h1>
 
 <h2>Planteamiento</h2>
 
