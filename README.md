@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.teleadhesivo.com/es/img/asfs1646-jpg/folder/products-listado-merchanthover/pegatinas-coches-motos-fake-taxi-ii.jpg" alt="Taxi Image" width="300" height="200">
+  <img src="https://www.fenixdanza.com.mx/wp-content/uploads/2019/10/logo-fenix-danza.png" alt="" width="300" height="200">
 </p>
 
 <h1>PROYECTO 2: API+SQL Danza Fénix</h1>
