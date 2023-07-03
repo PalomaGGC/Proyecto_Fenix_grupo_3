@@ -1,1 +1,1 @@
-# Proyecto_Fenix_grupo_3 
+# Proyecto_Fenix_equipo_3 
