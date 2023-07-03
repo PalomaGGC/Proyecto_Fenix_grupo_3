@@ -1,6 +1,6 @@
 <h1>PROYECTO 2: API+SQL Danza Fénix</h1>
 
-<h3>Planteamiento</h3>
+<h2>Planteamiento</h2>
 
 Pertenecéis al equipo de desarrollo de una consultora tecnológica orientada a dar servicio a Pymes. Habéis sido contactados por Mar, la dueña de una escuela de baile llamada Danza Fénix para aportar solución a un problema. 
 
@@ -8,7 +8,7 @@ Danza Fénix es una escuela pequeña que acaba de abrir en Collado Villalba y qu
 
 Vuestro jefe (o sea, yo) ha valorado que podemos dar una solución robusta y escalable si guardamos toda esa información en una base de datos de tipo SQL y gestionamos el acceso y manejo de esos datos a través de una API tipo REST. Es vuestro trabajo implementarla, siguiendo las indicaciones que nos han dado.
 
-<h2>Plazoa</h2>
+<h2>Plazos</h2>
 
 Se presupuestan tres semanas para el prototipado. El programa no tiene por qué estar completo al 100%, pero evidentemente deberíamos tener una demo funcional y un esbozo del producto final. Organizarse y trabajar de manera Agile en SCRUM a través de Iteraciones será fundamental.
 
