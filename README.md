@@ -1,6 +1,6 @@
-# PROYECTO 2: API+SQL Danza Fénix
+<h1>PROYECTO 2: API+SQL Danza Fénix</h1>
 
-##Planteamiento
+<h3>Planteamiento</h3>
 
 Pertenecéis al equipo de desarrollo de una consultora tecnológica orientada a dar servicio a Pymes. Habéis sido contactados por Mar, la dueña de una escuela de baile llamada Danza Fénix para aportar solución a un problema. 
 
