@@ -22,11 +22,11 @@ Se presupuestan tres semanas para el prototipado. El programa no tiene por qué 
 <h2>Condiciones de entrega</h2>
 
 <ul>
- <li>Un esquema UML de la base de datos diseñada, la cual debe contener varias tablas relacionadas correctamente cuando sea necesario</li>
+ <li>Un esquema UML de la base de datos diseñada, la cual debe contener varias tablas relacionadas correctamente cuando sea necesario.</li>
  <li>El repositorio en GitHub, con el trabajo ordenado adecuadamente en ramas y mensajes de commit limpios y claros.</li> 
- <li>Una API con los endpoints necesarios para interaccionar con esa base de datos, con rutas claras</li> 
- <li>Rutinas de testing que se ejecuten y pasen sin errores</li>
- <li>Documentación correcta del uso de la API</li>
- <li>Trello y herramientas organizativas usadas</li>
+ <li>Una API con los endpoints necesarios para interaccionar con esa base de datos, con rutas claras.</li> 
+ <li>Rutinas de testing que se ejecuten y pasen sin errores.</li>
+ <li>Documentación correcta del uso de la API.</li>
+ <li>Trello y herramientas organizativas usadas.</li>
 </ul>
  
