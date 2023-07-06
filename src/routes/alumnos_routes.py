@@ -41,11 +41,11 @@ def agregarAlumno(alumnos: Alumnos):
     # Verificar si el NIE del alumno ya existe en la base de datos
     existe_alumno = conexion.execute(tabla_alumnos.select().where(tabla_alumnos.c.nie_alumno == alumnos.nie_alumno)).first()
     if existe_alumno:
-        return "No se puede agregar el alumno. El NIE ya está registrado."
+        return "No se puede agregar el alumno. Porque ya existe."
     
     #paso los datos a un diccionario
     nuevo_alumno = {
-        "nombre_alumno": alumnos.apellido_alumno,
+        "nombre_alumno": alumnos.nombre_alumno,
         "apellido_alumno": alumnos.apellido_alumno,
         "edad_alumno": alumnos.edad_alumno,
         "nie_alumno": alumnos.nie_alumno,
