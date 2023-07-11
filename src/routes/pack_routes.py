@@ -2,7 +2,7 @@ import json
 from fastapi import APIRouter
 from config.db import conexion
 from models.pack import tabla_pack
-from schemas.pack import Packs
+from schemas.pack import Pack
 from sqlalchemy.exc import SQLAlchemyError
 
 packs = APIRouter()
@@ -70,7 +70,7 @@ def obtenerPackPorNombre(nombre: int):
 
 #AGREGAR
 @packs.post("/packs", tags=["packs_agregar"])
-def agregarPack(pack: Packs):
+def agregarPack(pack: Pack):
     try:
         # Verificar si el nombre del pack ya existe en la base de datos
         existe_pack = conexion.execute(tabla_pack.select().where(tabla_pack.c.nombre_alumno == pack.nombre_pack)).first()
@@ -102,7 +102,7 @@ def agregarPack(pack: Packs):
 
 #EDITAR
 @packs.put("/packs/{pack_id}", tags=["packs"])
-def editarPack(pack_id: int, pack: Packs):
+def editarPack(pack_id: int, pack: Pack):
     try:
         # Verificar si el pack existe en la base de datos
         existe_pack = conexion.execute(tabla_pack.select().where(tabla_pack.c.id_pack == pack_id)).first()
