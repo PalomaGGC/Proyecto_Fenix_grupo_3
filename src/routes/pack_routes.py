@@ -20,7 +20,9 @@ def todosLosPacks():
         for item in result:
             pack = {
                 "nombre_pack": item[1],
-                "precio_pack": item[2]
+                "precio_pack": item[2],
+                "primer_descuento": item[3],
+                "segundo_descuento": item[4]
             }
             packs.append(pack)
 
@@ -51,7 +53,9 @@ def obtenerPackPorNombre(nombre: int):
         # Crear un diccionario con los datos del pack
         pack = {
             "nombre_pack": result[1],
-            "precio_pack": result[2]
+            "precio_pack": result[2],
+            "primer_descuento": result[3],
+            "segundo_descuento": result[4]
         }
 
         # Retornar el pack en formato JSON
@@ -76,7 +80,9 @@ def agregarPack(pack: Pack):
         # Preparar los valores que se van a guardar
         nuevo_pack = {
             "nombre_pack": pack.nombre_pack,
-            "precio_pack": pack.precio_pack
+            "precio_pack": pack.precio_pack,
+            "primer_descuento": pack.primer_descuento_pack,
+            "segundo_descuento": pack.segundo_descuento_pack
         }
 
         # Insertar el nuevo pack en la base de datos
@@ -106,7 +112,9 @@ def editarPack(pack_id: int, pack: Pack):
         # Preparar los valores que se van a actualizar
         valores_actualizados = {
             "nombre_pack": pack.nombre_pack,
-            "precio_pack": pack.precio_pack
+            "precio_pack": pack.precio_pack,
+            "primer_descuento": pack.primer_descuento_pack,
+            "segundo_descuento": pack.segundo_descuento_pack
         }
         
         print(valores_actualizados)
