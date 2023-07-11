@@ -6,8 +6,8 @@ from config.db import meta, engine
 tabla_inscripciones = Table("inscripciones", meta, 
     Column("id_inscripciones", Integer, primary_key=True,  autoincrement=True),
     Column("alumnos_ID", Integer, ForeignKey("alumnos.id_alumnos")),
-    Column("clases_ID", Integer, ForeignKey("clases.id_clases")),
-    Column("niveles", Integer)
+    Column("profesor_clase_id", Integer, ForeignKey("")),
+    Column("fecha_inscripcion", str)
 )
 
 #creo la tabla en la base de datos
