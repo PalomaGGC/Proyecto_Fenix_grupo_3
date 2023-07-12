@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from routes.alumnos_routes import alumnos
-from routes.pack_routes import packs
+from routers.alumnos_router import alumnos
+from routers.pack_router import packs
 app = FastAPI()
 
 app.include_router(alumnos)
