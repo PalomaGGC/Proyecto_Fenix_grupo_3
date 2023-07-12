@@ -2,4 +2,4 @@ env/
 venv/
 registro.log
 __pycache__
-.env/
+.env
