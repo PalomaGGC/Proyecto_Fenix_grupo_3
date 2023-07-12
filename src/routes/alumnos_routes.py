@@ -5,10 +5,12 @@ from models.alumnosModel import tabla_alumnos
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
 
-alumnos = APIRouter()
+alumnos = APIRouter( prefix="/alumnos",
+                     tags=["alumnos"]
+                   )
 
 #COSULTAR
-@alumnos.get("/alumnos", tags=["alumnos"])
+@alumnos.get("/alumnos")
 def todosLosAlumnos():
     try:
         # Extraer todos los registros de la tabla "alumnos"
@@ -42,7 +44,7 @@ def todosLosAlumnos():
 
 
 #CONSULTAR SOLO UNO
-@alumnos.get("/alumnos/{nie}", tags=["alumnos"])
+@alumnos.get("/alumnos/{nie}")
 def obtenerAlumnoPorNIE(nie: int):
     try:
         # Buscar el alumno por su NIE en la base de datos
@@ -75,7 +77,7 @@ def obtenerAlumnoPorNIE(nie: int):
 
 
 #AGREGAR
-@alumnos.post("/alumnos", tags=["alumnos_agregar"])
+@alumnos.post("/alumnos", )
 def agregarAlumno(alumno: Alumnos):
     try:
         # Verificar si el NIE del alumno ya existe en la base de datos
@@ -110,7 +112,7 @@ def agregarAlumno(alumno: Alumnos):
 
 
 #EDITAR
-@alumnos.put("/alumnos/{alumno_id}", tags=["alumnos"])
+@alumnos.put("/alumnos/{alumno_id}")
 def editarAlumno(alumno_id: int, alumno: Alumnos):
     try:
         # Verificar si el alumno existe en la base de datos
