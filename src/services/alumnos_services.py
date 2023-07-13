@@ -3,11 +3,22 @@ from models.alumnosModel import tabla_alumnos
 from config.db import conexion
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi.responses import JSONResponse
+<<<<<<< HEAD
 
 
 
 class Alumnos_services:
     
+=======
+from fastapi.encoders import jsonable_encoder
+from models.alumnosModel import Alumno as AlumnoModel
+
+
+class Alumnos_services:
+
+
+
+>>>>>>> b9f160c33f12d9c6ba6939e409c41db9de29cd19
     #TODOS LOS ALUMNOS
     def alumnos(self):
         try:
@@ -33,12 +44,12 @@ class Alumnos_services:
             return JSONResponse(status_code=status.HTTP_200_OK, content=alumnos)
         except SQLAlchemyError as e:
             return {"error": str(e)}
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
     #UN ALUMNO
     def alumno(self, nie):
         try:
@@ -49,7 +60,7 @@ class Alumnos_services:
             # Verificar si se encontró un alumno con el NIE especificado
             if result is None:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
-               
+
 
             # Crear un diccionario con los datos del alumno
             alumno = {
@@ -73,8 +84,20 @@ class Alumnos_services:
 
 
     #AGREGAR UN ALUMNO
-    def insertar_alumno(self, data):
-        try:
+
+    
+    def insertar_alumno(self, data: Alumnos):
+        nuevo_alumno = AlumnoModel(**data.model_dump())
+        self.db.add(nuevo_alumno)
+        #Le envío la nueva película
+        self.db.commit()
+        #Hago el commit para que se actualice
+        return
+
+
+
+
+        '''try:
         # Verificar si el NIE del alumno ya existe en la base de datos
             existe_alumno = conexion.execute(tabla_alumnos.select().where(tabla_alumnos.c.nie_alumno == data.nie_alumno)).first()
             if existe_alumno:
@@ -99,7 +122,7 @@ class Alumnos_services:
 
             return f"Se agregó el alumno {nuevo_alumno} correctamente"
         except SQLAlchemyError as e:
-            return {"error": str(e)}
+            return {"error": str(e)}'''
         
         
         

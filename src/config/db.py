@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.exc import SQLAlchemyError
 from decouple import config
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm.session import sessionmaker
+
 
 try:
     user= config("USER_NAME")
@@ -17,6 +20,9 @@ try:
     # MetaData actúa como un contenedor para mantener información sobre las tablas, columnas,
     # relaciones y otros elementos de la base de datos. Se utiliza para definir y manipular estructuras de la base de datos en SQLAlchemy.
     meta = MetaData()
+
+    Session = sessionmaker(bind=engine)
+
 except SQLAlchemyError as e:
     print(f"Error al conectar a la base de datos: {e}")
     # Puedes agregar aquí el manejo de la excepción según tus necesidades

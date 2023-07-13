@@ -1,19 +1,24 @@
 from sqlalchemy import Boolean, Float, Numeric, Table, Column, String
 from sqlalchemy.sql.sqltypes import Integer
 from config.db import meta, engine
+from config.db import Base
 
 
-#creo el modelo de la tabla
-tabla_alumnos = Table("alumnos", meta, 
-    Column("id_alumnos", Integer, primary_key=True,  autoincrement=True),
-    Column("nombre_alumno", String(100)),
-    Column("apellido_alumno", String(100)),
-    Column("edad_alumno", String(5)),
-    Column("nie_alumno", Integer ),
-    Column("telefono_alumno", String(5)),
-    Column("email_alumno", String(100)),
-    Column("descuento_familiar", Float, default=0.0)
-)
+
+
+class Alumno(Base):
+
+    #creo el modelo de la tabla
+    __tablename__ = "alumnos"
+    id_alumnos = Column(Integer, primary_key=True,  autoincrement=True)
+    nombre_alumno = Column(String(100))
+    apellido_alumno = Column(String(100))
+    edad_alumno = Column(String(5))
+    nie_alumno = Column(Integer )
+    telefono_alumno = Column(String(5))
+    email_alumno = Column(String(100))
+    descuento_familiar = Column(Float, default=0.0)
+
 
 #creo la tabla en la base de datos
 meta.create_all(engine)
