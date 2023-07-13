@@ -1,4 +1,3 @@
-import json
 from fastapi import APIRouter
 from config.db import conexion
 from models.pack import tabla_pack
