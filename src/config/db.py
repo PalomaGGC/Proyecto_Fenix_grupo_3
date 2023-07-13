@@ -3,15 +3,15 @@ from sqlalchemy.exc import SQLAlchemyError
 from decouple import config
 
 try:
-    user= config("USER")
+    user= config("USER_NAME")
     host= config("HOST")
+    password = config("PASSWORD")
     db= config("DB")
-    url = f"mysql+pymysql://{user}:@{host}:3306/{db}"
+    url = f"mysql+pymysql://{user}:{password}@{host}:3306/{db}"
     
     # Aquí hago la conexión a la base de datos... la base de datos se llama "database_fenix"
-    # engine = create_engine("mysql+pymysql://root:@localhost:3306/database_fenix")
     engine = create_engine(url)
-    print(url)
+    print(user)
     # Guardo la conexión en una variable para luego utilizarla en otros archivos
     conexion = engine.connect()
     # MetaData actúa como un contenedor para mantener información sobre las tablas, columnas,
