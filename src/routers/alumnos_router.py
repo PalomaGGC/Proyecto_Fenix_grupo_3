@@ -28,6 +28,7 @@ def obtenerAlumnoPorNIE(nie: int):
     return result
 
 
+
 #AGREGAR
 @alumnos.post("/alumnos")
 def agregarAlumno(alumno: Alumnos):

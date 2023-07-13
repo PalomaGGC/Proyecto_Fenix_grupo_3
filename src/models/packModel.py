@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Numeric, Table, Column, String
+from sqlalchemy import Boolean, Numeric, Table, Column, String, Float
 from sqlalchemy.sql.sqltypes import Integer
 from config.db import meta, engine
 
@@ -7,7 +7,7 @@ from config.db import meta, engine
 tabla_pack = Table("pack", meta, 
     Column("id_pack", Integer, primary_key=True,  autoincrement=True),
     Column("nombre_pack", String(100)),
-    Column("precio_pack", float),
+    Column("precio_pack", Float),
 )
 
 #creo la tabla en la base de datos

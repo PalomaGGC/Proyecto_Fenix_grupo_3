@@ -1,7 +1,7 @@
 import json
 from fastapi import APIRouter
 from config.db import conexion
-from models.pack import tabla_pack
+from models.packModel import tabla_pack
 from schemas.pack import Pack
 from sqlalchemy.exc import SQLAlchemyError
 
