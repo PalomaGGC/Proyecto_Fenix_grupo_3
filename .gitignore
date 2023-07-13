@@ -3,3 +3,5 @@ venv/
 registro.log
 __pycache__
 .env
+.idea
+.DS_Store
