@@ -34,9 +34,18 @@ async def agregarAlumno(descuento:Descuentos):
     
     
 
+<<<<<<< HEAD
 #EDITAR
 # @alumnos.put("/descuento/{id}")
 # async def editarAlumno(alumno_id: int, descuento:Descuentos):
 #     descuentos = Descuentos_services()
 #     result = Descuentos_services.ed
 #     return result
+=======
+# #EDITAR
+@descuentos.put("/descuento/{id}")
+def editarAlumno(id: int, descuento:Descuentos):
+    descuentos = Descuentos_services()
+    result = descuentos.editar_descuento(id, descuento)
+    return result
+>>>>>>> e0045007b4438588e2a29781e581c50659bfeb27
