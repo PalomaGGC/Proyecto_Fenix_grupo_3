@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-rom config.db import conexion
+from config.db import conexion
 from models.clasesModel import tabla_clases
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
