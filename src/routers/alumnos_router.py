@@ -1,7 +1,4 @@
-import json
 from fastapi import APIRouter
-from config.db import conexion
-from models.alumnosModel import tabla_alumnos
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
 from services.alumnos_services import Alumnos_services
