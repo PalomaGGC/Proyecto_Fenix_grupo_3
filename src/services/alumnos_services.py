@@ -1,15 +1,13 @@
 from fastapi import HTTPException, status
-from models.alumnosModel import tabla_alumnos
+from schemas.alumnos import Alumnos
 from config.db import conexion
 from sqlalchemy.exc import SQLAlchemyError
-from schemas.alumnos import Alumnos
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from models.alumnosModel import Alumno as AlumnoModel
 
 
 class Alumnos_services:
-
     def __init__(self, db) -> None: #db para que cada vez que se ejecute ese servicio se envíe una sesión a la base de datos
         self.db = db
         #ya puedo acceder a la base de datos desde otros métodos
@@ -20,7 +18,7 @@ class Alumnos_services:
     def alumnos(self):
         try:
             # Extraer todos los registros de la tabla "alumnos"
-            query = tabla_alumnos.select()
+            query = Alumno.select()
             result = conexion.execute(query).fetchall()
 
             # Convertir los resultados a una lista de alumnos
@@ -48,7 +46,7 @@ class Alumnos_services:
     def alumno(self, nie):
         try:
             # Buscar el alumno por su NIE en la base de datos
-            query = tabla_alumnos.select().where(tabla_alumnos.c.nie_alumno == nie)
+            query = alumnos.select().where(tabla_alumnos.c.nie_alumno == nie)
             result = conexion.execute(query).fetchone()
 
             # Verificar si se encontró un alumno con el NIE especificado
@@ -75,41 +73,17 @@ class Alumnos_services:
 
 
     #AGREGAR UN ALUMNO
-    def agregar_alumno(self, data: Alumnos):
-        nuevo_alumno = AlumnoModel(**data.model_dump())
-        self.db.add(nuevo_alumno)
-        #Le envío la nueva película
-        self.db.commit()
-        #Hago el commit para que se actualice
-        return
-
-
-        '''try:
-        # Verificar si el NIE del alumno ya existe en la base de datos
-            existe_alumno = conexion.execute(tabla_alumnos.select().where(tabla_alumnos.c.nie_alumno == data.nie_alumno)).first()
-            if existe_alumno:
-
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se puede agregar el alumno. El NIE ya está registrado.")
-
-            # Preparar los valores que se van a guardar
-            nuevo_alumno = {
-                "nombre_alumno": data.nombre_alumno,
-                "apellido_alumno": data.apellido_alumno,
-                "edad_alumno": data.edad_alumno,
-                "nie_alumno": data.nie_alumno,
-                "email_alumno": data.email_alumno,
-                "telefono_alumno": data.telefono_alumno,
-                "descuento_familiar": data.descuento_familiar
-            }
-
-            # Insertar el nuevo alumno en la base de datos
-            conexion.execute(tabla_alumnos.insert().values(**nuevo_alumno))
-            # Hacer un commit a la base de datos
-            conexion.commit()
-
+    def agregar_alumno(self, data):
+        try: 
+            nuevo_alumno = AlumnoModel(**data.model_dump())
+            self.db.add(nuevo_alumno)
+            #Le envío la nueva película
+            #Hago el commit para que se actualice
+            self.db.commit()
             return f"Se agregó el alumno {nuevo_alumno} correctamente"
         except SQLAlchemyError as e:
-            return {"error": str(e)}'''
+            return {"error": str(e)}
+        
 
     #EDITAR UN ALUMNO
     def editar_alumno(self, id, data):
