@@ -35,8 +35,8 @@ def agregarAlumno(descuento:Descuentos):
     
 
 # #EDITAR
-# @alumnos.put("/descuento/{id}")
-# def editarAlumno(alumno_id: int, alumno: Alumnos):
-#     alumnos = Alumnos_services()
-#     result = alumnos.editar_alumno(alumno_id, alumno)
-#     return result
+@descuentos.put("/descuento/{id}")
+def editarAlumno(id: int, descuento:Descuentos):
+    descuentos = Descuentos_services()
+    result = descuentos.editar_descuento(id, descuento)
+    return result
