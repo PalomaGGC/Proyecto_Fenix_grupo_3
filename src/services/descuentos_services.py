@@ -52,35 +52,31 @@ class Descuentos_services:
             return JSONResponse(status_code=status.HTTP_200_OK, content=descuentos)
         except SQLAlchemyError as e:
             return {"error": str(e)}
-        return
+        
     
     
-    # def agregar_descuento(self):
-    #      try:
-    #         # Verificar si el NIE del alumno ya existe en la base de datos
-    #             existe_alumno = conexion.execute(tabla_descuentos.select().where(tabla_descuentos.c.nie_alumno == data.nie_alumno)).first()
-    #             if existe_alumno:
+    def agregar_descuento(self, data):
+        try:
+            # Verificar si el NIE del alumno ya existe en la base de datos
+                # existe_alumno = conexion.execute(tabla_descuentos.select().where(tabla_descuentos.c.tipo_descuento == data.tipo_descuento)).first()
+                # if existe_alumno:
 
-    #                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se puede agregar el alumno. El NIE ya está registrado.")
+                #     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se puede agregar el nuevo descuento con un mismo tipo de descuento ")
 
-    #             # Preparar los valores que se van a guardar
-    #             nuevo_alumno = {
-    #                 "nombre_alumno": data.nombre_alumno,
-    #                 "apellido_alumno": data.apellido_alumno,
-    #                 "edad_alumno": data.edad_alumno,
-    #                 "nie_alumno": data.nie_alumno,
-    #                 "email_alumno": data.email_alumno,
-    #                 "telefono_alumno": data.telefono_alumno,
-    #                 "descuento_familiar": data.descuento_familiar
-    #             }
+                # Preparar los valores que se van a guardar
+                nuevo_descuento = {
+                    "id_descuento": data.id_descuento,
+                    "tipo_descuento": data.tipo_descuento,
+                    "porcentage_descuento": data.porcentage_descuento,
+                }
 
-    #             # Insertar el nuevo alumno en la base de datos
-    #             conexion.execute(tabla_alumnos.insert().values(**nuevo_alumno))
-    #             # Hacer un commit a la base de datos
-    #             conexion.commit()
+                # Insertar el nuevo alumno en la base de datos
+                conexion.execute(tabla_descuentos.insert().values(**nuevo_descuento))
+                # Hacer un commit a la base de datos
+                conexion.commit()
 
-    #             return f"Se agregó el alumno {nuevo_alumno} correctamente"
-    #         except SQLAlchemyError as e:
-    #             return {"error": str(e)}
+                return f"Se agregó el nuevo descuento {nuevo_descuento} correctamente"
+        except SQLAlchemyError as e:
+                return {"error": str(e)}
     
     

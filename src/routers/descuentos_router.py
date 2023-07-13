@@ -25,12 +25,12 @@ def obtenerAlumnoPorNIE(id: int):
     return result
 
 
-# #AGREGAR
-# @descuentos.post("/descuentos")
-# def agregarAlumno(descuento:Descuentos):
-#     descuentos = Descuentos_services()
-#     result = descuentos.agregar_descuento(descuento)
-#     return result
+#AGREGAR
+@descuentos.post("/descuentos")
+def agregarAlumno(descuento:Descuentos):
+    descuentos = Descuentos_services()
+    result = descuentos.agregar_descuento(descuento)
+    return result
     
     
 
