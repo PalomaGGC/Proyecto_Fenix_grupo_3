@@ -10,6 +10,10 @@ from models.alumnosModel import Alumno as AlumnoModel
 
 class Alumnos_services:
 
+    def __init__(self, db) -> None: #db para que cada vez que se ejecute ese servicio se envíe una sesión a la base de datos
+        self.db = db
+        #ya puedo acceder a la base de datos desde otros métodos
+
 
 
     #TODOS LOS ALUMNOS
@@ -37,9 +41,6 @@ class Alumnos_services:
             return JSONResponse(status_code=status.HTTP_200_OK, content=alumnos)
         except SQLAlchemyError as e:
             return {"error": str(e)}
-
-
-
 
 
 
@@ -73,21 +74,14 @@ class Alumnos_services:
 
 
 
-
-
-
     #AGREGAR UN ALUMNO
-
-    
-    def insertar_alumno(self, data: Alumnos):
+    def agregar_alumno(self, data: Alumnos):
         nuevo_alumno = AlumnoModel(**data.model_dump())
         self.db.add(nuevo_alumno)
         #Le envío la nueva película
         self.db.commit()
         #Hago el commit para que se actualice
         return
-
-
 
 
         '''try:
@@ -116,14 +110,7 @@ class Alumnos_services:
             return f"Se agregó el alumno {nuevo_alumno} correctamente"
         except SQLAlchemyError as e:
             return {"error": str(e)}'''
-        
-        
-        
-        
-        
-        
-        
-        
+
     #EDITAR UN ALUMNO
     def editar_alumno(self, id, data):
             try:
@@ -131,7 +118,7 @@ class Alumnos_services:
                 existe_alumno = conexion.execute(tabla_alumnos.select().where(tabla_alumnos.c.id_alumnos == id)).first()
                 if not existe_alumno:
                     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No se encontró ningún alumno con el ID especificado.")
-                
+
 
                 # Preparar los valores que se van a actualizar
                 valores_actualizados = {
@@ -143,7 +130,7 @@ class Alumnos_services:
                     "email_alumno": data.email_alumno,
                     "descuento_familiar": data.descuento_familiar
                 }
-                
+
 
                 # Actualizar el alumno en la base de datos
                 query = tabla_alumnos.update().where(tabla_alumnos.c.id_alumnos == id).values(**valores_actualizados)

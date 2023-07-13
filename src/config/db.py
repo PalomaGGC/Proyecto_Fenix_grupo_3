@@ -11,7 +11,7 @@ try:
     password = config("PASSWORD")
     db= config("DB")
     url = f"mysql+pymysql://{user}:{password}@{host}:3306/{db}"
-    
+
 
     # Aquí hago la conexión a la base de datos... la base de datos se llama "database_fenix"
     engine = create_engine(url)
@@ -22,6 +22,7 @@ try:
     meta = MetaData()
 
     Session = sessionmaker(bind=engine)
+    Base = declarative_base()
 
 except SQLAlchemyError as e:
     print(f"Error al conectar a la base de datos: {e}")
