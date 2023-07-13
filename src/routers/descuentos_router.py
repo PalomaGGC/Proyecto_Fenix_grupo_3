@@ -10,7 +10,7 @@ descuentos = APIRouter(tags=["descuentos"])
 
 #COSULTAR
 @descuentos.get("/descuentos")
-async def todosLodDescuentos():
+async def todosLosDescuentos():
     descuento = Descuentos_services()
     result = descuento.descuento()
     return result
@@ -19,7 +19,7 @@ async def todosLodDescuentos():
 
 #CONSULTAR SOLO UNO
 @descuentos.get("/descuento/{id}")
-async def obtenerUnDescurntoE(id: int):
+async def obtenerUnDescuento(id: int):
     descuento = Descuentos_services()
     result = descuento.descuento(id)
     return result
