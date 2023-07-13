@@ -7,13 +7,9 @@ try:
     host= config("HOST")
     password = config("PASSWORD")
     db= config("DB")
-<<<<<<< HEAD
     url = f"mysql+pymysql://{user}:{password}@{host}:3306/{db}"
     
-=======
-    url = f"mysql+pymysql://{user}:@{host}:3306/{db}"
 
->>>>>>> c42df18362afbf367bb457d48a6b3eccdf7bf876
     # Aquí hago la conexión a la base de datos... la base de datos se llama "database_fenix"
     engine = create_engine(url)
     print(user)
