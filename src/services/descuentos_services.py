@@ -100,16 +100,6 @@ class Descuentos_services:
                 
 
                 # Actualizar el alumno en la base de datos
-<<<<<<< HEAD
-                query = tabla_descuentos.update().where(tabla_descuentos.c.id_alumnos == id).values(**valores_actualizados)
-                conexion.execute(query)
-                conexion.commit()
-
-                return {"message": "Alumno actualizado correctamente."}
-            except SQLAlchemyError as e:
-                return {"error": str(e)}
-        
-=======
                 query = tabla_descuentos.update().where(tabla_descuentos.c.id_descuento == id).values(**valores_actualizados)
                 conexion.execute(query)
                 conexion.commit()
@@ -119,6 +109,5 @@ class Descuentos_services:
                 return {"error": str(e)}
     
     
->>>>>>> e0045007b4438588e2a29781e581c50659bfeb27
     
     
