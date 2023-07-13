@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-rom config.db import conexion
+from config.db import conexion
 from models.clasesModel import tabla_clases
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
@@ -13,6 +13,7 @@ async def read_data():
 
 @user.get("/{id}")
 async def read_data(id: int):
+    
     return conexion.execute(users.select().where(user.c.id == id)).fetchall()
 
 @user.post("/")

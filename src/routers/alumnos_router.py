@@ -12,7 +12,7 @@ alumnos = APIRouter(tags=["alumnos"])
 
 #COSULTAR
 @alumnos.get("/alumnos")
-def todosLosAlumnos():
+async def todosLosAlumnos():
     alumnos = Alumnos_services()
     result = alumnos.alumnos()
     return result
@@ -21,10 +21,11 @@ def todosLosAlumnos():
 
 #CONSULTAR SOLO UNO
 @alumnos.get("/alumnos/{nie}")
-def obtenerAlumnoPorNIE(nie: int):
+async def obtenerAlumnoPorNIE(nie: int):
     alumno = Alumnos_services()
     result = alumno.alumno(nie)
     return result
+
 
 
 #AGREGAR
@@ -36,9 +37,10 @@ def agregarAlumno(alumno: Alumnos) -> dict:
 
 
 
+
 #EDITAR
 @alumnos.put("/alumnos/{alumno_id}")
-def editarAlumno(alumno_id: int, alumno: Alumnos):
+async def editarAlumno(alumno_id: int, alumno: Alumnos):
     alumnos = Alumnos_services()
     result = alumnos.editar_alumno(alumno_id, alumno)
     return result
