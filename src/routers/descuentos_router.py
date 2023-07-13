@@ -10,7 +10,7 @@ descuentos = APIRouter(tags=["descuentos"])
 
 #COSULTAR
 @descuentos.get("/descuentos")
-def todosLosAlumnos():
+async def todosLosAlumnos():
     descuento = Descuentos_services()
     result = descuento.descuento()
     return result
@@ -19,7 +19,7 @@ def todosLosAlumnos():
 
 #CONSULTAR SOLO UNO
 @descuentos.get("/descuento/{id}")
-def obtenerAlumnoPorNIE(id: int):
+async def obtenerAlumnoPorNIE(id: int):
     descuento = Descuentos_services()
     result = descuento.descuento(id)
     return result
@@ -27,16 +27,16 @@ def obtenerAlumnoPorNIE(id: int):
 
 #AGREGAR
 @descuentos.post("/descuentos")
-def agregarAlumno(descuento:Descuentos):
+async def agregarAlumno(descuento:Descuentos):
     descuentos = Descuentos_services()
     result = descuentos.agregar_descuento(descuento)
     return result
     
     
 
-# #EDITAR
+#EDITAR
 # @alumnos.put("/descuento/{id}")
-# def editarAlumno(alumno_id: int, alumno: Alumnos):
-#     alumnos = Alumnos_services()
-#     result = alumnos.editar_alumno(alumno_id, alumno)
+# async def editarAlumno(alumno_id: int, descuento:Descuentos):
+#     descuentos = Descuentos_services()
+#     result = Descuentos_services.ed
 #     return result

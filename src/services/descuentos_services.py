@@ -58,10 +58,10 @@ class Descuentos_services:
     def agregar_descuento(self, data):
         try:
             # Verificar si el NIE del alumno ya existe en la base de datos
-                # existe_alumno = conexion.execute(tabla_descuentos.select().where(tabla_descuentos.c.tipo_descuento == data.tipo_descuento)).first()
-                # if existe_alumno:
+                existe_alumno = conexion.execute(tabla_descuentos.select().where(tabla_descuentos.c.tipo_descuento == data.tipo_descuento)).first()
+                if existe_alumno:
 
-                #     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se puede agregar el nuevo descuento con un mismo tipo de descuento ")
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se puede agregar el nuevo descuento con un mismo tipo de descuento ")
 
                 # Preparar los valores que se van a guardar
                 nuevo_descuento = {
@@ -78,5 +78,34 @@ class Descuentos_services:
                 return f"Se agregó el nuevo descuento {nuevo_descuento} correctamente"
         except SQLAlchemyError as e:
                 return {"error": str(e)}
+            
+            
+            
+            
+    def editar_descuento(self, id, data):
+            try:
+                # Verificar si el alumno existe en la base de datos
+                existe_alumno = conexion.execute(tabla_descuentos.select().where(tabla_descuentos.c.id_descuento == id)).first()
+                if not existe_alumno:
+                    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No se encontró ningún descuento con el ID especificado.")
+                
+
+                # Preparar los valores que se van a actualizar
+                valores_actualizados = {
+                    "id_descuento": data.id_descuento,
+                    "tipo_descuento": data.tipo_descuento,
+                    "porcentage_descuento": data.porcentage_descuento,
+                }
+                
+
+                # Actualizar el alumno en la base de datos
+                query = tabla_descuentos.update().where(tabla_descuentos.c.id_alumnos == id).values(**valores_actualizados)
+                conexion.execute(query)
+                conexion.commit()
+
+                return {"message": "Alumno actualizado correctamente."}
+            except SQLAlchemyError as e:
+                return {"error": str(e)}
+        
     
     

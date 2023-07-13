@@ -13,6 +13,7 @@ async def read_data():
 
 @user.get("/{id}")
 async def read_data(id: int):
+    
     return conexion.execute(users.select().where(user.c.id == id)).fetchall()
 
 @user.post("/")
