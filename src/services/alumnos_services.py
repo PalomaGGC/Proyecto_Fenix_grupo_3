@@ -2,14 +2,11 @@ from fastapi import HTTPException, status
 from models.alumnosModel import tabla_alumnos
 from config.db import conexion
 from sqlalchemy.exc import SQLAlchemyError
-from schemas.alumnos import Alumnos
 from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
+
 
 
 class Alumnos_services:
-    
-    
     
     #TODOS LOS ALUMNOS
     def alumnos(self):
