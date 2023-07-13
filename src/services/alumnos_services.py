@@ -1,29 +1,25 @@
 from fastapi import HTTPException, status
-from models.alumnosModel import tabla_alumnos
+from models.alumnosModel import Alumno
 from config.db import conexion
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi.responses import JSONResponse
-<<<<<<< HEAD
-
-
-
-class Alumnos_services:
-    
-=======
 from fastapi.encoders import jsonable_encoder
 from models.alumnosModel import Alumno as AlumnoModel
 
 
 class Alumnos_services:
+    
+    def __init__(self, db):
+        self.db = db
+    
 
 
 
->>>>>>> b9f160c33f12d9c6ba6939e409c41db9de29cd19
     #TODOS LOS ALUMNOS
     def alumnos(self):
         try:
             # Extraer todos los registros de la tabla "alumnos"
-            query = tabla_alumnos.select()
+            query = Alumno.select()
             result = conexion.execute(query).fetchall()
 
             # Convertir los resultados a una lista de alumnos
@@ -54,7 +50,7 @@ class Alumnos_services:
     def alumno(self, nie):
         try:
             # Buscar el alumno por su NIE en la base de datos
-            query = tabla_alumnos.select().where(tabla_alumnos.c.nie_alumno == nie)
+            query = alumnos.select().where(tabla_alumnos.c.nie_alumno == nie)
             result = conexion.execute(query).fetchone()
 
             # Verificar si se encontró un alumno con el NIE especificado
@@ -86,7 +82,8 @@ class Alumnos_services:
     #AGREGAR UN ALUMNO
 
     
-    def insertar_alumno(self, data: Alumnos):
+    def agregar_alumno(self, data: AlumnoModel):
+        print(data)
         nuevo_alumno = AlumnoModel(**data.model_dump())
         self.db.add(nuevo_alumno)
         #Le envío la nueva película

@@ -28,8 +28,8 @@ async def obtenerAlumnoPorNIE(nie: int):
 
 #AGREGAR
 @alumnos.post("/alumnos")
-def agregar_alumno(alumno: Alumnos):
-    db = 
+async def agregar_alumno(alumno: Alumnos):
+    alumnos = Alumnos_services()
     result = alumnos.agregar_alumno(alumno)
     return result
     
