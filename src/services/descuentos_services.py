@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from models.descuentosModel import tabla_descuentos
+from models.descuentosModel import Descuentos
 from config.db import conexion
 from sqlalchemy.exc import SQLAlchemyError
 from schemas.descuentos import Descuentos
@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 
 class Descuentos_services:
     
+     ''' 
     
     def descuentos(self):
         try:
@@ -31,7 +32,7 @@ class Descuentos_services:
             return {"error": str(e)}
  
     
-    
+  
     
     def descuento(self, id):
         try:
@@ -108,6 +109,6 @@ class Descuentos_services:
             except SQLAlchemyError as e:
                 return {"error": str(e)}
     
-    
+    '''
     
     

@@ -11,5 +11,6 @@ tabla_clases = Table("clases", meta,
 
 )
 
+
 #creo la tabla en la base de datos
 meta.create_all(engine)
