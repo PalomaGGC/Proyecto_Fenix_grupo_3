@@ -8,9 +8,9 @@ class Alumno(Base):
     id_alumno = Column(Integer, primary_key=True,  autoincrement=True)
     nombre_alumno = Column(String(100))
     apellido_alumno = Column(String(100))
-    edad_alumno = Column(String(5))
+    edad_alumno = Column(String(3))
     nie_alumno = Column(String(10))
-    telefono_alumno = Column(String(5))
-    email_alumno = Column(String(100))
+    telefono_alumno = Column(String(10))
+    email_alumno = Column(String(30))
     descuento_familiar = Column(Float, default=0.0)
 

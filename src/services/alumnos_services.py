@@ -50,6 +50,3 @@ class Alumnos_services:
         alumno.descuento_familiar = data.descuento_familiar
         self.db.commit()
         return
-    
-   
-   
