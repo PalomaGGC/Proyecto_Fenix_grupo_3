@@ -93,6 +93,21 @@ class Alumnos_services:
             return {"error": str(e)}
 
 
+
+    def editar_alumno(self, nie: str, data):
+        alumno = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
+        alumno.nombre_alumno = data. nombre_alumno
+        alumno.apellido_alumno = data.apellido_alumno
+        alumno.edad_alumno = data.edad_alumno
+        alumno.nie_alumno = data.nie_alumno
+        alumno.email_alumno = data.email_alumno
+        alumno.telefono_alumno = data.telefono_alumno
+        alumno.descuento_familiar = data.descuento_familiar
+        self.db.commit()
+        return
+    
+   
+    
     # #EDITAR UN ALUMNO
     # def editar_alumno(self, id, data):
     #         try:
