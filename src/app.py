@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from routers.alumnos_router import alumnos
 from routers.pack_router import packs
-from routers.descuentos_router import descuentos
+#from routers.descuentos_router import descuentos
 from decouple import config
 import uvicorn
 
@@ -10,8 +10,7 @@ port = config("PORT")
 
 app.include_router(alumnos)
 app.include_router(packs)
-app.include_router(descuentos)
-
+#app.include_router(descuentos)
 
 
 if __name__ == '__main__':

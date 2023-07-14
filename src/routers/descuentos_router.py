@@ -3,7 +3,7 @@ from services.descuentos_services import Descuentos_services
 from schemas.descuentos import Descuentos
 
 
-
+'''
 
 descuentos = APIRouter(tags=["descuentos"])
 
@@ -40,3 +40,6 @@ def editarDescuento(id: int, descuento:Descuentos):
     descuentos = Descuentos_services()
     result = descuentos.editar_descuento(id, descuento)
     return result
+
+    
+    '''
