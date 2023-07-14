@@ -25,13 +25,13 @@ async def consultar_una_inscripcion(id):
     response = Inscripciones_services().consultar_una_inscripcion(id)
     return JSONResponse(status_code=200, content=jsonable_encoder(response))
 
-# #AGREGAR UN NUEVO DESCUENTO
+# #AGREGAR UNA NUEVA INSCRIPCION
 # @descuentos.post("/descuentos")
 # async def crerar_descuentos(descuento:Descuentos):
 #     response = Descuentos_services().crear_descuento(descuento)
 #     return response
     
-# #EDITAR UN DESCUENTO
+# #EDITAR UNA INSCRIPCION
 # @descuentos.put("/descuentos/{id}")
 # async def editar_descuentos(id, descuento:Descuentos):
 #     response = Descuentos_services().editar_descuento(id, descuento)

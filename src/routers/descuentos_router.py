@@ -27,7 +27,7 @@ async def consultar_un_Descuentos(id):
 
 #AGREGAR UN NUEVO DESCUENTO
 @descuentos.post("/descuentos")
-async def crerar_descuentos(descuento:Descuentos):
+async def crear_descuentos(descuento:Descuentos):
     response = Descuentos_services().crear_descuento(descuento)
     return response
     
