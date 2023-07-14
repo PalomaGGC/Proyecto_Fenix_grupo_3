@@ -27,7 +27,7 @@ def todosLosAlumnos() -> List[Alumnos]:
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @alumnos.get('/alumno/{nie}', response_model=Alumnos)# nie es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
-def consultar_alumno_nie(nie: int) -> Alumnos:
+def consultar_alumno_nie(nie:int) -> Alumnos:
     db = Session()
     #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio
     result = Alumnos_services(db).consultar_alumno(nie)
@@ -39,14 +39,6 @@ def consultar_alumno_nie(nie: int) -> Alumnos:
 
 
 
-# #CONSULTAR SOLO UNO
-# @alumnos.get("/alumnos/{nie}")
-# def obtenerAlumnoPorNIE(nie: int):
-#     alumno = Alumnos_services()
-#     result = alumno.alumno(nie)
-#     return result
-
-
 
 
 @alumnos.post("/alumnos", response_model=dict, status_code=201)
@@ -55,12 +47,5 @@ def agregarAlumno(alumno: Alumnos) -> dict:
     Alumnos_services(db).agregar_alumno(alumno)
     return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
 
-
-# #EDITAR
-# @alumnos.put("/alumnos/{alumno_id}")
-# def editarAlumno(alumno_id: int, alumno: Alumnos):
-#     alumnos = Alumnos_services()
-#     result = alumnos.editar_alumno(alumno_id, alumno)
-#     return result
 
 
