@@ -1,7 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 from models.alumnosModel import Alumno as AlumnoModel
 from sqlalchemy.orm import Session
-
+from fastapi import HTTPException, status
 
 
 class Alumnos_services:
@@ -11,21 +11,30 @@ class Alumnos_services:
         self.db = db
         #ya puedo acceder a la base de datos desde otros métodos
 
-    #CONSULTAR TODOS LOS ALUMNOS
+    # CONSULTAR TODOS LOS ALUMNOS
     def consultar_alumnos(self):
-        result = self.db.query(AlumnoModel).all()
-        #obtengo todos los datos AlumnoModel y los guardo en la variable result
-        return result
+        try:
+            result = self.db.query(AlumnoModel).all()
+            #obtengo todos los datos AlumnoModel y los guardo en la variable result
+            return result
+        except SQLAlchemyError as e:
+            # Si ocurre un error en la consulta, se lanza una excepción HTTP con el código de estado 500 y el detalle del error
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-    #CONSULTAR UN ALUMNO
+    # CONSULTAR UN ALUMNO
     def consultar_alumno(self, nie):
-        result = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
-        #obtengo los datos de el alumno que quiero consultar filtrando por nie, 
-        # obtengo los del primero que encuentre y los guardo en la variable result
-        return result
+        try:
+            result = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
+            #obtengo los datos de el alumno que quiero consultar filtrando por nie, 
+            # obtengo los del primero que encuentre y los guardo en la variable result
+            if not result:
+                # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
+            return result
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-
-    #AGREGAR UN ALUMNO
+    # AGREGAR UN ALUMNO
     def agregar_alumno(self, data):
         try:
             nuevo_alumno = AlumnoModel(**data.model_dump())
@@ -35,18 +44,24 @@ class Alumnos_services:
             self.db.commit()
             return f"Se agregó el alumno {nuevo_alumno} correctamente"
         except SQLAlchemyError as e:
-            return {"error": str(e)}
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-
-    #EDITAR UN ALUMNO
+    # EDITAR UN ALUMNO
     def editar_alumno(self, nie: str, data):
-        alumno = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
-        alumno.nombre_alumno = data. nombre_alumno
-        alumno.apellido_alumno = data.apellido_alumno
-        alumno.edad_alumno = data.edad_alumno
-        alumno.nie_alumno = data.nie_alumno
-        alumno.email_alumno = data.email_alumno
-        alumno.telefono_alumno = data.telefono_alumno
-        alumno.descuento_familiar = data.descuento_familiar
-        self.db.commit()
-        return
+        try:
+            alumno = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
+            if not alumno:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
+
+            alumno.nombre_alumno = data.nombre_alumno
+            alumno.apellido_alumno = data.apellido_alumno
+            alumno.edad_alumno = data.edad_alumno
+            alumno.nie_alumno = data.nie_alumno
+            alumno.email_alumno = data.email_alumno
+            alumno.telefono_alumno = data.telefono_alumno
+            alumno.descuento_familiar = data.descuento_familiar
+
+            self.db.commit()
+            return {"message": "Alumno actualizado correctamente"}
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

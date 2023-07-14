@@ -20,9 +20,11 @@ def startup():
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
 def todosLosAlumnos() -> List[Alumnos]:
     db = Session()
+    result = Alumnos_services(db).consultar_alumnos()
+    
     if not result:
         return None
-    result = Alumnos_services(db).consultar_alumnos()
+    
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
