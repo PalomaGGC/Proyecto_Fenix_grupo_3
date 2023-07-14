@@ -32,18 +32,17 @@ class Descuentos_services:
             nuevo_descuento = Descuento_model(**data.model_dump())
             self.db.add(nuevo_descuento)
             self.db.commit()
-            return "Se agrego un nuevo descuento"
+            return "{'message':'Se agrego un nuevo descuento'}"
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-    #EDITAR UN DESCUENTO
     def editar_descuento(self, id, data):
         try:
             descuento = self.db.query(Descuento_model).filter(Descuento_model.id_descuento == id).first()
             if not descuento:
-                raise  HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Descuento no encontrado")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Descuento no encontrado")
             descuento.tipo_descuento = data.tipo_descuento
-            descuento.porcentaje_descuento = data.porcentaje_descuento
+            descuento.porcentage_descuento = data.porcentage_descuento
             self.db.commit()
             return {"message": "Descuento actualizado correctamente."}
         except SQLAlchemyError as e:
