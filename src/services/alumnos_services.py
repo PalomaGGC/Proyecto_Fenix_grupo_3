@@ -80,6 +80,7 @@ class Alumnos_services:
         #obtengo los datos de el alumno que quiero consultar filtrando por nie, obtengo los del primero que encuentre y los guardo en la variable result
         return result
 
+
     #AGREGAR UN ALUMNO
     def agregar_alumno(self, data):
         try:

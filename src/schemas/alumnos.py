@@ -11,3 +11,5 @@ class Alumnos(BaseModel):
     email_alumno:str
     telefono_alumno:str
     descuento_familiar:float
+
+

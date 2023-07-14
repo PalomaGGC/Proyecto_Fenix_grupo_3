@@ -18,10 +18,10 @@ def startup():
     Base.metadata.create_all(bind=engine)
 
 
-
 #COSULTAR
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
 def todosLosAlumnos() -> List[Alumnos]:
+    startup()
     db = Session()
     result = Alumnos_services(db).consultar_alumnos()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
@@ -37,12 +37,15 @@ def consultar_alumno_nie(nie: int) -> Alumnos:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
+
+
 # #CONSULTAR SOLO UNO
 # @alumnos.get("/alumnos/{nie}")
 # def obtenerAlumnoPorNIE(nie: int):
 #     alumno = Alumnos_services()
 #     result = alumno.alumno(nie)
 #     return result
+
 
 
 
