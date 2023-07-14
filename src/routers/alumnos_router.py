@@ -39,14 +39,6 @@ def consultar_alumno_nie(nie:str) -> Alumnos:
 
 
 
-# #CONSULTAR SOLO UNO
-# @alumnos.get("/alumnos/{nie}")
-# def obtenerAlumnoPorNIE(nie: int):
-#     alumno = Alumnos_services()
-#     result = alumno.alumno(nie)
-#     return result
-
-
 
 
 @alumnos.post("/alumnos", response_model=dict, status_code=201)
@@ -56,11 +48,17 @@ def agregarAlumno(alumno: Alumnos) -> dict:
     return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
 
 
-# #EDITAR
-# @alumnos.put("/alumnos/{alumno_id}")
-# def editarAlumno(alumno_id: int, alumno: Alumnos):
-#     alumnos = Alumnos_services()
-#     result = alumnos.editar_alumno(alumno_id, alumno)
-#     return result
+
+@alumnos.put('/alumnos/{nie}', response_model=dict, status_code=200)
+def editarAlumno(nie: str, data:Alumnos) -> dict:
+    db = Session()
+    result = Alumnos_services(db).consultar_alumno(nie)
+    if not result:
+         return JSONResponse(status_code=404, content={'message': "No encontrado"})
+
+    Alumnos_services(db).editar_alumno(nie, data)
+    return JSONResponse(status_code=200, content={"message": "Se ha modificado la película"})
+
+
 
 
