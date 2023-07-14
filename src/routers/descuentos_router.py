@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from services.descuentos_services import Descuentos_services
 from schemas.descuentos import Descuentos
-from config.db import Session
+
 
 
 
