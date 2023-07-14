@@ -57,7 +57,7 @@ def editarAlumno(nie: str, data:Alumnos) -> dict:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
 
     Alumnos_services(db).editar_alumno(nie, data)
-    return JSONResponse(status_code=200, content={"message": "Se ha modificado la película"})
+    return JSONResponse(status_code=200, content={"message": "Se ha modificado el alumno"})
 
 
 

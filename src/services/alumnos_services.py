@@ -105,9 +105,7 @@ class Alumnos_services:
         alumno.descuento_familiar = data.descuento_familiar
         self.db.commit()
         return
-    
-   
-    
+
     # #EDITAR UN ALUMNO
     # def editar_alumno(self, id, data):
     #         try:
