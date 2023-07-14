@@ -10,7 +10,7 @@ class Alumno(Base):
 
     #creo el modelo de la tabla
     __tablename__ = "alumnos"
-    id_alumnos = Column(Integer, primary_key=True,  autoincrement=True)
+    id_alumno = Column(Integer, primary_key=True,  autoincrement=True)
     nombre_alumno = Column(String(100))
     apellido_alumno = Column(String(100))
     edad_alumno = Column(String(5))

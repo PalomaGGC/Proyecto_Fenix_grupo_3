@@ -32,10 +32,7 @@ def agregarAlumno(alumno: Alumnos) -> dict:
     db = Session()
     Alumnos_services(db).agregar_alumno(alumno)
     return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
-    
-    
 
-    
 
 #EDITAR
 @alumnos.put("/alumnos/{alumno_id}")
@@ -43,5 +40,5 @@ def editarAlumno(alumno_id: int, alumno: Alumnos):
     alumnos = Alumnos_services()
     result = alumnos.editar_alumno(alumno_id, alumno)
     return result
-   
+
 
