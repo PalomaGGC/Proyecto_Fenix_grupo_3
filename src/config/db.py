@@ -23,6 +23,8 @@ try:
     Session = sessionmaker(engine)
     
     Base = declarative_base()
+    
+    
 
 except SQLAlchemyError as e:
     print(f"Error al conectar a la base de datos: {e}")

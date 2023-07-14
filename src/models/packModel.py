@@ -3,7 +3,7 @@ from sqlalchemy.sql.sqltypes import Integer
 from config.db import meta, engine
 
 
-#creo el modelo de la tabla
+#MODELO DE LA TABLA
 tabla_pack = Table("pack", meta, 
     Column("id_pack", Integer, primary_key=True,  autoincrement=True),
     Column("nombre_pack", String(100)),

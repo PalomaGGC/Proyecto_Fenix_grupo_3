@@ -8,23 +8,23 @@ from services.alumnos_services import Alumnos_services
 from config.db import Base, Session, engine
 
 
-
-
 alumnos = APIRouter(tags=["alumnos"])
 
+#CREAR LAS TABLAS
 @alumnos.on_event("startup")
 def startup():
-    # create db table
     Base.metadata.create_all(bind=engine)
-
 
 
 #COSULTAR
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
 def todosLosAlumnos() -> List[Alumnos]:
     db = Session()
+    if not result:
+        return None
     result = Alumnos_services(db).consultar_alumnos()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 
 @alumnos.get('/alumno/{nie}', response_model=Alumnos)# nie es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
 def consultar_alumno_nie(nie:str) -> Alumnos:
@@ -36,9 +36,6 @@ def consultar_alumno_nie(nie:str) -> Alumnos:
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
-
-
-
 
 
 @alumnos.post("/alumnos", response_model=dict, status_code=201)
@@ -58,6 +55,7 @@ def editarAlumno(nie: str, data:Alumnos) -> dict:
 
     Alumnos_services(db).editar_alumno(nie, data)
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el alumno"})
+
 
 
 
