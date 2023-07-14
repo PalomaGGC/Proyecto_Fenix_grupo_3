@@ -20,5 +20,5 @@ class Alumno(Base):
     descuento_familiar = Column(Float, default=0.0)
 
 
-#creo la tabla en la base de datos
-meta.create_all(engine)
+    #creo la tabla en la base de datos
+    #meta.create_all(engine)
