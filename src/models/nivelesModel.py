@@ -3,7 +3,7 @@ from sqlalchemy.sql.sqltypes import Integer
 from config.db import meta, engine
 
 
-#creo el modelo de la tabla
+#MODELO DE LA TABLA
 tabla_niveles = Table("niveles", meta, 
     Column("id_niveles", Integer, primary_key=True,  autoincrement=True),
     Column("nombre_nivel", String(100)),
