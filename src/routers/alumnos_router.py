@@ -19,7 +19,7 @@ def startup():
 
 #COSULTAR
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
-def todosLosAlumnos() -> List[Alumnos]:
+def consultar_alumnos() -> List[Alumnos]:
     db = Session()
     result = Alumnos_services(db).consultar_alumnos()
 
@@ -30,7 +30,7 @@ def todosLosAlumnos() -> List[Alumnos]:
 
 
 @alumnos.get('/alumno/{nie}', response_model=Alumnos)# nie es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
-def consultar_alumno_nie(nie:str) -> Alumnos:
+def consultar_alumno_por_nie(nie:str) -> Alumnos:
     db = Session()
     #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio
     result = Alumnos_services(db).consultar_alumno(nie)
@@ -42,7 +42,7 @@ def consultar_alumno_nie(nie:str) -> Alumnos:
 
 
 @alumnos.post("/alumnos", response_model=dict, status_code=201)
-def agregarAlumno(alumno: Alumnos) -> dict:
+def agregar_alumno(alumno: Alumnos) -> dict:
     db = Session()
     Alumnos_services(db).agregar_alumno(alumno)
     return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
@@ -50,7 +50,7 @@ def agregarAlumno(alumno: Alumnos) -> dict:
 
 
 @alumnos.put('/alumnos/{nie}', response_model=dict, status_code=200)
-def editarAlumno(nie: str, data:Alumnos) -> dict:
+def editar_alumno(nie: str, data:Alumnos) -> dict:
     db = Session()
     result = Alumnos_services(db).consultar_alumno(nie)
     if not result:
