@@ -30,7 +30,7 @@ class Alumnos_services:
             # obtengo los del primero que encuentre y los guardo en la variable result
             if not result:
                 # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
+                raise HTTPException(status_code=status.HTTP_204_NOT_FOUND, detail="Alumno no encontrado")
             return result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
