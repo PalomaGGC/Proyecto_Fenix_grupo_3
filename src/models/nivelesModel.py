@@ -1,13 +1,14 @@
-from sqlalchemy import Boolean, Numeric, Table, Column, String
+from sqlalchemy import Float, Column, String
 from sqlalchemy.sql.sqltypes import Integer
-from config.db import meta, engine
-
+from config.db import Base
 
 #MODELO DE LA TABLA
-tabla_niveles = Table("niveles", meta, 
-    Column("id_niveles", Integer, primary_key=True,  autoincrement=True),
-    Column("nombre_nivel", String(100)),
-)
+class Niveles_model(Base):
+    __tablename__ = "niveles"
+    id_nivel = Column(Integer, primary_key=True,  autoincrement=True)
+    nombre_nivel = Column(String(100))
+   
 
-#creo la tabla en la base de datos
-meta.create_all(engine)
+
+
+
