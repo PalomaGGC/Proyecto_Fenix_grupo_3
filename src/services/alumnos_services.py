@@ -1,5 +1,5 @@
 from sqlalchemy.exc import SQLAlchemyError
-from models.alumnosModel import Alumno as AlumnoModel
+from models.alumnosModel import Alumnos_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
@@ -14,8 +14,8 @@ class Alumnos_services:
     # CONSULTAR TODOS LOS ALUMNOS
     def consultar_alumnos(self):
         try:
-            result = self.db.query(AlumnoModel).all()
-            #obtengo todos los datos AlumnoModel y los guardo en la variable result
+            result = self.db.query(Alumnos_model).all()
+            #obtengo todos los datos Alumnos_model y los guardo en la variable result
             return result
         except SQLAlchemyError as e:
             # Si ocurre un error en la consulta, se lanza una excepción HTTP con el código de estado 500 y el detalle del error
@@ -24,7 +24,7 @@ class Alumnos_services:
     # CONSULTAR UN ALUMNO
     def consultar_alumno(self, nie):
         try:
-            result = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
+            result = self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
             #obtengo los datos de el alumno que quiero consultar filtrando por nie, 
             # obtengo los del primero que encuentre y los guardo en la variable result
             if not result:
@@ -37,7 +37,12 @@ class Alumnos_services:
     # AGREGAR UN ALUMNO
     def agregar_alumno(self, data):
         try:
-            nuevo_alumno = AlumnoModel(**data.model_dump())
+            alumno = self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == data.nie_alumno).first()
+            print(data)
+            if alumno:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un alumno con este nie")
+
+            nuevo_alumno = Alumnos_model(**data.model_dump())
             #Le envío la nueva película
             self.db.add(nuevo_alumno)
             #Hago el commit para que se actualice
@@ -49,7 +54,7 @@ class Alumnos_services:
     # EDITAR UN ALUMNO
     def editar_alumno(self, nie: str, data):
         try:
-            alumno = self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
+            alumno = self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
             if not alumno:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
 
@@ -65,3 +70,9 @@ class Alumnos_services:
             return {"message": "Alumno actualizado correctamente"}
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    # BORRAR UN ALUMNO
+    def borrar_alumno(self, nie: str):
+        self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).delete()
+        self.db.commit()
+        return
