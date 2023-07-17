@@ -3,7 +3,7 @@ from sqlalchemy.sql.sqltypes import Integer
 from config.db import Base
 
 #MODELO DE LA TABLA
-class Alumno(Base):
+class Alumnos_model(Base):
     __tablename__ = "alumnos"
     id_alumno = Column(Integer, primary_key=True,  autoincrement=True)
     nombre_alumno = Column(String(100))

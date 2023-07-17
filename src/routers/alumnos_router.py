@@ -6,7 +6,7 @@ from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
 from services.alumnos_services import Alumnos_services
 from config.db import Base, Session, engine
-from models.alumnosModel import Alumno as AlumnoModel
+from models.alumnosModel import Alumnos_model
 
 
 alumnos = APIRouter(tags=["alumnos"])
@@ -35,7 +35,7 @@ def consultar_alumno_por_nie(nie:str) -> Alumnos:
     #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio
     result = Alumnos_services(db).consultar_alumno(nie)
     #De Alumnos_services primero obtengo la sesión y luego le paso el método consultar_alumno
-    #Consulto los datos de AlumnoModel y hago un filtrado por nie, le digo que obtenga el primer resultado.
+    #Consulto los datos de Alumnos_model y hago un filtrado por nie, le digo que obtenga el primer resultado.
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
@@ -63,7 +63,7 @@ def editar_alumno(nie: str, data:Alumnos) -> dict:
 @alumnos.delete('/alumnos/{nie}', response_model=dict, status_code=200)
 def borrar_alumno(nie: str) -> dict:
     db = Session()
-    result= db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).first()
+    result= db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
     print(result)
     #REalizo la búsqueda del alumno
     if not result:
