@@ -3,114 +3,55 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
-from models.packsModel import Packs_model
-from schemas.pack import Pack
+from config.db import Base, Session, engine
+# from models.packsModel import Packs_model
+from schemas.packs import Packs
+from services.packs_services import Packs_services
 
-packs = APIRouter()
+packs = APIRouter(tags=["packs"])
+
+@packs.on_event("startup")
+def startup():
+    # create db table
+    Base.metadata.create_all(bind=engine)
 
 #COSULTAR
-@packs.get("/packs", tags=["packs"])
-def todosLosPacks():
-    try:
-        # Extraer todos los registros de la tabla "pack"
-        query = tabla_pack.select()
-        result = conexion.execute(query).fetchall()
-
-        # Convertir los resultados a una lista de packs
-        packs = []
-        for item in result:
-            pack = {
-                "nombre_pack": item[1],
-                "precio_pack": item[2],
-                "primer_descuento": item[3],
-                "segundo_descuento": item[4]
-            }
-            packs.append(pack)
-
-        # Retornar la lista de alumnos en formato JSON
-        return packs
-    except SQLAlchemyError as e:
-        return {"error": str(e)}
+@packs.get("/packs", response_model=List[Packs], status_code=200)
+def consultar_packs()-> List[Packs]:
+    result = Packs_services().consultar_packs()
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
 #CONSULTAR SOLO UNO
-@packs.get("/packs/{nombre}", tags=["packs"])
-def obtenerPackPorNombre(nombre: int):
-    try:
-        # Buscar el pack por su nombre en la base de datos
-        query = tabla_pack.select().where(tabla_pack.c.nombre_pack == nombre)
-        result = conexion.execute(query).fetchone()
-
-        # Verificar si se encontró un pack con el nombre especificado
-        if result is None:
-            return {"error": "No se encontró ningún pack con el nombre especificado."}
-
-        # Crear un diccionario con los datos del pack
-        pack = {
-            "nombre_pack": result[1],
-            "precio_pack": result[2],
-            "primer_descuento": result[3],
-            "segundo_descuento": result[4]
-        }
-
-        # Retornar el pack en formato JSON
-        return pack
-    except SQLAlchemyError as e:
-        return {"error": str(e)}
+@packs.get('/pack/{id}', response_model=Packs)
+def consultar_pack_por_id(id:int) -> Packs:
+    result = Packs_services().consultar_pack(id)
+    if not result:
+        return JSONResponse(status_code=404, content={'message': "No encontrado"})
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
 #AGREGAR
-@packs.post("/packs", tags=["packs_agregar"])
-def agregarPack(pack: Pack):
-    try:
-        # Verificar si el nombre del pack ya existe en la base de datos
-        existe_pack = conexion.execute(tabla_pack.select().where(tabla_pack.c.nombre_alumno == pack.nombre_pack)).first()
-        if existe_pack:
-            return "No se puede agregar el pack. El pack ya está registrado."
-
-        # Preparar los valores que se van a guardar
-        nuevo_pack = {
-            "nombre_pack": pack.nombre_pack,
-            "precio_pack": pack.precio_pack,
-            "primer_descuento": pack.primer_descuento_pack,
-            "segundo_descuento": pack.segundo_descuento_pack
-        }
-
-        # Insertar el nuevo pack en la base de datos
-        conexion.execute(tabla_pack.insert().values(**nuevo_pack))
-        # Hacer un commit a la base de datos
-        conexion.commit()
-
-        return f"Se agregó el pack {nuevo_pack} correctamente"
-    except SQLAlchemyError as e:
-        return {"error": str(e)}
+@packs.post("/packs", response_model=dict, status_code=201)
+def agregar_pack(pack: Packs)-> dict:
+    Packs_services().agregar_pack(pack)
+    return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
 
 
 #EDITAR
-@packs.put("/packs/{pack_id}", tags=["packs"])
-def editarPack(pack_id: int, pack: Pack):
-    try:
-        # Verificar si el pack existe en la base de datos
-        existe_pack = conexion.execute(tabla_pack.select().where(tabla_pack.c.id_pack == pack_id)).first()
-        if not existe_pack:
-            return {"error": "No se encontró ningún pack con el ID especificado."}
+@packs.put("/packs/{id}", response_model=dict, status_code=200)
+def editar_pack(id: int, pack: Packs)-> dict:
+    result = Packs_services().consultar_pack(id)
+    if not result:
+         return JSONResponse(status_code=404, content={'message': "No encontrado"})
+    Packs_services().editar_pack(id, data)
+    return JSONResponse(status_code=200, content={"message": "Se ha modificado el pack"})
 
-        # Preparar los valores que se van a actualizar
-        valores_actualizados = {
-            "nombre_pack": pack.nombre_pack,
-            "precio_pack": pack.precio_pack,
-            "primer_descuento": pack.primer_descuento_pack,
-            "segundo_descuento": pack.segundo_descuento_pack
-        }
-        
-        print(valores_actualizados)
-
-        # Actualizar el pack en la base de datos
-        query = tabla_pack.update().where(tabla_pack.c.id_pack == pack_id).values(**valores_actualizados)
-        conexion.execute(query)
-        conexion.commit()
-
-        return {"message": "Pack actualizado correctamente."}
-    except SQLAlchemyError as e:
-        return {"error": str(e)}
-
+#BORRAR
+@packs.delete('/packs/{id}', response_model=dict, status_code=200)
+def borrar_pack(id: int) -> dict:
+    result = Packs_services().consultar_pack(id)
+    if not result:
+         return JSONResponse(status_code=404, content={'message': "No encontrado"})
+    Packs_services().borrar_pack(id)
+    return JSONResponse(status_code=200, content={"message": "Se ha eliminado el pack"})
