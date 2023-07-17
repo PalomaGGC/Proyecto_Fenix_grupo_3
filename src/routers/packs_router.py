@@ -3,7 +3,6 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
-
 from models.packsModel import Packs_model
 from schemas.pack import Pack
 
@@ -85,11 +84,6 @@ def agregarPack(pack: Pack):
         return f"Se agregó el pack {nuevo_pack} correctamente"
     except SQLAlchemyError as e:
         return {"error": str(e)}
-    
-    
-    
-    
-    
 
 
 #EDITAR
