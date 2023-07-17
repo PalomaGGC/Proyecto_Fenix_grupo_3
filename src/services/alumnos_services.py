@@ -2,13 +2,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from models.alumnosModel import Alumnos_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
+from config.db import Session
 
 
 class Alumnos_services:
-    def __init__(self, db: Session) -> None: 
+    def __init__(self) -> None:
         #db para que cada vez que se ejecute ese servicio
         #se envíe una sesión a la base de datos
-        self.db = db
+        self.db = Session()
         #ya puedo acceder a la base de datos desde otros métodos
 
     # CONSULTAR TODOS LOS ALUMNOS
@@ -73,6 +74,12 @@ class Alumnos_services:
 
     # BORRAR UN ALUMNO
     def borrar_alumno(self, nie: str):
-        self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).delete()
-        self.db.commit()
-        return
+        try:
+            alumno = self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
+            if not alumno:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún añumno con ese nie")
+            self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).delete()
+            self.db.commit()
+            return
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

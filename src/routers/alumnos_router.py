@@ -20,8 +20,7 @@ def startup():
 #COSULTAR
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
 def consultar_alumnos() -> List[Alumnos]:
-    db = Session()
-    result = Alumnos_services(db).consultar_alumnos()
+    result = Alumnos_services().consultar_alumnos()
 
     if not result:
         return None
@@ -31,9 +30,8 @@ def consultar_alumnos() -> List[Alumnos]:
 
 @alumnos.get('/alumno/{nie}', response_model=Alumnos)# nie es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
 def consultar_alumno_por_nie(nie:str) -> Alumnos:
-    db = Session()
     #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio
-    result = Alumnos_services(db).consultar_alumno(nie)
+    result = Alumnos_services().consultar_alumno(nie)
     #De Alumnos_services primero obtengo la sesión y luego le paso el método consultar_alumno
     #Consulto los datos de Alumnos_model y hago un filtrado por nie, le digo que obtenga el primer resultado.
     if not result:
@@ -43,31 +41,27 @@ def consultar_alumno_por_nie(nie:str) -> Alumnos:
 
 @alumnos.post("/alumnos", response_model=dict, status_code=201)
 def agregar_alumno(alumno: Alumnos) -> dict:
-    db = Session()
-    Alumnos_services(db).agregar_alumno(alumno)
+    Alumnos_services().agregar_alumno(alumno)
     return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
 
 
 
 @alumnos.put('/alumnos/{nie}', response_model=dict, status_code=200)
 def editar_alumno(nie: str, data:Alumnos) -> dict:
-    db = Session()
-    result = Alumnos_services(db).consultar_alumno(nie)
+    result = Alumnos_services().consultar_alumno(nie)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
 
-    Alumnos_services(db).editar_alumno(nie, data)
+    Alumnos_services().editar_alumno(nie, data)
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el alumno"})
 
 
 @alumnos.delete('/alumnos/{nie}', response_model=dict, status_code=200)
 def borrar_alumno(nie: str) -> dict:
-    db = Session()
-    result= db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
-    print(result)
-    #REalizo la búsqueda del alumno
+    result =Alumnos_services().consultar_alumno(nie)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
-    Alumnos_services(db).borrar_alumno(nie)
+    Alumnos_services().borrar_alumno(nie)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el alumno"})
+
 

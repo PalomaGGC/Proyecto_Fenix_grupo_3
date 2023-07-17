@@ -2,6 +2,7 @@ from typing import List
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from models.profesoresModel import Profesores_model
 from schemas.profesores import Profesores
 from sqlalchemy.exc import SQLAlchemyError
 from services.profesores_services import Profesores_services
@@ -58,3 +59,15 @@ def editar_profesor(nombre: str, data:Profesores) -> dict:
 
     Profesores_services(db).editar_profesor(nombre, data)
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el profesor"})
+
+# BORRO UN PROFESOR
+@profesores.delete('/profesores/{nombre}', response_model=dict, status_code=200)
+def borrar_profesor(nombre: str) -> dict:
+
+    result= db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
+    print(result)
+    #Realizo la búsqueda del profesor
+    if not result:
+         return JSONResponse(status_code=404, content={'message': "No encontrado"})
+    Profesores_services(db).borrar_profesor(nombre)
+    return JSONResponse(status_code=200, content={"message": "Se ha eliminado el profesor"})

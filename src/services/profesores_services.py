@@ -1,5 +1,5 @@
 from sqlalchemy.exc import SQLAlchemyError
-from models.profesoresModel import Profesores as ProfesorModel
+from models.profesoresModel import Profesores_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
@@ -14,8 +14,8 @@ class Profesores_services:
     # CONSULTAR TODOS LOS PROFESORES
     def consultar_profesores(self):
         try:
-            result = self.db.query(ProfesorModel).all()
-            # Obtengo todos los datos ProfesorModel y los guardo en la variable result.
+            result = self.db.query(Profesores_model).all()
+            # Obtengo todos los datos Profesores_model y los guardo en la variable result.
             return result
         except SQLAlchemyError as e:
             # Si ocurre un error en la consulta, se lanza una excepción HTTP con el código de estado 500 y el detalle del error.
@@ -24,7 +24,7 @@ class Profesores_services:
     # CONSULTAR UN PROFESOR
     def consultar_profesor(self, nombre):
         try:
-            result = self.db.query(ProfesorModel).filter(ProfesorModel.nombre_profesor == nombre).first()
+            result = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
             # Obtengo los datos del profesor que quiero consultar filtrando por nombre.
             # Obtengo los del primero que encuentre y los guardo en la variable result.
             if not result:
@@ -37,7 +37,7 @@ class Profesores_services:
     # AGREGAR UN PROFESOR
     def agregar_profesor(self, data):
         try:
-            nuevo_profesor = ProfesorModel(**data.model_dump())
+            nuevo_profesor = Profesores_model(**data.model_dump())
             #Le envío el nuevo profesor
             self.db.add(nuevo_profesor)
             #Hago el commit para que se actualice
@@ -46,10 +46,11 @@ class Profesores_services:
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
+
     # EDITAR UN PROFESOR
     def editar_profesor(self, nombre: str, data):
         try:
-            profesor = self.db.query(ProfesorModel).filter(ProfesorModel.nombre_profesor == nombre).first()
+            profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
             if not profesor:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Profesor no encontrado")
 
@@ -61,5 +62,11 @@ class Profesores_services:
             return {"message": "Profesor actualizado correctamente"}
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    # BORRAR UN PROFESOR
+    def borrar_profesor(self, nombre: str):
+        self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).delete()
+        self.db.commit()
+        return
 
 
