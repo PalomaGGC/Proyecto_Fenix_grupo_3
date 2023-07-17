@@ -4,6 +4,7 @@ from models.clasesModel import tabla_clases
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
 
+
 user = APIRouter()
 
 @user.get("/")

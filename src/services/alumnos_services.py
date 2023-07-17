@@ -65,3 +65,9 @@ class Alumnos_services:
             return {"message": "Alumno actualizado correctamente"}
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    # BORRAR UN ALUMNO
+    def borrar_alumno(self, nie: str):
+        self.db.query(AlumnoModel).filter(AlumnoModel.nie_alumno == nie).delete()
+        self.db.commit()
+        return
