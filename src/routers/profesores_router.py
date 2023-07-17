@@ -63,7 +63,7 @@ def editar_profesor(nombre: str, data:Profesores) -> dict:
 # BORRO UN PROFESOR
 @profesores.delete('/profesores/{nombre}', response_model=dict, status_code=200)
 def borrar_profesor(nombre: str) -> dict:
-    db = Session()
+
     result= db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
     print(result)
     #Realizo la búsqueda del profesor
