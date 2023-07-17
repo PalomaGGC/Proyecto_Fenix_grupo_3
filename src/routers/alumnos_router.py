@@ -21,10 +21,10 @@ def startup():
 def todosLosAlumnos() -> List[Alumnos]:
     db = Session()
     result = Alumnos_services(db).consultar_alumnos()
-    
+
     if not result:
         return None
-    
+
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
