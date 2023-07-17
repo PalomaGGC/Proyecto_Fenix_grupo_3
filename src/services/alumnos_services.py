@@ -30,7 +30,7 @@ class Alumnos_services:
             # obtengo los del primero que encuentre y los guardo en la variable result
             if not result:
                 # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
+                raise HTTPException(status_code=status.HTTP_204_NOT_FOUND, detail="Alumno no encontrado")
             return result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
@@ -77,7 +77,7 @@ class Alumnos_services:
         try:
             alumno = self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
             if not alumno:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún añumno con ese nie")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese nie")
             self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).delete()
             self.db.commit()
             return

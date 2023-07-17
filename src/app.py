@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from routers.alumnos_router import alumnos
-from routers.pack_router import packs
+from routers.packs_router import packs
 from routers.descuentos_router import descuentos
 from routers.inscripciones_router import inscripciones
 from routers.profesores_router import profesores
