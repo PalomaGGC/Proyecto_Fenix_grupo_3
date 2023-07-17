@@ -20,8 +20,7 @@ def startup():
 # COSULTAR TODOS LOS PROFESORES
 @profesores.get("/profesores", response_model=List[Profesores], status_code=200)
 def consultar_profesores() -> List[Profesores]:
-    db = Session()
-    result = Profesores_services(db).consultar_profesores()
+    result = Profesores_services().consultar_profesores()
 
     if not result:
         return None
@@ -32,9 +31,8 @@ def consultar_profesores() -> List[Profesores]:
 # CONSULTAR PROFESOR POR NOMBRE
 @profesores.get('/profesor/{nombre}', response_model=Profesores)# nombre es el parámetro de ruta que espero recibir cuando el usuario acceda  a esta url
 def consultar_profesor_por_nombre(nombre:str) -> Profesores:
-    db = Session()
     #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio
-    result = Profesores_services(db).consultar_profesor(nombre)
+    result = Profesores_services().consultar_profesor(nombre)
     #De Profesores_services primero obtengo la sesión y luego le paso el método consultar_profesor
     #Consulto los datos de ProfesorModel y hago un filtrado por nombre, le digo que obtenga el primer resultado.
     if not result:
@@ -44,30 +42,25 @@ def consultar_profesor_por_nombre(nombre:str) -> Profesores:
 # AÑADO UN NUEVO PROFESOR A LA TABLA
 @profesores.post("/profesores", response_model=dict, status_code=201)
 def agregar_profesor(profesor: Profesores) -> dict:
-    db = Session()
-    Profesores_services(db).agregar_profesor(profesor)
+    Profesores_services().agregar_profesor(profesor)
     return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo profesor"})
 
 
 # MODIFICO LOS DATOS DE UN PROFESOR
 @profesores.put('/profesores/{nombre}', response_model=dict, status_code=200)
 def editar_profesor(nombre: str, data:Profesores) -> dict:
-    db = Session()
-    result = Profesores_services(db).consultar_profesor(nombre)
+    result = Profesores_services().consultar_profesor(nombre)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
 
-    Profesores_services(db).editar_profesor(nombre, data)
+    Profesores_services().editar_profesor(nombre, data)
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el profesor"})
 
 # BORRO UN PROFESOR
 @profesores.delete('/profesores/{nombre}', response_model=dict, status_code=200)
 def borrar_profesor(nombre: str) -> dict:
-
-    result= db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
-    print(result)
-    #Realizo la búsqueda del profesor
+    result = Profesores_services().consultar_profesor(nombre)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
-    Profesores_services(db).borrar_profesor(nombre)
+    Profesores_services().borrar_profesor(nombre)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el profesor"})

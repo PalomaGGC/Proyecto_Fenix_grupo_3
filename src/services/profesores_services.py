@@ -2,13 +2,13 @@ from sqlalchemy.exc import SQLAlchemyError
 from models.profesoresModel import Profesores_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
+from config.db import Session
 
 
 class Profesores_services:
-    def __init__(self, db: Session) -> None:
-        #db para que cada vez que se ejecute ese servicio
-        #se envíe una sesión a la base de datos
-        self.db = db
+    def __init__(self) -> None:
+        self.db = Session()
+        #db para que cada vez que se ejecute ese servicio se envíe una sesión a la base de datos
         #ya puedo acceder a la base de datos desde otros métodos
 
     # CONSULTAR TODOS LOS PROFESORES
@@ -65,8 +65,13 @@ class Profesores_services:
 
     # BORRAR UN PROFESOR
     def borrar_profesor(self, nombre: str):
-        self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).delete()
-        self.db.commit()
-        return
-
+        try:
+            profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
+            if not profesor:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún profesor con ese nombre")
+            self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).delete()
+            self.db.commit()
+            return
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 

@@ -77,7 +77,7 @@ class Alumnos_services:
         try:
             alumno = self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).first()
             if not alumno:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún añumno con ese nie")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese nie")
             self.db.query(Alumnos_model).filter(Alumnos_model.nie_alumno == nie).delete()
             self.db.commit()
             return
