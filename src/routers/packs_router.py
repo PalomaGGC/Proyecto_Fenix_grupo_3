@@ -1,8 +1,11 @@
+from typing import List
 from fastapi import APIRouter
-from config.db import conexion
-from models.packModel import tabla_pack
-from schemas.pack import Pack
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
+
+from models.packsModel import Packs_model
+from schemas.pack import Pack
 
 packs = APIRouter()
 
@@ -31,12 +34,6 @@ def todosLosPacks():
         return {"error": str(e)}
 
 
-
-
-
-
-
-
 #CONSULTAR SOLO UNO
 @packs.get("/packs/{nombre}", tags=["packs"])
 def obtenerPackPorNombre(nombre: int):
@@ -61,10 +58,6 @@ def obtenerPackPorNombre(nombre: int):
         return pack
     except SQLAlchemyError as e:
         return {"error": str(e)}
-
-
-
-
 
 
 #AGREGAR
