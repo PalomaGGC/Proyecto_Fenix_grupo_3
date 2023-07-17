@@ -1,13 +1,14 @@
 from sqlalchemy import Table, Column, String
 from sqlalchemy.sql.sqltypes import Integer
-from config.db import meta, engine
+from config.db import meta, engine, Base
 
 
-#creo el modelo de la tabla
-tabla_profesores = Table("profesores", meta, 
-    Column("id_clases", Integer, primary_key=True,  autoincrement=True),
-    Column("nombre_profesor", String(100))
-)
 
-#creo la tabla en la base de datos
-meta.create_all(engine)
+# Creo el modelo de la tabla Profesores
+class Profesores(Base):
+    __tablename__ = "profesores"
+    id_profesor = Column(Integer, primary_key=True,  autoincrement=True)
+    nombre_profesor = Column(String(100))
+    apellido_profesor = Column(String(100))
+    email_profesor = Column(String(50))
+
