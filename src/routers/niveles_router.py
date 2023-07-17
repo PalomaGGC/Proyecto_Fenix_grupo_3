@@ -52,7 +52,7 @@ def editar_nivel(nombre: str, data:Niveles) -> dict:
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
 
-    Alumnos_services().editar_nivel(nombre, data)
+    Niveles_services().editar_nivel(nombre, data)
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el nivel"})
 
 

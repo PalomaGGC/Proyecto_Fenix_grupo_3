@@ -40,7 +40,7 @@ class Niveles_services:
         try:
             nivel = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == data.nombre_nivel).first()
             print(data)
-            if alumno:
+            if nivel:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un nivel con este nombre")
 
             nuevo_nivel = Niveles_model(**data.model_dump())
