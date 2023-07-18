@@ -3,6 +3,9 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
+from services.clases_services import Clases_services
+from schemas.clases import Clases
+from config.db import Base, engine
 
 clases = APIRouter(tags=["clases"])
 
@@ -11,14 +14,10 @@ def startup():
     # create db table
     Base.metadata.create_all(bind=engine)
 
-@user.get("/")
-async def read_data():
-    return conexion.execute(users.select()).fetchall()
-
 
 #CONSULTAR SOLO UNO
 @clases.get('/clase/{id}', response_model=Clases)
-def consultar_clase_por_id(id: int):
+def consultar_clase_por_nombre(id: int):
     result = Clases_services().consultar_clase(nombre)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
