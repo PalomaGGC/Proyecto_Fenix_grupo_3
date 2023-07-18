@@ -21,6 +21,7 @@ def startup():
 @clases.get("/clases", response_model=List[Clases], status_code=200)
 def consultar_clase() -> List[Clases]:
     result = Clases_services().consultar_clase()
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
 #CONSULTAR SOLO UNO

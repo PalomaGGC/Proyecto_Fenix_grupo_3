@@ -12,7 +12,7 @@ class Clases_services:
        
 
     # CONSULTAR TODOS LOS CLASSES
-    def consultar_classes(self):
+    def consultar_clases(self):
         try:
             result = self.db.query(Clases_model).all()
             #obtengo todos los datos Clases_model y los guardo en la variable result
