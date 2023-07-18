@@ -35,11 +35,9 @@ class Clases_services:
     def agregar_clase(self, data):
         try:
             clase = self.db.query(Clases_model).filter(Clases_model.nombre_clase == data.nombre_clase).first()
-            self.db.add(clase)
-            print(data)
             if clase:
                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un clase con este nombre")
-            nuevo_clase = Clases_model(**data.dict())           
+            nuevo_clase = Clases_model(**data.dict())
             self.db.add(nuevo_clase)
             self.db.commit()
             return f"Se agregó el clase {nuevo_clase} correctamente"
