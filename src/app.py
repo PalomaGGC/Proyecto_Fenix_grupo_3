@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from routers.alumnos_router import alumnos
 from routers.packs_router import packs
 from routers.descuentos_router import descuentos
@@ -17,6 +18,9 @@ app.include_router(descuentos)
 app.include_router(inscripciones)
 app.include_router(profesores)
 app.include_router(niveles)
+
+
+
 
 if __name__ == '__main__':
     uvicorn.run("app:app", port=int(port), host='localhost', reload=True)

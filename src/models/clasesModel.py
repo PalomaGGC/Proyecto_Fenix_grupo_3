@@ -6,7 +6,7 @@ from config.db import Base
 #MODELO DE LA TABLA
 class Clases_model(Base): 
     __tablename__ = "clases"
-    id_clases =Column(Integer, primary_key=True,  autoincrement=True),
+    id_clase =Column(Integer, primary_key=True,  autoincrement=True),
     nombre_clase =Column(String(50))
     packs_id =Column(Integer, ForeignKey("packs.id_pack"))
 

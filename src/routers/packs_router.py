@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from config.db import conexion
-from models.packsModel import tabla_pack
+from models.packsModel import Packs_model
 from schemas.pack import Pack
 from sqlalchemy.exc import SQLAlchemyError
 

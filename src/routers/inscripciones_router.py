@@ -25,6 +25,12 @@ async def consultar_una_inscripcion(id):
     response = Inscripciones_services().consultar_una_inscripcion(id)
     return JSONResponse(status_code=200, content=jsonable_encoder(response))
 
+
+# @inscripciones.post("/inscripcion")
+# async def consultar_una_inscripcion():
+#     response = Inscripciones_services().crear_inscripcion()
+#     return response
+
 # #AGREGAR UNA NUEVA INSCRIPCION
 # @descuentos.post("/descuentos")
 # async def crerar_descuentos(descuento:Descuentos):
