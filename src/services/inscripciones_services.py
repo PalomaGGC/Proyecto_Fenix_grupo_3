@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy import func
-from models.alumnosModel import Alumno
+from models.alumnosModel import Alumnos_model
 from models.incripcionesModel import Inscripciones_model
 from config.db import Session
 
@@ -22,9 +22,9 @@ class Inscripciones_services:
     def crear_inscripcion(self):
         # verificar a qué pack se está inscribiendo
         # verificar si este alumno ya estaba inscrito a este mismo pack y cuántas veces
-        pack_informacion =  self.db.query(Inscripciones_model, Alumno)\
-                            .join(Alumno, Alumno.id_alumno == Inscripciones_model.alumno_id).all()
-        print(pack_informacion, "---------------------------------------------------------------")
+        # pack_informacion =  self.db.query(Inscripciones_model, Alumno)\
+        #                     .join(Alumno, Alumno.id_alumno == Inscripciones_model.alumno_id).all()
+        # print(pack_informacion, "---------------------------------------------------------------")
         return 
         
     # resultados = session.query(Inscripcion).join(Alumno, Alumno.id_alumno == Inscripcion.alumno_id).all()

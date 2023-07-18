@@ -4,13 +4,14 @@ from config.db import Base
 #MODELO DE LA TABLA
 class Inscripciones_model(Base):
     __tablename__ = "inscripciones"
-    id_inscripciones = Column(Integer, primary_key=True,  autoincrement=True)
+    id_inscripciones = Column(Integer, primary_key=True, autoincrement=True)
+    profesor_clase_id = Column(Integer)
     alumno_id = Column(Integer, ForeignKey("alumnos.id_alumno"))
-    profesor_clase_id = Column(Integer, ForeignKey("profesores.id_clase_profesor"))
+    # profesor_clase_id = Column(Integer, ForeignKey("profesores_clases.id_clase_profesor"))
     precio_clase = Column(Integer)
     descuento_inscripcion = Column(Integer)
     precio_con_descuento = Column(Integer)
     estado_inscripcion = Column(String(10))
-    pack_id = Column(Integer)
     fecha_inscripcion = Column(DateTime, default=func.now())
+
 

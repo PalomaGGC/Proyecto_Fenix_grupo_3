@@ -2,6 +2,7 @@ from typing import List
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from fastapi.testclient import TestClient
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
 from services.alumnos_services import Alumnos_services
@@ -11,11 +12,12 @@ from models.alumnosModel import Alumnos_model
 
 alumnos = APIRouter(tags=["alumnos"])
 
+
 #CREAR LAS TABLAS
 @alumnos.on_event("startup")
 def startup():
     Base.metadata.create_all(bind=engine)
-
+    
 
 #COSULTAR
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
@@ -24,7 +26,6 @@ def consultar_alumnos() -> List[Alumnos]:
 
     if not result:
         return None
-
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 

@@ -11,6 +11,9 @@ class Alumnos_services:
         #se envíe una sesión a la base de datos
         self.db = Session()
         #ya puedo acceder a la base de datos desde otros métodos
+        
+        
+        
 
     # CONSULTAR TODOS LOS ALUMNOS
     def consultar_alumnos(self):
