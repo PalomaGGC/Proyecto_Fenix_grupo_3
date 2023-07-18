@@ -7,3 +7,5 @@ __pycache__
 .DS_Store
 proyecto_fenix/
 myenv/
+.pytest_cache/
+.pytest_cache
