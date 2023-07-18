@@ -5,6 +5,7 @@ from routers.packs_router import packs
 from routers.descuentos_router import descuentos
 from routers.inscripciones_router import inscripciones
 from routers.profesores_router import profesores
+from routers.clases_router import clases
 from decouple import config
 import uvicorn
 
