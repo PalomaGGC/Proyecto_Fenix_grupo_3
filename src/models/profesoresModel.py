@@ -12,3 +12,4 @@ class Profesores_model(Base):
     apellido_profesor = Column(String(100))
     email_profesor = Column(String(50))
 
+

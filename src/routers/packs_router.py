@@ -1,7 +1,8 @@
 from typing import List
 from fastapi import APIRouter
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from config.db import conexion
+from models.packsModel import tabla_pack
+from schemas.pack import Pack
 from sqlalchemy.exc import SQLAlchemyError
 from config.db import Base, Session, engine
 # from models.packsModel import Packs_model

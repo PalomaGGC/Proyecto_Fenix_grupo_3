@@ -11,3 +11,4 @@ class Clases_model(Base):
     packs_id =Column(Integer, ForeignKey("packs.id_pack"))
 
     packs = relationship("Packs_model", back_populates="clases")
+

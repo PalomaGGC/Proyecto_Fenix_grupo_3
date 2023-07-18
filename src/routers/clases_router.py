@@ -3,9 +3,6 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
-from config.db import Base, Session, engine
-from schemas.clases import Clases
-from services.clases_services import Clases_services
 
 clases = APIRouter(tags=["clases"])
 
@@ -14,11 +11,9 @@ def startup():
     # create db table
     Base.metadata.create_all(bind=engine)
 
-#COSULTAR
-@clases.get("/clases", response_model=List[Clases], status_code=200)
-def consultar_todos_los_clases():
-    result = Clases_services().consultar_clases()
-    return JSONResponse(status_code=200, content=jsonable_encoder(result))
+@user.get("/")
+async def read_data():
+    return conexion.execute(users.select()).fetchall()
 
 
 #CONSULTAR SOLO UNO
@@ -46,5 +41,6 @@ def editar_clase(id: int, data: Clases)-> dict:
 def borrar_clase(id: int) -> dict:
     Clases_services().borrar_clase(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el clase"})
+
 
     

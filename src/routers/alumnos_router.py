@@ -2,6 +2,7 @@ from typing import List
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from fastapi.testclient import TestClient
 from schemas.alumnos import Alumnos
 from sqlalchemy.exc import SQLAlchemyError
 from services.alumnos_services import Alumnos_services
@@ -10,11 +11,12 @@ from models.alumnosModel import Alumnos_model
 
 alumnos = APIRouter(tags=["alumnos"])
 
+
 @alumnos.on_event("startup")
 def startup():
     # create db table
     Base.metadata.create_all(bind=engine)
-
+    
 
 #COSULTAR
 @alumnos.get("/alumnos", response_model=List[Alumnos], status_code=200)
@@ -23,7 +25,6 @@ def consultar_alumnos() -> List[Alumnos]:
 
     if not result:
         return None
-
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
@@ -57,7 +58,7 @@ def editar_alumno(nie: str, data:Alumnos) -> dict:
 
 @alumnos.delete('/alumnos/{nie}', response_model=dict, status_code=200)
 def borrar_alumno(nie: str) -> dict:
-    result = Alumnos_services().consultar_alumno(nie)
+    result =Alumnos_services().consultar_alumno(nie)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Alumnos_services().borrar_alumno(nie)
