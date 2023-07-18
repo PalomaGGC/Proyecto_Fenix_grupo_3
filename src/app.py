@@ -12,11 +12,12 @@ app = FastAPI()
 port = config("PORT")
 
 app.include_router(alumnos)
+app.include_router(clases)
 app.include_router(packs)
 app.include_router(profesores)
 app.include_router(descuentos)
 app.include_router(inscripciones)
-app.include_router(clases)
+
 
 if __name__ == '__main__':
     uvicorn.run("app:app", port=int(port), host='localhost', reload=True)

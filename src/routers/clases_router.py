@@ -46,3 +46,5 @@ def editar_clase(id: int, data: Clases)-> dict:
 def borrar_clase(id: int) -> dict:
     Clases_services().borrar_clase(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el clase"})
+
+    
