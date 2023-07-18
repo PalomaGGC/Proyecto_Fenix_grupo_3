@@ -1,4 +1,3 @@
-
 from sqlalchemy import Boolean, Numeric, Table, Column, String, Float
 from sqlalchemy.sql.sqltypes import Integer
 from config.db import Base
@@ -13,4 +12,3 @@ class Packs_model(Base):
     precio_pack =Column(Float)
     primer_descuento =Column(Float)
     segundo_descuento =Column(Float)
-
