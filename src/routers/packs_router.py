@@ -1,7 +1,8 @@
 from typing import List
 from fastapi import APIRouter
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from config.db import conexion
-from models.clasesModel import Clases_model
 from schemas.packs import Packs
 from sqlalchemy.exc import SQLAlchemyError
 from config.db import Base, Session, engine
@@ -11,10 +12,10 @@ from services.packs_services import Packs_services
 
 packs = APIRouter(tags=["packs"])
 
-@packs.on_event("startup")
-def startup():
-    # create db table
-    Base.metadata.create_all(bind=engine)
+# @packs.on_event("startup")
+# def startup():
+#     # create db table
+#     Base.metadata.create_all(bind=engine)
 
 #COSULTAR
 @packs.get("/packs", response_model=List[Packs], status_code=200)

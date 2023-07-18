@@ -22,8 +22,8 @@ class Inscripciones_services:
     def crear_inscripcion(self):
         # verificar a qué pack se está inscribiendo
         # verificar si este alumno ya estaba inscrito a este mismo pack y cuántas veces
-        pack_informacion =  self.db.query(Inscripciones_model, Alumno)\
-                            .join(Alumno, Alumno.id_alumno == Inscripciones_model.alumno_id).all()
+        pack_informacion =  self.db.query(Inscripciones_model, Alumnos_model)\
+                            .join(Alumnos_model, Alumnos_model.id_alumno == Inscripciones_model.Alumnos_model_id).all()
         print(pack_informacion, "---------------------------------------------------------------")
         return 
         

@@ -14,3 +14,4 @@ class Packs_model(Base):
     segundo_descuento =Column(Float)
 
     clases = relationship("Clases_model", back_populates="packs")
+    
