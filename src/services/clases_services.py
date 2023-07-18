@@ -34,6 +34,8 @@ class Clases_services:
     def agregar_clase(self, data):
         try:
             clase = self.db.query(Clases_model).filter(Clases_model.nombre_clase == data.nombre_clase).first()
+            self.db.add(clase)
+            print(data)
             if clase:
                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un clase con este nombre")
 
