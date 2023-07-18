@@ -17,6 +17,11 @@ def startup():
     # create db table
     Base.metadata.create_all(bind=engine)
 
+#COSULTAR TODAS LAS CLASES
+@clases.get("/clases", response_model=List[Clases], status_code=200)
+def consultar_clase() -> List[Clases]:
+    result = Clases_services().consultar_clase()
+
 
 #CONSULTAR SOLO UNO
 @clases.get('/clase/{id}', response_model= Clases )

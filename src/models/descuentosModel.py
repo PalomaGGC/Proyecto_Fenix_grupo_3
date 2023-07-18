@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, Float, String
 from sqlalchemy.sql.sqltypes import Integer
 from config.db import Base
 
@@ -7,4 +7,4 @@ class Descuento_model(Base):
     __tablename__= "descuentos"
     id_descuento = Column( Integer, primary_key=True,  autoincrement=True)
     tipo_descuento = Column( String(100))
-    porcentage_descuento = Column( Integer)
+    porcentage_descuento = Column(Float)

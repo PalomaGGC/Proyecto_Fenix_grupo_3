@@ -43,7 +43,7 @@ class Profesor_clases_services:
     # AGREGAR UN PROFESOR
     def agregar_profesor(self, data):
         try:
-            nuevo_profesor = Profesor_clases_model(**data.model_dump())
+            nuevo_profesor = Profesor_clases_model(**data.dict())
             #Le envío el nuevo profesor
             self.db.add(nuevo_profesor)
             #Hago el commit para que se actualice

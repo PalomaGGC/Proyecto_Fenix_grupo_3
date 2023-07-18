@@ -10,5 +10,5 @@ class Clases_model(Base):
     nombre_clase =Column(String(50))
     packs_id =Column(Integer, ForeignKey("packs.id_pack"))
 
-    packs = relationship("Packs_model", back_populates="clases")
+    #packs = relationship("Packs_model", back_populates="clases")
 

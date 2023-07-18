@@ -43,7 +43,7 @@ class Niveles_services:
             if nivel:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un nivel con este nombre")
 
-            nuevo_nivel = Niveles_model(**data.model_dump())
+            nuevo_nivel = Niveles_model(**data.dict())
             #Le envío el nuevo nivel
             self.db.add(nuevo_nivel)
             #Hago el commit para que se actualice
