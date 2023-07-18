@@ -9,9 +9,9 @@ from config.db import Base, engine
 inscripciones = APIRouter(tags=["inscripciones"])
 
 #CREAR LAS TABLAS
-@inscripciones.on_event("startup")
-def startup():
-    Base.metadata.create_all(bind=engine)
+# @inscripciones.on_event("startup")
+# def startup():
+#     Base.metadata.create_all(bind=engine)
     
 #COSULTAR TODOS LAS INSCRIPCIONES
 @inscripciones.get("/inscripciones")
