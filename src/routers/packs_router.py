@@ -1,19 +1,19 @@
 from typing import List
 from fastapi import APIRouter
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from config.db import conexion
-from models.packsModel import Packs_model
 from schemas.packs import Packs
 from sqlalchemy.exc import SQLAlchemyError
 from config.db import Base, Session, engine
-# from models.packsModel import Packs_model
-from schemas.packs import Packs
+from models.packsModel import Packs_model
 from services.packs_services import Packs_services
 
 packs = APIRouter(tags=["packs"])
 
 @packs.on_event("startup")
 def startup():
-    # create db table
+   # create db table
     Base.metadata.create_all(bind=engine)
 
 #COSULTAR
@@ -26,7 +26,7 @@ def consultar_packs()-> List[Packs]:
 #CONSULTAR SOLO UNO
 @packs.get('/pack/{id}', response_model=Packs)
 def consultar_pack_por_id(id:int) -> Packs:
-    result = Packs_services().consultar_pack(id)
+    result = Packs_services().consultar_pack_por_id(id)
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
@@ -42,7 +42,7 @@ def agregar_pack(pack: Packs)-> dict:
 #EDITAR
 @packs.put("/packs/{id}", response_model=dict, status_code=200)
 def editar_pack(id: int, data: Packs)-> dict:
-    result = Packs_services().consultar_pack(id)
+    result = Packs_services().consultar_pack_por_id(id)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Packs_services().editar_pack(id, data)
@@ -51,7 +51,7 @@ def editar_pack(id: int, data: Packs)-> dict:
 #BORRAR
 @packs.delete('/packs/{id}', response_model=dict, status_code=200)
 def borrar_pack(id: int) -> dict:
-    result = Packs_services().consultar_pack(id)
+    result = Packs_services().consultar_pack_por_id(id)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Packs_services().borrar_pack(id)

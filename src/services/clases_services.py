@@ -7,7 +7,7 @@ from config.db import Session
 
 
 class Clases_services:
-    def __init__(self) -> None:
+    def __init__(self):
         self.db = Session()
        
 
@@ -39,7 +39,7 @@ class Clases_services:
             print(data)
             if clase:
                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un clase con este nombre")
-            nuevo_clase = Clases_model(**data.model_dump())           
+            nuevo_clase = Clases_model(**data.dict())           
             self.db.add(nuevo_clase)
             self.db.commit()
             return f"Se agregó el clase {nuevo_clase} correctamente"

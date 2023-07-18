@@ -3,20 +3,24 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
+from services.clases_services import Clases_services
+from schemas.clases import Clases
 from config.db import Base, engine
 
-from models import clasesModel
-from schemas.clases import Clases
-from services.clases_services import Clases_services
 
 clases = APIRouter(tags=["clases"])
 
 
 @clases.on_event("startup")
 def startup():
-    # create db table
+     # create db tables
     Base.metadata.create_all(bind=engine)
 
+#CONSULTAR SOLO UNO
+@clases.get('/clases', response_model= list[Clases] )
+def consultar_classes():
+    result = Clases_services().consultar_clases()
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 #CONSULTAR SOLO UNO
 @clases.get('/clase/{id}', response_model= Clases )
