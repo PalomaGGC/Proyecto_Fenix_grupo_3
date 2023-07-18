@@ -12,7 +12,7 @@ class Clases_services:
        
 
     # CONSULTAR TODOS LOS CLASSES
-    def consultar_classes(self):
+    def consultar_clases(self):
         try:
             result = self.db.query(Clases_model).all()
             #obtengo todos los datos Clases_model y los guardo en la variable result
@@ -35,7 +35,6 @@ class Clases_services:
     def agregar_clase(self, data):
         try:
             clase = self.db.query(Clases_model).filter(Clases_model.nombre_clase == data.nombre_clase).first()
-            self.db.add(clase)
             print(data)
             if clase:
                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un clase con este nombre")

@@ -18,14 +18,14 @@ def startup():
 
 #CONSULTAR SOLO UNO
 @clases.get('/clases', response_model= list[Clases] )
-def consultar_classes():
+def consultar_clases():
     result = Clases_services().consultar_clases()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 #CONSULTAR SOLO UNO
 @clases.get('/clase/{id}', response_model= Clases )
 def consultar_clase_por_id(id: int):
-    result = Clases_services().consultar_clase(id)
+    result = Clases_services().consultar_clase_por_id(id)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
