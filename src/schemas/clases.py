@@ -1,6 +1,10 @@
 from typing import Optional
 from pydantic import BaseModel
 
-class Class(BaseModel):
+class Clases(BaseModel):
+    
+    id_clase: Optional[int]
     nombre_clase: str
-    pack_id: str
+    packs_id: int
+
+    
