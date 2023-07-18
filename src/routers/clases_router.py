@@ -13,11 +13,7 @@ clases = APIRouter(tags=["clases"])
 
 @clases.on_event("startup")
 def startup():
-<<<<<<< HEAD
-    # create db table
-=======
      # create db tables
->>>>>>> 25e2b7ea09c06a6794551524e34afe70e419cdb7
     Base.metadata.create_all(bind=engine)
 
 #CONSULTAR SOLO UNO
