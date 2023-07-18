@@ -29,7 +29,7 @@ class Descuentos_services:
     #AGREGAR UN NUEVO DESCUENTO
     def crear_descuento(self, data):
         try:
-            nuevo_descuento = Descuento_model(**data.model_dump())
+            nuevo_descuento = Descuento_model(**data.dict())
             self.db.add(nuevo_descuento)
             self.db.commit()
             return "{'message':'Se agrego un nuevo descuento'}"

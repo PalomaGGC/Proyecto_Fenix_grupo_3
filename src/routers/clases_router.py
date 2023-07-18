@@ -11,10 +11,10 @@ from services.clases_services import Clases_services
 clases = APIRouter(tags=["clases"])
 
 
-# @clases.on_event("startup")
-# def startup():
-#     # create db table
-#     Base.metadata.create_all(bind=engine)
+@clases.on_event("startup")
+def startup():
+    # create db table
+    Base.metadata.create_all(bind=engine)
 
 
 #CONSULTAR SOLO UNO

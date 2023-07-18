@@ -19,7 +19,7 @@ try:
     # relaciones y otros elementos de la base de datos. Se utiliza para definir y manipular estructuras de la base de datos en SQLAlchemy.
     meta = MetaData()
 
-    Session = sessionmaker(engine, autocreate=False)
+    Session = sessionmaker(engine)
     
     Base = declarative_base()
     

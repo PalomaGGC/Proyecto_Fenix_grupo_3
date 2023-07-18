@@ -46,7 +46,7 @@ class Alumnos_services:
             if alumno:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un alumno con este nie")
 
-            nuevo_alumno = Alumnos_model(**data.model_dump())
+            nuevo_alumno = Alumnos_model(**data.dict())
             #Le envío la nueva película
             self.db.add(nuevo_alumno)
             #Hago el commit para que se actualice
