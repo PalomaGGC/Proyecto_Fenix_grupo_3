@@ -35,12 +35,12 @@ def consultar_pack_por_id(id:int) -> Packs:
 @packs.post("/packs", response_model=dict, status_code=201)
 def agregar_pack(pack: Packs)-> dict:
     Packs_services().agregar_pack(pack)
-    return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
+    return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo pack"})
 
 
 #EDITAR
 @packs.put("/packs/{id}", response_model=dict, status_code=200)
-def editar_pack(id: int, pack: Packs)-> dict:
+def editar_pack(id: int, data: Packs)-> dict:
     result = Packs_services().consultar_pack(id)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
@@ -55,3 +55,4 @@ def borrar_pack(id: int) -> dict:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Packs_services().borrar_pack(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el pack"})
+

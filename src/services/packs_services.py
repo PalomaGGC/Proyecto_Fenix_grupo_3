@@ -23,7 +23,7 @@ class Packs_services:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     # CONSULTAR UN PACK
-    def consultar_pack(self, id):
+    def consultar_pack_por_id(self, id):
         try:
             result = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
             #obtengo los datos de el pack que quiero consultar filtrando por id, 
@@ -40,7 +40,7 @@ class Packs_services:
         try:
             pack = self.db.query(Packs_model).filter(Packs_model.id_pack == data.id_pack).first()
             print(data)
-            if alumno:
+            if pack:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un pack con este id")
 
             nuevo_pack = Packs_model(**data.model_dump())
