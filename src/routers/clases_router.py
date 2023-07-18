@@ -11,10 +11,10 @@ from config.db import Base, engine
 clases = APIRouter(tags=["clases"])
 
 
-# @clases.on_event("startup")
-# def startup():
-#     # create db table
-#     Base.metadata.create_all(bind=engine)
+@clases.on_event("startup")
+def startup():
+     # create db tables
+    Base.metadata.create_all(bind=engine)
 
 
 #CONSULTAR SOLO UNO

@@ -7,15 +7,14 @@ from schemas.packs import Packs
 from sqlalchemy.exc import SQLAlchemyError
 from config.db import Base, Session, engine
 from models.packsModel import Packs_model
-from schemas.packs import Packs
 from services.packs_services import Packs_services
 
 packs = APIRouter(tags=["packs"])
 
-# @packs.on_event("startup")
-# def startup():
-#     # create db table
-#     Base.metadata.create_all(bind=engine)
+@packs.on_event("startup")
+def startup():
+   # create db table
+    Base.metadata.create_all(bind=engine)
 
 #COSULTAR
 @packs.get("/packs", response_model=List[Packs], status_code=200)
