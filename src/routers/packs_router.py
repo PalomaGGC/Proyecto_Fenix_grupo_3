@@ -13,11 +13,7 @@ packs = APIRouter(tags=["packs"])
 
 @packs.on_event("startup")
 def startup():
-<<<<<<< HEAD
-    # create db table
-=======
    # create db table
->>>>>>> 25e2b7ea09c06a6794551524e34afe70e419cdb7
     Base.metadata.create_all(bind=engine)
 
 #COSULTAR
