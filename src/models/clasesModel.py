@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, ForeignKey, Table, Column, String
 from sqlalchemy.sql.sqltypes import Integer
 from config.db import Base
-from sqlalchemy.orm import relationship
+#from sqlalchemy.orm import relationship
 
 #MODELO DE LA TABLA
 class Clases_model(Base): 

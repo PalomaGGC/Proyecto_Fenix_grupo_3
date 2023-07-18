@@ -3,19 +3,17 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from config.db import conexion
-from models.packsModel import Packs_model
 from schemas.packs import Packs
 from sqlalchemy.exc import SQLAlchemyError
 from config.db import Base, Session, engine
-# from models.packsModel import Packs_model
-from schemas.packs import Packs
+from models.packsModel import Packs_model
 from services.packs_services import Packs_services
 
 packs = APIRouter(tags=["packs"])
 
 @packs.on_event("startup")
 def startup():
-    # create db table
+   # create db table
     Base.metadata.create_all(bind=engine)
 
 #COSULTAR

@@ -6,7 +6,7 @@ from config.db import Session
 
 
 class Alumnos_services:
-    def __init__(self) -> None:
+    def __init__(self):
         #db para que cada vez que se ejecute ese servicio
         #se envíe una sesión a la base de datos
         self.db = Session()
