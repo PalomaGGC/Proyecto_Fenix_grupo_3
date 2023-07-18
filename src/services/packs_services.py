@@ -43,7 +43,7 @@ class Packs_services:
             if pack:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un pack con este id")
 
-            nuevo_pack = Packs_model(**data.model_dump())
+            nuevo_pack = Packs_model(**data.dict())
             #Le envío el nuevo pack
             self.db.add(nuevo_pack)
             #Hago el commit para que se actualice
