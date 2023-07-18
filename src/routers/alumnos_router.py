@@ -11,7 +11,7 @@ from models.alumnosModel import Alumnos_model
 
 alumnos = APIRouter(tags=["alumnos"])
 
-
+# CREAR TABLAS
 @alumnos.on_event("startup")
 def startup():
     # create db table

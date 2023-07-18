@@ -16,7 +16,6 @@ def startup():
      # create db tables
     Base.metadata.create_all(bind=engine)
 
-
 #CONSULTAR SOLO UNO
 @clases.get('/clases', response_model= list[Clases] )
 def consultar_clases():
@@ -26,7 +25,7 @@ def consultar_clases():
 #CONSULTAR SOLO UNO
 @clases.get('/clase/{id}', response_model= Clases )
 def consultar_clase_por_id(id: int):
-    result = Clases_services().consultar_clase(id)
+    result = Clases_services().consultar_clase_por_id(id)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
@@ -48,6 +47,3 @@ def editar_clase(id: int, data: Clases)-> dict:
 def borrar_clase(id: int) -> dict:
     Clases_services().borrar_clase(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el clase"})
-
-
-    
