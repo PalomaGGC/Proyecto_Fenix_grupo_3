@@ -9,9 +9,6 @@ from config.db import Base, engine
 user = APIRouter()
 
 #CREAR LAS TABLAS
-@user.on_event("startup")
-def startup():
-    Base.metadata.create_all(bind=engine)
 
 @user.get("/")
 async def read_data():
