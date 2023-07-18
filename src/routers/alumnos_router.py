@@ -59,7 +59,7 @@ def editar_alumno(nie: str, data:Alumnos) -> dict:
 
 @alumnos.delete('/alumnos/{nie}', response_model=dict, status_code=200)
 def borrar_alumno(nie: str) -> dict:
-    result = Alumnos_services().consultar_alumno(nie)
+    result =Alumnos_services().consultar_alumno(nie)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Alumnos_services().borrar_alumno(nie)
