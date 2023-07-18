@@ -9,6 +9,7 @@ from config.db import Base, engine
 
 clases = APIRouter(tags=["clases"])
 
+
 @clases.on_event("startup")
 def startup():
     # create db table
