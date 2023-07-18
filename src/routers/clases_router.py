@@ -6,14 +6,11 @@ from sqlalchemy.exc import SQLAlchemyError
 
 clases = APIRouter(tags=["clases"])
 
+
 @clases.on_event("startup")
 def startup():
     # create db table
     Base.metadata.create_all(bind=engine)
-
-@user.get("/")
-async def read_data():
-    return conexion.execute(users.select()).fetchall()
 
 
 #CONSULTAR SOLO UNO
