@@ -9,13 +9,12 @@ from services.alumnos_services import Alumnos_services
 from config.db import Base, Session, engine
 from models.alumnosModel import Alumnos_model
 
-
 alumnos = APIRouter(tags=["alumnos"])
 
 
-#CREAR LAS TABLAS
 @alumnos.on_event("startup")
 def startup():
+    # create db table
     Base.metadata.create_all(bind=engine)
     
 
@@ -64,5 +63,4 @@ def borrar_alumno(nie: str) -> dict:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Alumnos_services().borrar_alumno(nie)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el alumno"})
-
 
