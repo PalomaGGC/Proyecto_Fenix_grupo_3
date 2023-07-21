@@ -12,7 +12,7 @@ try:
     url = f"mysql+pymysql://{user}:{password}@{host}:3306/{db}"
 
     # Aquí hago la conexión a la base de datos... la base de datos se llama "database_fenix"
-    engine = create_engine(url, echo=True)
+    engine = create_engine(url)
     # Guardo la conexión en una variable para luego utilizarla en otros archivos
     conexion = engine.connect()
     # MetaData actúa como un contenedor para mantener información sobre las tablas, columnas,
