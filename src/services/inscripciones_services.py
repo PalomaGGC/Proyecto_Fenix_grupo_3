@@ -29,7 +29,7 @@ class Inscripciones_services:
         query = f"""SELECT nombre_pack, precio_pack, COUNT(nombre_pack) AS repeticiones
                     FROM inscripciones AS i
                     JOIN profesores_clases AS pc
-                    ON pc.id_profesor_clase = i.profesor_clase_id
+                    ON pc.id_clase_profesor = i.profesor_clase_id
                     JOIN clases AS c
                     ON c.id_clase = pc.clase_id
                     JOIN packs AS p
@@ -41,7 +41,7 @@ class Inscripciones_services:
                         ON clases.id_clase = profesores_clases.clase_id
                         JOIN packs 
                         ON packs.id_pack = clases.packs_id
-                        WHERE profesores_clases.id_profesor_clase = {id_clase_profesor}
+                        WHERE profesores_clases.id_clase_profesor = {id_clase_profesor}
                     )
                     GROUP BY nombre_pack"""
                     # La primera consulta recibe el id del alumno que se esta incribiendo a 
@@ -64,26 +64,37 @@ class Inscripciones_services:
     def crear_inscripcion(self, data):
         
         dataPack = self.consultar_pack(data.alumno_id, data.profesor_clase_id)
-        num_veces_inscrito = dataPack[0][2]
-        precio_pack = dataPack[0][1]
+        if dataPack:
+            num_veces_inscrito = dataPack[0][2]
+            precio_pack = dataPack[0][1]
+        else:
+            # Si dataPack está vacío, asignamos valores predeterminados
+            num_veces_inscrito = 0
+            precio_pack = 0.0 
+            
+        descuento_aplicado = 0
         
         # INSERT INTO inscripciones (profesor_clase_id, alumno_id, precio_clase,descuento_inscripcion, precio_con_descuento, estado_inscripcion) VALUES (4,2,'35',0.5,'17.5','activo')
         
         if(num_veces_inscrito == 0):
             precio_con_descuento = precio_pack
-            print("no descuento")
+            descuento_aplicado = 0
+            print(descuento_aplicado)
         elif (num_veces_inscrito == 1):
             precio_con_descuento = precio_pack * 0.5
-            print("descuento del 50%")
+            descuento_aplicado = 0.5
+            print(descuento_aplicado)
         else:
             precio_con_descuento = precio_pack * 0.25
-            print("descuento del 75%")
+            descuento_aplicado = 0.75
+            print(descuento_aplicado)
             
-        print(dataPack)
-        print(precio_con_descuento)
-        
-        
+        query = f"INSERT INTO inscripciones (id_clase_profesor, profesor_clase_id, alumno_id, precio_clase,descuento_inscripcion, precio_con_descuento, estado_inscripcion) VALUES (0, {data.profesor_clase_id},{data.alumno_id},'{precio_pack}',{descuento_aplicado},'{precio_con_descuento}','activo')"
+        self.db.query(text(query))
+        self.db.commit()
             
+        print(query)
+
         return "todo ok"
         
     
