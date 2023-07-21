@@ -35,6 +35,12 @@ def consultar_profesor_clase_por_id(id: int) -> Profesor_clases:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
+# CONSULTAR UNA RELACIÓN 'PROFESOR - CLASE - NIVEL' viendo sus nombres
+@profesor_clases.get("/profesor-clases-nombre/{nombre}", response_model=List[Profesor_clases], status_code=200)
+def consultar_profesor_clase_nombre(nombre: str):
+    result = Profesor_clases_services().consultar_profesor_clase_por_nombre(nombre)
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 # AÑADO UN NUEVO PROFESOR A LA TABLA
 @profesor_clases.post("/profesor-clases", response_model=dict, status_code=201)
 def agregar_profesor_clase(data: Profesor_clases) -> dict:

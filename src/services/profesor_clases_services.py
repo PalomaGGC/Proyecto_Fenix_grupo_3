@@ -1,3 +1,4 @@
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from models.profesor_clasesModel import Profesor_clases_model
 from sqlalchemy.orm import Session
@@ -53,8 +54,30 @@ class Profesor_clases_services:
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
+    # CONSULTAR UNA RELACIÓN 'PROFESOR - CLASE - NIVEL' POR ID_CLASE_PROFESOR
+    def consultar_profesor_clase_por_nombre(self, nombre):
+        try: 
+            query = f"""SELECT profesores_clases.id_clase_profesor, clases.nombre_clase, niveles.nombre_nivel, profesores.nombre_profesor
+                    FROM profesores_clases
+                    JOIN clases
+                    ON clases.id_clase = profesores_clases.clase_id
+                    JOIN niveles
+                    ON niveles.id_nivel = profesores_clases.nivel_id
+                    JOIN profesores
+                    ON profesores.id_profesor = profesores_clases.profesor_id
+                    WHERE clases.nombre_clase = '{nombre}'"""
 
+            result = self.db.execute(text(query)).fetchall()
+            result_dicts = [{'id':row[0],  'nombre de clase':row[1],  'nivel':row[2], 'profesor':row[3]}  for row in result]
 
+            # Obtengo los datos del profesor que quiero consultar filtrando por nombre.
+            # Obtengo los del primero que encuentre y los guardo en la variable result.
+            if not result:
+                 # Si no se encuentra el profesor, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error.
+                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase -nivel 'no encontrada")
+            return result_dicts
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
     # AGREGAR UNA RELACIÓN 'PROFESOR - CLASE - NIVEL'
     def agregar_profesor_clase(self, data):
