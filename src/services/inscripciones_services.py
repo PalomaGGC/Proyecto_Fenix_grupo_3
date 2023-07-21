@@ -47,7 +47,6 @@ class Inscripciones_services:
                     # La primera consulta recibe el id del alumno que se esta incribiendo a 
                     # una nueva clase, en el WHERE genero una sub consulta para obtener el 
                     # nombre del pack segun el id de la tabla clase_profesor...
-                    # 
                     # #
                     # la subconsulta recibe el id de Profesores_clases hago un join -
                     # para con la tabla clases y despues un join a la tabla Packs... -
