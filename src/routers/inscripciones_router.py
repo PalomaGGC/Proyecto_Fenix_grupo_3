@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from schemas.descuentos import Descuentos
+from schemas.inscripciones import Incripciones
 from services.inscripciones_services import  Inscripciones_services
 from config.db import Base, engine
 
@@ -23,10 +24,10 @@ async def consultar_una_inscripcion(id):
     return JSONResponse(status_code=200, content=jsonable_encoder(response))
 
 
-# @inscripciones.post("/inscripcion")
-# async def consultar_una_inscripcion():
-#     response = Inscripciones_services().crear_inscripcion()
-#     return response
+@inscripciones.post("/inscripcionn")
+async def consultar_una_inscripcion_gh(data:Incripciones):
+    results = Inscripciones_services().crear_inscripcion(data)
+    return JSONResponse(status_code=200, content=jsonable_encoder(results))
 
 # #AGREGAR UNA NUEVA INSCRIPCION
 # @descuentos.post("/descuentos")
