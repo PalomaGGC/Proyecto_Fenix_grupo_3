@@ -76,7 +76,6 @@ class Profesor_clases_services:
             if not profesor_clase:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase -nivel'  no encontrada")
 
-            profesor_clase.id_clase_profesor = data.id_clase_profesor
             profesor_clase.clase_id = data.clase_id
             profesor_clase.profesor_id = data.profesor_id
             profesor_clase.nivel_id = data.nivel_id
