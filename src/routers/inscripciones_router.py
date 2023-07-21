@@ -24,8 +24,8 @@ async def consultar_una_inscripcion(id):
     return JSONResponse(status_code=200, content=jsonable_encoder(response))
 
 
-@inscripciones.post("/inscripcionn")
-async def consultar_una_inscripcion_gh(data:Incripciones):
+@inscripciones.post("/inscripcion")
+async def crear_inscripcion(data:Incripciones):
     results = Inscripciones_services().crear_inscripcion(data)
     return JSONResponse(status_code=200, content=jsonable_encoder(results))
 
