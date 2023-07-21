@@ -56,4 +56,3 @@ def borrar_pack(id: int) -> dict:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
     Packs_services().borrar_pack(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el pack"})
-
