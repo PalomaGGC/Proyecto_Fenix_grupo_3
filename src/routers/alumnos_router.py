@@ -28,12 +28,10 @@ def consultar_alumnos() -> List[Alumnos]:
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@alumnos.get('/alumno/{nie}', response_model=Alumnos)# nie es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
-def consultar_alumno_por_nie(nie:str) -> Alumnos:
-    #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio
-    result = Alumnos_services().consultar_alumno(nie)
-    #De Alumnos_services primero obtengo la sesión y luego le paso el método consultar_alumno
-    #Consulto los datos de Alumnos_model y hago un filtrado por nie, le digo que obtenga el primer resultado.
+@alumnos.get('/alumno/{id}', response_model=Alumnos)# id es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
+def consultar_alumno_por_id(id:str) -> Alumnos:
+    result = Alumnos_services().consultar_alumno(id)
+    #Consulto los datos de Alumnos_model y hago un filtrado por id, le digo que obtenga el primer resultado.
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
@@ -46,21 +44,21 @@ def agregar_alumno(alumno: Alumnos) -> dict:
 
 
 
-@alumnos.put('/alumnos/{nie}', response_model=dict, status_code=200)
-def editar_alumno(nie: str, data:Alumnos) -> dict:
-    result = Alumnos_services().consultar_alumno(nie)
+@alumnos.put('/alumnos/{id}', response_model=dict, status_code=200)
+def editar_alumno(id: str, data:Alumnos) -> dict:
+    result = Alumnos_services().consultar_alumno(id)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
 
-    Alumnos_services().editar_alumno(nie, data)
+    Alumnos_services().editar_alumno(id, data)
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el alumno"})
 
 
-@alumnos.delete('/alumnos/{nie}', response_model=dict, status_code=200)
-def borrar_alumno(nie: str) -> dict:
-    result =Alumnos_services().consultar_alumno(nie)
+@alumnos.delete('/alumnos/{id}', response_model=dict, status_code=200)
+def borrar_alumno(id: str) -> dict:
+    result =Alumnos_services().consultar_alumno(id)
     if not result:
          return JSONResponse(status_code=404, content={'message': "No encontrado"})
-    Alumnos_services().borrar_alumno(nie)
+    Alumnos_services().borrar_alumno(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el alumno"})
 
