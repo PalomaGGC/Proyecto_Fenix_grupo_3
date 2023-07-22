@@ -48,9 +48,9 @@ class Profesor_clases_services:
             # Obtengo los datos del profesor que quiero consultar filtrando por nombre.
             # Obtengo los del primero que encuentre y los guardo en la variable result.
             if not result:
-                # Si no se encuentra el profesor, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error.
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase -nivel 'no encontrada")
-            return result
+                # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase - nivel 'no encontrada") 
+            return  result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -74,7 +74,7 @@ class Profesor_clases_services:
             # Obtengo los del primero que encuentre y los guardo en la variable result.
             if not result:
                  # Si no se encuentra el profesor, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error.
-                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase -nivel 'no encontrada")
+                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase - nivel 'no encontrada")
             return result_dicts
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
@@ -99,7 +99,7 @@ class Profesor_clases_services:
             # Obtengo los del primero que encuentre y los guardo en la variable result.
             if not result:
                  # Si no se encuentra el profesor, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error.
-                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase -nivel 'no encontrada")
+                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Relación 'profesor - clase -nivel ' no encontrada")
             return result_dicts
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
