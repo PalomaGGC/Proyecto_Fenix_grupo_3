@@ -1,4 +1,5 @@
 
+import json
 from fastapi import HTTPException, status
 from sqlalchemy import func
 from models.alumnosModel import Alumnos_model
@@ -8,7 +9,8 @@ from models.packsModel import Packs_model
 from models.clasesModel import Clases_model
 from models.profesor_clasesModel import Profesor_clases_model
 from sqlalchemy import text
-
+from services.alumnos_services import Alumnos_services
+from services.profesor_clases_services import Profesor_clases_services
 
 
 class Inscripciones_services:
@@ -25,77 +27,135 @@ class Inscripciones_services:
         return self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripciones == id).first()
     
     #Consulto cuantas veces se a incrito al mismo pack
-    def consultar_pack(self, id_alumno, id_clase_profesor):
-        query = f"""SELECT nombre_pack, precio_pack, COUNT(nombre_pack) AS repeticiones
+    def repeticiones_pack(self, id_alumno, id_clase_profesor):
+         # La primera consulta recibe el id del alumno que se esta incribiendo a 
+        # una nueva clase, en el WHERE genero una sub consulta para obtener el 
+        # nombre del pack segun el id de la tabla clase_profesor...
+        # #
+        # la subconsulta recibe el id de Profesores_clases hago un join -
+        # para con la tabla clases y despues un join a la tabla Packs... -
+        # de la tabla packs obtengo el nombre de packs para saber a que - 
+        # packs se esta incribiendo el alumno y verificar si ya estaba inscrito -
+        # a este mismo packs
+        query = f"""
+                    SELECT COUNT(nombre_pack) AS repeticiones
                     FROM inscripciones AS i
-                    JOIN profesores_clases AS pc
-                    ON pc.id_clase_profesor = i.profesor_clase_id
-                    JOIN clases AS c
-                    ON c.id_clase = pc.clase_id
-                    JOIN packs AS p
-                    ON p.id_pack = c.packs_id
+                    JOIN profesores_clases AS pc ON pc.id_clase_profesor = i.profesor_clase_id
+                    JOIN clases AS c ON c.id_clase = pc.clase_id
+                    JOIN packs AS p ON p.id_pack = c.packs_id
                     WHERE i.alumno_id = {id_alumno} AND nombre_pack IN ( 
                         SELECT nombre_pack
                         FROM profesores_clases
-                        JOIN clases 
-                        ON clases.id_clase = profesores_clases.clase_id
-                        JOIN packs 
-                        ON packs.id_pack = clases.packs_id
+                        JOIN clases ON clases.id_clase = profesores_clases.clase_id
+                        JOIN packs ON packs.id_pack = clases.packs_id
                         WHERE profesores_clases.id_clase_profesor = {id_clase_profesor}
                     )
-                    GROUP BY nombre_pack"""
-                    # La primera consulta recibe el id del alumno que se esta incribiendo a 
-                    # una nueva clase, en el WHERE genero una sub consulta para obtener el 
-                    # nombre del pack segun el id de la tabla clase_profesor...
-                    # #
-                    # la subconsulta recibe el id de Profesores_clases hago un join -
-                    # para con la tabla clases y despues un join a la tabla Packs... -
-                    # de la tabla packs obtengo el nombre de packs para saber a que - 
-                    # packs se esta incribiendo el alumno y verificar si ya estaba inscrito -
-                    # a este mismo packs
-                    
+                    GROUP BY nombre_pack
+                """
+                   
         results = self.db.execute(text(query)).fetchall()
-        return  results
+        results_dict = [{"repeticiones":results[0][0]}]
+        return  results_dict
     
     
     
+    def datos_pack(self, id):
+        query = f"""
+                    SELECT p.id_pack, p.nombre_pack, p.precio_pack, p.primer_descuento, p.segundo_descuento
+                    FROM profesores_clases AS pc
+                    JOIN clases AS c ON c.id_clase = pc.clase_id
+                    JOIN packs AS p ON p.id_pack = c.packs_id
+                    WHERE pc.id_clase_profesor = {id}
+                """
+        result = self.db.execute(text(query)).fetchall()     
+        result_dict = [{"id_pack":data[0], "nombre_pack":data[1], "precio_pack":data[2], "primer_descuento":data[3], "segundo_descuento":data[4]} for data in result]                  
+        return result_dict
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
     
     #CREAR UNA NUEVA INSCRIPCION
     def crear_inscripcion(self, data):
         
-        dataPack = self.consultar_pack(data.alumno_id, data.profesor_clase_id)
-        if dataPack:
-            num_veces_inscrito = dataPack[0][2]
-            precio_pack = dataPack[0][1]
-        else:
-            # Si dataPack está vacío, asignamos valores predeterminados
-            num_veces_inscrito = 0
-            precio_pack = 0.0 
-            
-        descuento_aplicado = 0
         
-        # INSERT INTO inscripciones (profesor_clase_id, alumno_id, precio_clase,descuento_inscripcion, precio_con_descuento, estado_inscripcion) VALUES (4,2,'35',0.5,'17.5','activo')
+        data_repeticiones= self.repeticiones_pack(data.alumno_id, data.profesor_clase_id)
+        print(data_repeticiones)
+        # data_pack = self.datos_pack(data.profesor_clase_id)
+   
+        # if data_pack:
+        #     primer_descuento = data_pack[0]["primer_descuento"]
+        #     segundo_descuento = data_pack[0]["segundo_descuento"]
+        #     precio_pack = data_pack[0]["precio_pack"]
+        # else:
+        #     primer_descuento = 0
+        #     segundo_descuento = 0
+        #     precio_pack =0
+            
+            
         
-        if(num_veces_inscrito == 0):
-            precio_con_descuento = precio_pack
-            descuento_aplicado = 0
-            print(descuento_aplicado)
-        elif (num_veces_inscrito == 1):
-            precio_con_descuento = precio_pack * 0.5
-            descuento_aplicado = 0.5
-            print(descuento_aplicado)
-        else:
-            precio_con_descuento = precio_pack * 0.25
-            descuento_aplicado = 0.75
-            print(descuento_aplicado)
-            
-        query = f"INSERT INTO inscripciones (id_clase_profesor, profesor_clase_id, alumno_id, precio_clase,descuento_inscripcion, precio_con_descuento, estado_inscripcion) VALUES (0, {data.profesor_clase_id},{data.alumno_id},'{precio_pack}',{descuento_aplicado},'{precio_con_descuento}','activo')"
-        self.db.query(text(query))
-        self.db.commit()
-            
-        print(query)
+        
+        
+        # if data_repeticiones:
+        #     num_veces_inscrito = data_repeticiones[0][2]
+        # else:
+        #     num_veces_inscrito = 0
 
-        return "todo ok"
+            
+        # if(num_veces_inscrito == 0):
+        #     precio_con_descuento = precio_pack
+        #     descuento_aplicado = 0.0
+        # elif (num_veces_inscrito == 1):
+        #     precio_con_descuento = precio_pack * primer_descuento
+        #     descuento_aplicado = 0.5
+        # else:
+        #     precio_con_descuento = precio_pack * segundo_descuento
+        #     descuento_aplicado = 0.75
+            
+        #  # Creo una nueva instancia del modelo Inscripcion_model con los datos proporcionados
+        # nueva_inscripcion = Inscripciones_model(
+        #     profesor_clase_id=data.profesor_clase_id,
+        #     alumno_id=data.alumno_id,
+        #     precio_clase=precio_pack,
+        #     descuento_inscripcion=descuento_aplicado,
+        #     precio_con_descuento=precio_con_descuento,
+        #     estado_inscripcion='activo'
+        # )
+
+        # self.db.add(nueva_inscripcion)  # Agrega la nueva inscripción a la sesión
+        # self.db.commit()  # Confirma los cambios en la base de datos
+        # self.db.close()
+
+        return data_repeticiones
         
     
     #EDITAR UNA INSCRIPCION
