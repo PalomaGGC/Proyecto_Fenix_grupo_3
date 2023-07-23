@@ -1,11 +1,14 @@
+import datetime
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException, status
 from models.incripcionesModel import Inscripciones_model
+from dateutil.relativedelta import relativedelta
 from config.db import Session
 from sqlalchemy import text
 from services.alumnos_services import Alumnos_services
 from services.profesor_clases_services import Profesor_clases_services
+
 
 
 
@@ -16,14 +19,20 @@ class Inscripciones_services:
         
     #CONSULTAR TODAS LAS INSCRIPCIONES
     def consultar_inscripciones(self):
-        return  self.db.query(Inscripciones_model).all()
+        try:
+            result = self.db.query(Inscripciones_model).all()
+        
+            return result
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     
     
     
     
     #CONSULTAR UNA INSCRIPCION
     def consultar_una_inscripcion(self, id):
-        return self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
+        
+            return self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
     
     
     
@@ -89,6 +98,7 @@ class Inscripciones_services:
     #CREAR UNA NUEVA INSCRIPCION
     def crear_inscripcion(self, data):
         try:
+            # crear_nueva_inscripcion()
             alumno = Alumnos_services().consultar_alumno(data.alumno_id)
             packs_repeticiones = self.repeticiones_pack(data.alumno_id, data.profesor_clase_id)
             data_pack = self.datos_pack(data.profesor_clase_id)
@@ -119,6 +129,7 @@ class Inscripciones_services:
                 descuento_aplicado = segundo_descuento
                 
             # # Creo una nueva instancia del modelo Inscripcion_model con los datos proporcionados
+
             nueva_inscripcion = Inscripciones_model(
                 profesor_clase_id=data.profesor_clase_id,
                 alumno_id=data.alumno_id,
@@ -126,7 +137,10 @@ class Inscripciones_services:
                 descuento_inscripcion=descuento_aplicado,
                 descuento_familiar = descuento_familiar,
                 precio_con_descuento=precio_con_descuento,
-                estado_inscripcion='activo'
+                pagada='true',
+                fecha_inscripcion=datetime.datetime.now(), #Fecha actual
+                fecha_fin=datetime.datetime.now() + relativedelta(months=1) 
+                #Con relativedelta(months=1) le sumo 1 mes automaticamente
             )
 
             self.db.add(nueva_inscripcion)  # Agrega la nueva inscripción a la sesión
@@ -151,7 +165,7 @@ class Inscripciones_services:
             result.descuento_familiar = data.descuento_familiar,
             result.precio_con_descuento=data.precio_con_descuento,
             result.estado_inscripcion = data.estado_inscripcion
-            self.db.commit()  # Confirma los cambios en la base de datos
+            self.db.commit() 
             return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Inscripción editada exitosamente"})
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
