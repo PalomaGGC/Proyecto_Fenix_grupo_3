@@ -3,12 +3,12 @@ from pydantic import BaseModel
 
 class Incripciones(BaseModel):
 
-    id_inscripciones : Optional[int]
+    id_inscripcion : Optional[int]
     profesor_clase_id:int
     alumno_id:int
     precio_clase:str
-    nie_alumno:str
     descuento_inscripcion:float
+    descuento_familiar:float
     precio_con_descuento:str
-    estado_inscripcion:float
+    estado_inscripcion:str
     fecha_inscripcion:str

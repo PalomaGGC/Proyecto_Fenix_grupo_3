@@ -29,11 +29,12 @@ class Alumnos_services:
     def consultar_alumno(self, id):
         try:
             result = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
-            #obtengo los datos de el alumno que quiero consultar filtrando por id, 
+            # obtengo los datos de el alumno que quiero consultar filtrando por id, 
             # obtengo los del primero que encuentre y los guardo en la variable result
+        
             if not result:
                 # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-                raise HTTPException(status_code=status.HTTP_204_NOT_FOUND, detail="Alumno no encontrado")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Alumno no encontrado')
             return result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

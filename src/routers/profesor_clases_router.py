@@ -55,6 +55,7 @@ def agregar_profesor_clase_nivel(data: Profesor_clases) -> dict:
     return JSONResponse(status_code=201, content={"message": "Se ha agregado una nueva relación 'profesor -clase - nivel' correctamente"})
 
 
+
 # MODIFICO LOS DATOS DE UN PROFESOR
 @profesor_clases.put('/profesor-clases/{id}', response_model=dict, status_code=200)
 def editar_profesor_clase_nivel(id: int, data:Profesor_clases) -> dict:
