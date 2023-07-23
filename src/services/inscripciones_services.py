@@ -111,11 +111,11 @@ class Inscripciones_services:
                 #Obtengo el descuento que se utilizo 0.5
                 descuento_aplicado = primer_descuento
             else:
-                #Aplico el descuento correspondiente 35 - (35 * 0.5) = 17,50
+                #Aplico el descuento correspondiente 35 - (35 * 0.75) = 8.75
                 precio = precio_pack - ( precio_pack * segundo_descuento )
-                #Aplico descuento familiar 17.50 - (17,50 * 0.1) = 15,75
+                #Aplico descuento familiar 8.75 - (8.75 * 0.1) = 7,87
                 precio_con_descuento = precio - (precio * descuento_familiar)
-                #Obtengo el descuento que se utilizo 0.5
+                #Obtengo el descuento que se utilizo 0.75
                 descuento_aplicado = segundo_descuento
                 
             # # Creo una nueva instancia del modelo Inscripcion_model con los datos proporcionados
