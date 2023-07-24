@@ -52,7 +52,7 @@ class Profesores_services:
     def editar_profesor(self, nombre: str, data):
         profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
         if not profesor:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún profesor con ese nombre")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'No existe ningún profesor con ese nombre'})
 
         profesor.nombre_profesor = data.nombre_profesor
         profesor.apellido_profesor = data.apellido_profesor

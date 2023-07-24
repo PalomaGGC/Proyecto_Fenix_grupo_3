@@ -73,7 +73,7 @@ class Inscripciones_services:
             results = [{"repeticiones":results[0][0]}]
         else:
             results = [{"repeticiones":0}]
-        return JSONResponse(status_code=200, content=jsonable_encoder(results))
+        return results
 
     # CONSULTAR LA INFORMACIÓN DEL PACK AL QUE SE QUIERE INSCRIBIR EL ALUMNO
     def datos_pack(self, id):
@@ -86,7 +86,7 @@ class Inscripciones_services:
         result = self.db.execute(text(query)).fetchall()
         if result:
             result = [{"id_pack":data[0], "nombre_pack":data[1], "precio_pack":data[2], "primer_descuento":data[3], "segundo_descuento":data[4]} for data in result]
-        return JSONResponse(status_code=200, content=jsonable_encoder(result))
+        return result
 
 
     # CREAR UNA NUEVA INSCRIPCIÓN
@@ -104,7 +104,6 @@ class Inscripciones_services:
         precio_pack = data_pack[0]["precio_pack"]
         descuento_familiar = alumno.descuento_familiar
         fecha_inscripcion = data.fecha_inscripcion
-
 
         if(num_veces_inscrito == 0):
             #Aplico el descuento correspondiente 35 - (35 * 0.1)
@@ -126,7 +125,7 @@ class Inscripciones_services:
             #Obtengo el descuento que se utilizo 0.75
             descuento_aplicado = segundo_descuento
 
-        # # Creo una nueva instancia del modelo Inscripcion_model con los datos proporcionados
+        # Creo una nueva instancia del modelo Inscripcion_model con los datos proporcionados
 
         nueva_inscripcion = Inscripciones_model(
             profesor_clase_id=data.profesor_clase_id,
@@ -135,7 +134,7 @@ class Inscripciones_services:
             descuento_inscripcion=descuento_aplicado,
             descuento_familiar = descuento_familiar,
             precio_con_descuento=precio_con_descuento,
-            pagada='true',
+            pagada='false',
             fecha_inscripcion=fecha_inscripcion, #Fecha actual
             fecha_fin=fecha_inscripcion + relativedelta(months=1)
             #Con relativedelta(months=1) le sumo 1 mes automaticamente
