@@ -1,3 +1,4 @@
+
 from models.pagosModel import Pagos_model
 from services.incripcion_automatica_services import crear_nueva_inscripcion
 from routers.profesor_clases_router import profesor_clases
@@ -13,13 +14,15 @@ from config.db import Base, engine
 from fastapi import FastAPI
 from decouple import config
 import threading
-import schedule
+#import schedule
 import uvicorn
 import time
+from middlewares.error_handler import ErrorHandler # Importamos el manejador de errores
 
 port = config("PORT") 
 app = FastAPI()
 
+app.add_middleware(ErrorHandler)
 app.include_router(profesor_clases)
 app.include_router(inscripciones)
 app.include_router(profesores)

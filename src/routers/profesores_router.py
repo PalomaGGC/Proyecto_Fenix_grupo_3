@@ -23,7 +23,7 @@ def consultar_profesores() -> List[Profesores]:
     result = Profesores_services().consultar_profesores()
 
     if not result:
-        return None
+        return JSONResponse(status_code=404, content={'message': "No encontrado"})
 
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
