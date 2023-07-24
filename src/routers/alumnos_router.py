@@ -28,7 +28,7 @@ def consultar_alumno_por_id(id:str) -> Alumnos:
     result = Alumnos_services().consultar_alumno(id)
     return result
 
-#AGREGAR UN NUEVO ALUMNO
+# AGREGAR UN NUEVO ALUMNO
 @alumnos.post("/alumnos", response_model=dict)
 def agregar_alumno(alumno: Alumnos) -> dict:
     result = Alumnos_services().agregar_alumno(alumno)
