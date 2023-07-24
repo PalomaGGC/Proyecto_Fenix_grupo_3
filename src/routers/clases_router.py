@@ -17,33 +17,33 @@ def startup():
     Base.metadata.create_all(bind=engine)
 
 #CONSULTAR SOLO UNO
-@clases.get('/clases', response_model= list[Clases] )
-def consultar_clases():
+@clases.get('/clases', response_model= List[Clases] )
+def consultar_clases() -> List[Clases]:
     result = Clases_services().consultar_clases()
-    return JSONResponse(status_code=200, content=jsonable_encoder(result))
+    return result
 
 #CONSULTAR SOLO UNO
-@clases.get('/clase/{id}', response_model= Clases )
-def consultar_clase_por_id(id: int):
+@clases.get('/clase/{id}', response_model= Clases)
+def consultar_clase_por_id(id: int) -> Clases:
     result = Clases_services().consultar_clase_por_id(id)
-    return JSONResponse(status_code=200, content=jsonable_encoder(result))
+    return result
 
 
-#AGREGAR
-@clases.post("/clases", response_model=dict, status_code=201)
+#AGREGAR UNA NUEVA CLASE
+@clases.post("/clases", response_model=dict)
 def agregar_clase(clase: Clases)-> dict:
-    Clases_services().agregar_clase(clase)
-    return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo clase"})
+    result = Clases_services().agregar_clase(clase)
+    return result
 
 
-#EDITAR
-@clases.put("/clases/{id}", response_model=dict, status_code=200)
+#EDITAR UNA CLASE
+@clases.put("/clases/{id}", response_model=dict)
 def editar_clase(id: int, data: Clases)-> dict:
-    Clases_services().editar_clase(id, data)
-    return JSONResponse(status_code=200, content={"message": "Se ha modificado el clase"})
+    result = Clases_services().editar_clase(id, data)
+    return result
 
 #BORRAR
-@clases.delete('/clases/{id}', response_model=dict, status_code=200)
+@clases.delete('/clases/{id}', response_model=dict)
 def borrar_clase(id: int) -> dict:
-    Clases_services().borrar_clase(id)
-    return JSONResponse(status_code=200, content={"message": "Se ha eliminado el clase"})
+    result = Clases_services().borrar_clase(id)
+    return result

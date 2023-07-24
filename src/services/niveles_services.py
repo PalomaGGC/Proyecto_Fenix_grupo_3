@@ -1,4 +1,5 @@
-from sqlalchemy.exc import SQLAlchemyError
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from models.nivelesModel import Niveles_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
@@ -14,56 +15,44 @@ class Niveles_services:
 
     # CONSULTAR TODOS LOS NIVELES
     def consultar_niveles(self):
-        try:
-            result = self.db.query(Niveles_model).all()
-            #obtengo todos los datos Niveles_model y los guardo en la variable result
-            return result
-        except SQLAlchemyError as e:
-            # Si ocurre un error en la consulta, se lanza una excepción HTTP con el código de estado 500 y el detalle del error
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+        result = self.db.query(Niveles_model).all()
+        #obtengo todos los datos Niveles_model y los guardo en la variable result
+        if not result:
+        # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay niveles") 
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
     # CONSULTAR UN NIVEL
     def consultar_nivel(self, nombre):
-        try:
-            result = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == nombre).first()
-            #obtengo los datos de el nivel que quiero consultar filtrando por nombre, 
-            # obtengo los del primero que encuentre y los guardo en la variable result
-            if not result:
-                # Si no se encuentra el nivel, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Nivel no encontrado")
-            return result
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+        result = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == nombre).first()
+        #obtengo los datos de el nivel que quiero consultar filtrando por nombre, 
+        # obtengo los del primero que encuentre y los guardo en la variable result
+        if not result:
+            # Si no se encuentra el nivel, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún nivel con ese id")
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
     # AGREGAR UN NIVEL
     def agregar_nivel(self, data):
-        try:
-            nivel = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == data.nombre_nivel).first()
-            print(data)
-            if nivel:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un nivel con este nombre")
+        nivel = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == data.nombre_nivel).first()
+        if nivel:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un nivel con este nombre")
 
-            nuevo_nivel = Niveles_model(**data.dict())
-            #Le envío el nuevo nivel
-            self.db.add(nuevo_nivel)
-            #Hago el commit para que se actualice
-            self.db.commit()
-            return f"Se agregó el nivel {nuevo_nivel} correctamente"
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+        nuevo_nivel = Niveles_model(**data.dict())
+        #Le envío el nuevo nivel
+        self.db.add(nuevo_nivel)
+        #Hago el commit para que se actualice
+        self.db.commit()
+        return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo nivel"})
+
 
     # EDITAR UN NIVEL
     def editar_nivel(self, nombre: str, data):
-        try:
-            nivel = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == nombre).first()
-            if not nivel:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Nivel no encontrado")
+        nivel = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == nombre).first()
+        if not nivel:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese nombre")
 
-            nivel.nombre_nivel = data.nombre_nivel
-            
-            self.db.commit()
-            return {"message": "Nivel actualizado correctamente"}
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+        nivel.nombre_nivel = data.nombre_nivel
+        self.db.commit()
+        return JSONResponse(status_code=200, content={"message": "Se ha modificado el nivel"})
 
-   
