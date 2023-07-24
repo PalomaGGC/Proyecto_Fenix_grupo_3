@@ -3,6 +3,28 @@ from dateutil.relativedelta import relativedelta
 from config.db import Session, engine
 from sqlalchemy import func
 import datetime
+import sched
+import time
+
+def ejecutar_funcion_en_hora_especifica(hora, minuto, segundos):
+    # Crea un objeto scheduler
+    programador = sched.scheduler(time.time, time.sleep)
+
+    # Obtiene la hora actual
+    ahora = time.localtime()
+    # Establece la hora específica del día para la ejecución
+    hora_especifica = time.struct_time((ahora.tm_year, ahora.tm_mon, ahora.tm_mday, hora, minuto, segundos, ahora.tm_wday, ahora.tm_yday, ahora.tm_isdst))
+
+    # Calcula la cantidad de segundos entre la hora actual y la hora específica
+    tiempo_espera = time.mktime(hora_especifica) - time.mktime(ahora)
+
+    # Programa la ejecución de la función en la hora específica
+    programador.enter(tiempo_espera, 1, crear_nueva_inscripcion, ())
+
+    # Ejecuta el scheduler
+    programador.run()
+
+
 
 def crear_nueva_inscripcion():
     try:
