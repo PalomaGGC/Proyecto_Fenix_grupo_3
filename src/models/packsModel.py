@@ -13,6 +13,5 @@ class Packs_model(Base):
     primer_descuento =Column(Float)
     segundo_descuento =Column(Float)
 
-
     
     

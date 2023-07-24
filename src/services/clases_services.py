@@ -1,6 +1,6 @@
-from sqlalchemy.exc import SQLAlchemyError
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from models.clasesModel import Clases_model
-from models.packsModel import Packs_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from config.db import Session
@@ -9,64 +9,53 @@ from config.db import Session
 class Clases_services:
     def __init__(self):
         self.db = Session()
-       
 
-    # CONSULTAR TODOS LOS CLASSES
+
+    # CONSULTAR TODAS LOS CLASSES
     def consultar_clases(self):
-        try:
-            result = self.db.query(Clases_model).all()
-            #obtengo todos los datos Clases_model y los guardo en la variable result
-            return result
-        except SQLAlchemyError as e:
-            # Si ocurre un error en la consulta, se lanza una excepción HTTP con el código de estado 500 y el detalle del error
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        result = self.db.query(Clases_model).all()
+        #obtengo todos los datos Clases_model y los guardo en la variable result
+        if not result:
+        # Si no se encuentran clases, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay clases") 
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 
     # CONSULTAR UN CLASE
     def consultar_clase_por_id(self, id):
-        try:
-            result = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
-            if not result:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Clase no encontrado")
-            return result
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        result = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
+        if not result:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ninguna clase con ese id")
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-    # AGREGAR UN CLASE
+
+    # AGREGAR UNA NUEVA CLASE
     def agregar_clase(self, data):
-        try:
-            clase = self.db.query(Clases_model).filter(Clases_model.nombre_clase == data.nombre_clase).first()
-            if clase:
-               raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un clase con este nombre")
-            nuevo_clase = Clases_model(**data.dict())           
-            self.db.add(nuevo_clase)
-            self.db.commit()
-            return f"Se agregó el clase {nuevo_clase} correctamente"
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        clase = self.db.query(Clases_model).filter(Clases_model.nombre_clase == data.nombre_clase).first()
+        if clase:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe una clase con este nombre")
+        nueva_clase = Clases_model(**data.dict())
+        self.db.add(nueva_clase)
+        self.db.commit()
+        return JSONResponse(status_code=201, content={"message": "Se ha registrado una nueva clase"})
 
-    # EDITAR UN CLASE
+    # EDITAR UNA CLASE
     def editar_clase(self, id: int, data):
-        try:
-            clase = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
-            if not clase:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="clase no encontrado")
+        clase = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
+        if not clase:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ninguna clase con ese id")
 
-            clase.nombre_clase = data.nombre_clase
-            clase.packs_id = data.packs_id
-     
-            self.db.commit()
-            return {"message": "clase actualizado correctamente"}
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        clase.nombre_clase = data.nombre_clase
+        clase.packs_id = data.packs_id
+    
+        self.db.commit()
+        return JSONResponse(status_code=200, content={"message": "Se ha actualizado la clase"})
 
-    # BORRAR UN CLASE
+    # BORRAR UNA CLASE
     def borrar_clase(self, id: int):
-        try:
-            clase = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
-            if not clase:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún clase con ese id")
-            self.db.query(Clases_model).filter(Clases_model.id_clase == id).delete()
-            self.db.commit()
-            return
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        clase = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
+        if not clase:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ninguna clase con ese id")
+        self.db.query(Clases_model).filter(Clases_model.id_clase == id).delete()
+        self.db.commit()
+        return JSONResponse(status_code=200, content={"message": "Se ha eliminado la clase"})
