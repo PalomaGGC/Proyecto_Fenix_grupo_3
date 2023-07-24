@@ -13,6 +13,7 @@ def startup():
    # create db table
     Base.metadata.create_all(bind=engine)
 
+
 # COSULTAR TODOS LOS PACKS
 @packs.get("/packs", response_model=List[Packs])
 def consultar_packs()-> List[Packs]:
@@ -39,6 +40,7 @@ def agregar_pack(pack: Packs)-> dict:
 def editar_pack(id: int, data: Packs)-> dict:
     result = Packs_services().editar_pack(id, data)
     return result
+
 
 # BORRAR UN PACK
 @packs.delete('/packs/{id}', response_model=dict, status_code=200)

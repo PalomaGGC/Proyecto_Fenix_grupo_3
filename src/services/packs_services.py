@@ -63,6 +63,7 @@ class Packs_services:
         self.db.commit()
         return JSONResponse(status_code=200, content={"message": "Se ha modificado el pack"})
 
+
     # BORRAR UN PACK
     def borrar_pack(self, id: int):
         pack = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
