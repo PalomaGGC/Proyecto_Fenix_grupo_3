@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 from pydantic import BaseModel
 
@@ -10,5 +11,6 @@ class Incripciones(BaseModel):
     descuento_inscripcion:float
     descuento_familiar:float
     precio_con_descuento:str
-    estado_inscripcion:str
-    fecha_inscripcion:str
+    pagada:str
+    fecha_inscripcion: date
+    fecha_fin: date
