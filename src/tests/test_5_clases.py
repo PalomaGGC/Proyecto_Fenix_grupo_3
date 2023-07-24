@@ -62,3 +62,6 @@ def eliminar_profesor():
     response = client.delete(url)
     assert response.status_code == 200
     assert isinstance(response.json(), dict)
+    
+    
+    

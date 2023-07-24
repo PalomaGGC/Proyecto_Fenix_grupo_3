@@ -11,13 +11,6 @@ letras = string.ascii_lowercase
 longitud_nombre = random.randint(5, 10)  # Longitud aleatoria del nombre entre 5 y 10 caracteres
 nombre_aleatorio = ''.join(random.choice(letras) for _ in range(longitud_nombre))
 
-#TEST CONSULTAR TODOS LOS PROFESORES
-def test_consultar_profesores():
-    response = client.get("/profesores")
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
-    assert all(isinstance(item, dict) for item in response.json())
-
 
 
 #TEST AGREGAR UN PROFESOR
@@ -33,6 +26,13 @@ def test_agregar_un_profesor():
     assert response.status_code == 201
     assert response.json() == {"message": "Se ha registrado un nuevo profesor"}
 
+
+#TEST CONSULTAR TODOS LOS PROFESORES
+def test_consultar_profesores():
+    response = client.get("/profesores")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    assert all(isinstance(item, dict) for item in response.json())
 
 
 #TEST CONSULTAR UN PROFESOR

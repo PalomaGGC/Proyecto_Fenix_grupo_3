@@ -46,7 +46,7 @@ def editar_clase(id: int, data: Clases)-> dict:
 
 
 # BORRAR UNA CLASE
-@clases.delete('/clases/{id}', response_model=dict)
+@clases.delete('/clase/{id}', response_model=dict)
 def borrar_clase(id: int) -> dict:
     result = Clases_services().borrar_clase(id)
     return result

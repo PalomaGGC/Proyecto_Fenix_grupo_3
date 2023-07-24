@@ -8,6 +8,25 @@ client = TestClient(app)
 
 
 
+
+def test_agregar_un_alumno():
+    data = {
+            "apellido_alumno": "Apellido prueba",
+            "edad_alumno": "Edad prueba",
+            "email_alumno": "email prueba",
+            "nombre_alumno": "Nombre prueba",
+            "id_alumno": 0,
+            "telefono_alumno": "123456789",
+            "descuento_familiar": 0
+            }
+    
+    response = client.post("/alumnos", json=data)
+    assert response.status_code == 201
+    assert response.json() == {"message": "Se ha registrado un nuevo alumno"}
+
+
+
+
 # #TODOS LOS ALUMNOS
 def test_consultar_alumnos():
     response = client.get("/alumnos")
@@ -24,20 +43,7 @@ def test_consultar_alumnos():
     # en la lista de JSON sean instancias de la clase dict, es decir, -
     # verifica que cada elemento de la lista sea un diccionario.
 
-def test_agregar_un_alumno():
-    data = {
-            "apellido_alumno": "Apellido prueba",
-            "edad_alumno": "Edad prueba",
-            "email_alumno": "email prueba",
-            "nombre_alumno": "Nombre prueba",
-            "id_alumno": 0,
-            "telefono_alumno": "123456789",
-            "descuento_familiar": 0
-            }
-    
-    response = client.post("/alumnos", json=data)
-    assert response.status_code == 201
-    assert response.json() == {"message": "Se ha registrado un nuevo alumno"}
+
 
 
 # #UN ALUMNO

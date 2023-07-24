@@ -36,14 +36,15 @@ app.include_router(pagos)
 Base.metadata.create_all(bind=engine)
 
 # Define la hora y minuto específicos para la ejecución (ejemplo: 15:30)
-hora_especifica = 12
-minuto_especifico = 43
-segundos = 30
+hora_especifica = 00
+minuto_especifico = 00
+segundos = 00
 
 # Ejecuta la función en la hora determinada
 ejecutar_funcion_en_hora_especifica(hora_especifica, minuto_especifico, segundos)
 
 # uvicorn app:app --host localhost --port 5000 --reload
+
 
 
 

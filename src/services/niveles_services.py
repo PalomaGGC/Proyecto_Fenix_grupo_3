@@ -14,6 +14,7 @@ class Niveles_services:
         #ya puedo acceder a la base de datos desde otros métodos
 
 
+
     # CONSULTAR TODOS LOS NIVELES
     def consultar_niveles(self):
         result = self.db.query(Niveles_model).all()
