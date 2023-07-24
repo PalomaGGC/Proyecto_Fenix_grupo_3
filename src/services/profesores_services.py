@@ -1,4 +1,5 @@
-from sqlalchemy.exc import SQLAlchemyError
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from models.profesoresModel import Profesores_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
@@ -13,9 +14,13 @@ class Profesores_services:
 
     # CONSULTAR TODOS LOS PROFESORES
     def consultar_profesores(self):
-            result = self.db.query(Profesores_model).all()
-            # Obtengo todos los datos Profesores_model y los guardo en la variable result.
-            return result
+        result = self.db.query(Profesores_model).all()
+        # Obtengo todos los datos Profesores_model y los guardo en la variable result.
+        if not result:
+        # Si no se encuentran profesores, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay profesores") 
+        return  JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 
     # CONSULTAR UN PROFESOR
     def consultar_profesor(self, nombre):
@@ -25,30 +30,34 @@ class Profesores_services:
         if not result:
             # Si no se encuentra el profesor, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error.
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Profesor no encontrado")
-        return result
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
     # AGREGAR UN PROFESOR
     def agregar_profesor(self, data):
+        profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor  == data.nombre_profesor).first()
+        if profesor:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un profesor con este nombre")       
+
         nuevo_profesor = Profesores_model(**data.dict())
         #Le envío el nuevo profesor
         self.db.add(nuevo_profesor)
          #Hago el commit para que se actualice
         self.db.commit()
-        return f"Se agregó el profesor {nuevo_profesor} correctamente"
+        return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo profesor"})
 
 
     # EDITAR UN PROFESOR
     def editar_profesor(self, nombre: str, data):
         profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).first()
         if not profesor:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Profesor no encontrado")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún profesor con ese nombre")
 
         profesor.nombre_profesor = data.nombre_profesor
         profesor.apellido_profesor = data.apellido_profesor
         profesor.email_profesor = data.email_profesor
         self.db.commit()
 
-        return {"message": "Profesor actualizado correctamente"}
+        return JSONResponse(status_code=200, content={"message": "Se ha modificado el profesor"})
 
 
     # BORRAR UN PROFESOR
@@ -58,6 +67,6 @@ class Profesores_services:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún profesor con ese nombre")
         self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor == nombre).delete()
         self.db.commit()
-        return
+        return JSONResponse(status_code=200, content={"message": "Se ha eliminado el profesor"})
 
 
