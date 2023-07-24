@@ -39,14 +39,14 @@ async def crear_inscripcion(data:Incripciones):
 
     
 #EDITAR UNA INSCRIPCION
-@inscripciones.put("/descuentos/{id}")
+@inscripciones.put("/inscripcion/{id}")
 async def editar_inscripcion(id, data:Incripciones):
     response = Inscripciones_services().editar_inscripcion(id, data)
     return response 
 
 
 # ELIMINAR INSCRIPCION
-@inscripciones.delete("/descuentos/{id}")
-async def editar_inscripcion(id):
+@inscripciones.delete("/inscripcion/{id}")
+async def eliminar_inscripcion(id):
     response = Inscripciones_services().eliminar_inscripcion(id)
     return response 
