@@ -26,7 +26,7 @@ class Clases_services:
         try:
             result = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
             if not result:
-                raise HTTPException(status_code=status.HTTP_204_NOT_FOUND, detail="Clase no encontrado")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Clase no encontrado")
             return result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
