@@ -46,21 +46,21 @@ def consultar_profesor_clase_nivel_por_nombre_profesor(nombre: str):
 
 
 # AÑADIR UNA NUEVA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.post("/profesor-clases", response_model=dict, status_code=201)
+@profesor_clases.post("/profesor-clases", response_model=dict)
 def agregar_profesor_clase_nivel(data: Profesor_clases) -> dict:
     result = Profesor_clases_services().agregar_profesor_clase_nivel(data)
     return result
 
 
 # MODIFICAR LOS DATOS DE UNA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.put('/profesor-clases/{id}', response_model=dict, status_code=200)
+@profesor_clases.put('/profesor-clases/{id}', response_model=dict)
 def editar_profesor_clase_nivel(id: int, data:Profesor_clases) -> dict:
     result = Profesor_clases_services().editar_profesor_clase_nivel(id, data)
     return result
 
 
 # BORRAR UNA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.delete('/profesor-clases/{id}', response_model=dict, status_code=200)
+@profesor_clases.delete('/profesor-clases/{id}', response_model=dict)
 def borrar_profesor_clase_nivel(id: int) -> dict:
     result = Profesor_clases_services().borrar_profesor_clase_nivel(id)
     return result
