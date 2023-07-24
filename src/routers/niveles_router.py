@@ -27,7 +27,6 @@ def consultar_niveles() -> List[Niveles]:
 
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-
 @niveles.get('/nivel/{nombre}', response_model=Niveles)# nombre es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
 def consultar_nivel_por_nombre(nombre:str) -> Niveles:
     #Creo una sesión para conectarme a la base de datos, la variable db será una instancia de session, que ya importé al inicio

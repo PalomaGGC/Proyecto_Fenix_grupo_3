@@ -5,11 +5,9 @@ from fastapi import HTTPException, status
 from models.incripcionesModel import Inscripciones_model
 from dateutil.relativedelta import relativedelta
 from config.db import Session
-from sqlalchemy import text
+from sqlalchemy import and_, text
 from services.alumnos_services import Alumnos_services
 from services.profesor_clases_services import Profesor_clases_services
-
-
 
 
 class Inscripciones_services:
@@ -21,20 +19,29 @@ class Inscripciones_services:
     def consultar_inscripciones(self):
         try:
             result = self.db.query(Inscripciones_model).all()
-        
             return result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     
     
-    
-    
     #CONSULTAR UNA INSCRIPCION
     def consultar_una_inscripcion(self, id):
+        try:
+           result = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
+           if not result:
+               raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="alumno no encontrado")
+           return result
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
         
-            return self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
-    
-    
+        
+    #CONSULTAR INSCRIPCIONES PAGAS POR ID ALUMNO
+    def consultar_inscripciones_pagadas(self, id, bolean):
+        try:
+            result =  self.db.query(Inscripciones_model).filter(and_(Inscripciones_model.alumno_id == id, Inscripciones_model.pagada == str(bolean))).all()
+            return result
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     
     
     #CONSULTO CUANTAS VECES ESTA INSCRITO AL MISMO PACK
