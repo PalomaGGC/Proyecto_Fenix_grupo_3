@@ -11,6 +11,7 @@ from routers.niveles_router import niveles
 from decouple import config
 from config.db import Base, engine
 import uvicorn
+#from log import logger
 
 app = FastAPI()
 port = config("PORT") 
