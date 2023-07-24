@@ -1,4 +1,5 @@
-from sqlalchemy.exc import SQLAlchemyError
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from models.packsModel import Packs_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
@@ -14,69 +15,59 @@ class Packs_services:
 
     # CONSULTAR TODOS LOS PACKS
     def consultar_packs(self):
-        try:
-            result = self.db.query(Packs_model).all()
-            #obtengo todos los datos Packs_model y los guardo en la variable result
-            return result
-        except SQLAlchemyError as e:
-            # Si ocurre un error en la consulta, se lanza una excepción HTTP con el código de estado 500 y el detalle del error
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        result = self.db.query(Packs_model).all()
+        #obtengo todos los datos Packs_model y los guardo en la variable result
+        if not result:
+        # Si no se encuentran packs, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay packs") 
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-    # CONSULTAR UN PACK
+
+
+    # CONSULTAR UN PACK POR ID
     def consultar_pack_por_id(self, id):
-        try:
-            result = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
-            #obtengo los datos de el pack que quiero consultar filtrando por id, 
-            # obtengo los del primero que encuentre y los guardo en la variable result
-            if not result:
-                # Si no se encuentra el pack, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pack no encontrado")
-            return result
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        result = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
+        #obtengo los datos de el pack que quiero consultar filtrando por id,
+        # obtengo los del primero que encuentre y los guardo en la variable result
+        if not result:
+            # Si no se encuentra el pack, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún pack con ese id")
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-    # AGREGAR UN PACK
+
+    # AGREGAR UN NUEVO PACK
     def agregar_pack(self, data):
-        try:
-            pack = self.db.query(Packs_model).filter(Packs_model.id_pack == data.id_pack).first()
-            print(data)
-            if pack:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un pack con este id")
+        pack = self.db.query(Packs_model).filter(Packs_model.id_pack == data.id_pack).first()
+        if pack:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un pack con este id")
 
-            nuevo_pack = Packs_model(**data.dict())
-            #Le envío el nuevo pack
-            self.db.add(nuevo_pack)
-            #Hago el commit para que se actualice
-            self.db.commit()
-            return f"Se agregó el pack {nuevo_pack} correctamente"
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        nuevo_pack = Packs_model(**data.dict())
+        #Le envío el nuevo pack
+        self.db.add(nuevo_pack)
+        #Hago el commit para que se actualice
+        self.db.commit()
+        return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo pack"})
+
 
     # EDITAR UN PACK
     def editar_pack(self, id: int, data):
-        try:
-            pack = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
-            if not pack:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pack no encontrado")
+        pack = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
+        if not pack:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún pack con ese id")
 
-            pack.nombre_pack = data.nombre_pack
-            pack.precio_pack = data.precio_pack
-            pack.primer_descuento = data.primer_descuento
-            pack.segundo_descuento = data.segundo_descuento
+        pack.nombre_pack = data.nombre_pack
+        pack.precio_pack = data.precio_pack
+        pack.primer_descuento = data.primer_descuento
+        pack.segundo_descuento = data.segundo_descuento
 
-            self.db.commit()
-            return {"message": "Pack actualizado correctamente"}
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.db.commit()
+        return JSONResponse(status_code=200, content={"message": "Se ha modificado el pack"})
 
     # BORRAR UN PACK
     def borrar_pack(self, id: int):
-        try:
-            pack = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
-            if not pack:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún pack con ese id")
-            self.db.query(Packs_model).filter(Packs_model.id_pack == id).delete()
-            self.db.commit()
-            return
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pack = self.db.query(Packs_model).filter(Packs_model.id_pack == id).first()
+        if not pack:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún pack con ese id")
+        self.db.query(Packs_model).filter(Packs_model.id_pack == id).delete()
+        self.db.commit()
+        return JSONResponse(status_code=200, content={"message": "Se ha eliminado el pack"})
