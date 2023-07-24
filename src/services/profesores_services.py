@@ -12,13 +12,14 @@ class Profesores_services:
         #db para que cada vez que se ejecute ese servicio se envíe una sesión a la base de datos
         #ya puedo acceder a la base de datos desde otros métodos
 
+
     # CONSULTAR TODOS LOS PROFESORES
     def consultar_profesores(self):
         result = self.db.query(Profesores_model).all()
         # Obtengo todos los datos Profesores_model y los guardo en la variable result.
         if not result:
         # Si no se encuentran profesores, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay profesores") 
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay profesores")
         return  JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
@@ -32,11 +33,12 @@ class Profesores_services:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Profesor no encontrado")
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
+
     # AGREGAR UN PROFESOR
     def agregar_profesor(self, data):
         profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor  == data.nombre_profesor).first()
         if profesor:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un profesor con este nombre")       
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un profesor con este nombre")
 
         nuevo_profesor = Profesores_model(**data.dict())
         #Le envío el nuevo profesor

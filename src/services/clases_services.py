@@ -33,11 +33,12 @@ class Clases_services:
     def agregar_clase(self, data):
         clase = self.db.query(Clases_model).filter(Clases_model.nombre_clase == data.nombre_clase).first()
         if clase:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe una clase con este nombre")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe una clase con este nombre")
         nueva_clase = Clases_model(**data.dict())
         self.db.add(nueva_clase)
         self.db.commit()
         return JSONResponse(status_code=201, content={"message": "Se ha registrado una nueva clase"})
+
 
     # EDITAR UNA CLASE
     def editar_clase(self, id: int, data):
@@ -47,9 +48,10 @@ class Clases_services:
 
         clase.nombre_clase = data.nombre_clase
         clase.packs_id = data.packs_id
-    
+
         self.db.commit()
         return JSONResponse(status_code=200, content={"message": "Se ha actualizado la clase"})
+
 
     # BORRAR UNA CLASE
     def borrar_clase(self, id: int):

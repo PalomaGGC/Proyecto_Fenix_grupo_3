@@ -14,11 +14,13 @@ async def consultar_Inscripciones():
     result = Inscripciones_services().consultar_inscripciones()
     return result
 
+
 # CONSULTAR UNA INSCRIPCIÓN POR ID
 @inscripciones.get("/inscripcion/{id}")
 async def consultar_una_inscripcion(id):
     result = Inscripciones_services().consultar_una_inscripcion(id)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 
 # CONSULTAR INSCRIPCIONES PAGADAS POR ID ALUMNO
 @inscripciones.get("/inscripciones_pagadas/{id}")
@@ -26,6 +28,7 @@ async def consultar_inscripciones_pagas( id:int, boleano: bool ):
     # Llamar al servicio para consultar la inscripción con el ID y el valor booleano
     result = Inscripciones_services().consultar_inscripciones_pagadas(id, boleano)
     return result
+
 
 # CREAR UNA NUEVA INSCRIPCIÓN
 @inscripciones.post("/inscripcion")

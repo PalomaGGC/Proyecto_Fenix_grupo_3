@@ -94,7 +94,7 @@ class Inscripciones_services:
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.alumno_id).first()
 
         if not alumno:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="no existe ningún alumno con este id")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con este id")
 
         packs_repeticiones = self.repeticiones_pack(data.alumno_id, data.profesor_clase_id)
         data_pack = self.datos_pack(data.profesor_clase_id)

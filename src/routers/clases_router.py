@@ -16,33 +16,36 @@ def startup():
      # create db tables
     Base.metadata.create_all(bind=engine)
 
-#CONSULTAR SOLO UNO
+
+# CONSULTAR CLASES
 @clases.get('/clases', response_model= List[Clases] )
 def consultar_clases() -> List[Clases]:
     result = Clases_services().consultar_clases()
     return result
 
-#CONSULTAR SOLO UNO
+
+# CONSULTAR UNA CLASE POR ID
 @clases.get('/clase/{id}', response_model= Clases)
 def consultar_clase_por_id(id: int) -> Clases:
     result = Clases_services().consultar_clase_por_id(id)
     return result
 
 
-#AGREGAR UNA NUEVA CLASE
+# AGREGAR UNA NUEVA CLASE
 @clases.post("/clases", response_model=dict)
 def agregar_clase(clase: Clases)-> dict:
     result = Clases_services().agregar_clase(clase)
     return result
 
 
-#EDITAR UNA CLASE
+# EDITAR UNA CLASE
 @clases.put("/clases/{id}", response_model=dict)
 def editar_clase(id: int, data: Clases)-> dict:
     result = Clases_services().editar_clase(id, data)
     return result
 
-#BORRAR
+
+# BORRAR UNA CLASE
 @clases.delete('/clases/{id}', response_model=dict)
 def borrar_clase(id: int) -> dict:
     result = Clases_services().borrar_clase(id)

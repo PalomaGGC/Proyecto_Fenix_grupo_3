@@ -84,7 +84,7 @@ class Profesor_clases_services:
     def agregar_profesor_clase_nivel(self, data):
         profesor_clase = self.db.query(Profesor_clases_model).filter(Profesor_clases_model.id_clase_profesor == data.id_clase_profesor).first()
         if profesor_clase:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe una relación 'profesor - clase -nivel' con este id")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe una relación 'profesor - clase -nivel' con este id")
         nuevo_profesor_clase = Profesor_clases_model(**data.dict())
         #Le envío el nuevo profesor
         self.db.add(nuevo_profesor_clase)
@@ -105,7 +105,6 @@ class Profesor_clases_services:
 
         self.db.commit()
         return JSONResponse(status_code=200, content={"message": "Relación 'profesor - clase -nivel' actualizada correctamente"})
-
 
 
     # BORRAR UNA RELACIÓN RELACIÓN 'PROFESOR - CLASE - NIVEL'
