@@ -1,3 +1,5 @@
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 from models.alumnosModel import Alumnos_model
 from sqlalchemy.orm import Session
@@ -19,9 +21,9 @@ class Alumnos_services:
         if not result:
         # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay alumnos") 
-        return  result
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-    # CONSULTAR UN ALUMNO
+    # CONSULTAR UN ALUMNO POR ID
     def consultar_alumno(self, id):
         result = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
         # obtengo los datos de el alumno que quiero consultar filtrando por id,
@@ -29,20 +31,20 @@ class Alumnos_services:
         if not result:
             # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Alumno no encontrado')
-        return result
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-    # AGREGAR UN ALUMNO
+    # AGREGAR UN NUEVO ALUMNO
     def agregar_alumno(self, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.id_alumno).first()
         if alumno:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un alumno con este id")
 
         nuevo_alumno = Alumnos_model(**data.dict())
-        #Le envío la nueva película
+        #Le envío el nuevo alumno
         self.db.add(nuevo_alumno)
         #Hago el commit para que se actualice
         self.db.commit()
-        return f"Se agregó el alumno {nuevo_alumno} correctamente"
+        return JSONResponse(status_code=201, content={"message": "Se ha registrado un nuevo alumno"})
 
 
     # EDITAR UN ALUMNO
@@ -59,7 +61,7 @@ class Alumnos_services:
         alumno.descuento_familiar = data.descuento_familiar
 
         self.db.commit()
-        return {"message": "Alumno actualizado correctamente"}
+        return JSONResponse(status_code=200, content={"message": "Se ha modificado el alumno"})
 
 
     # BORRAR UN ALUMNO
@@ -69,4 +71,4 @@ class Alumnos_services:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
         self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).delete()
         self.db.commit()
-        return
+        return JSONResponse(status_code=200, content={"message": "Se ha eliminado el alumno"})
