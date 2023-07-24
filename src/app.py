@@ -14,7 +14,7 @@ from config.db import Base, engine
 from fastapi import FastAPI
 from decouple import config
 import threading
-#import schedule
+import schedule
 import uvicorn
 import time
 from middlewares.error_handler import ErrorHandler # Importamos el manejador de errores
@@ -47,3 +47,6 @@ Base.metadata.create_all(bind=engine)
 # creacion_inscripciones_thread.start()
 
 # uvicorn app:app --host localhost --port 5000 --reload
+
+
+

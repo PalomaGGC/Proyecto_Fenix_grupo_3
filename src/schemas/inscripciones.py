@@ -13,4 +13,3 @@ class Incripciones(BaseModel):
     precio_con_descuento:str
     pagada:str
     fecha_inscripcion: date
-    fecha_fin: date
