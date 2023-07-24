@@ -1,7 +1,7 @@
 import logging
 import mysql.connector
 from mysql.connector import Error
-import inspect
+#import inspect
 
 class Connect_DB():
     def __init__(self):
@@ -29,11 +29,7 @@ class CustomHandler(logging.StreamHandler):
     def emit(self, record):
         if record:
             self.db.execute_query(f"INSERT INTO LOGS VALUES('{record.filename}', '{record.funcName}', '{record.lineno}', '{record.msg}', SYSDATE())")
-    # def emit(self, record):
-    #     if record:
-    #         log_msg = self.format(record)  # Format the log record
-    #         self.db.execute_query(f"INSERT INTO LOGS (col1, col2, col3, col4, timestamp) VALUES ('{record.filename}', '{record.funcName}', '{record.lineno}', '{log_msg}', SYSDATE())")
-
+   
 
 def main(logger, db):
     try:
@@ -49,7 +45,7 @@ def main(logger, db):
 
 if __name__ == "__main__":
     db = Connect_DB()
-    logger = logging.Logger("test")
+    logger = logging.Logger("FENIX2")
     logger.setLevel(logging.DEBUG)
     customhandler = CustomHandler(db)
     logger.addHandler(customhandler)
