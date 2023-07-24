@@ -13,9 +13,13 @@ class Profesores_services:
 
     # CONSULTAR TODOS LOS PROFESORES
     def consultar_profesores(self):
-            result = self.db.query(Profesores_model).all()
-            # Obtengo todos los datos Profesores_model y los guardo en la variable result.
-            return result
+        result = self.db.query(Profesores_model).all()
+        # Obtengo todos los datos Profesores_model y los guardo en la variable result.
+        if not result:
+        # Si no se encuentran profesores, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay profesores") 
+        return  result
+
 
     # CONSULTAR UN PROFESOR
     def consultar_profesor(self, nombre):
@@ -29,6 +33,10 @@ class Profesores_services:
 
     # AGREGAR UN PROFESOR
     def agregar_profesor(self, data):
+        profesor = self.db.query(Profesores_model).filter(Profesores_model.nombre_profesor  == data.nombre_profesor).first()
+        if profesor:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un profesor con este nombre")       
+
         nuevo_profesor = Profesores_model(**data.dict())
         #Le envío el nuevo profesor
         self.db.add(nuevo_profesor)
