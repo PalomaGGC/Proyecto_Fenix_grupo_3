@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, ForeignKey, Numeric, Table, Column, String, Float
 from sqlalchemy.sql.sqltypes import Integer
 from config.db import Base
-#from sqlalchemy.orm import relationship
+
 
 #MODELO DE LA TABLA
 class Packs_model(Base):

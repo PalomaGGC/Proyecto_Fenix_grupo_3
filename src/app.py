@@ -1,4 +1,3 @@
-
 from models.pagosModel import Pagos_model
 from services.incripcion_automatica_services import crear_nueva_inscripcion
 from routers.profesor_clases_router import profesor_clases
@@ -18,6 +17,7 @@ import threading
 import schedule
 import uvicorn
 import time
+from middlewares.error_handler import ErrorHandler # Importamos el manejador de errores
 
 port = config("PORT") 
 app = FastAPI()
@@ -43,6 +43,3 @@ segundos = 30
 ejecutar_funcion_en_hora_especifica(hora_especifica, minuto_especifico, segundos)
 
 # uvicorn app:app --host localhost --port 5000 --reload
-
-
-
