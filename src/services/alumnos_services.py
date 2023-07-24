@@ -19,7 +19,7 @@ class Alumnos_services:
         #obtengo todos los datos Alumnos_model y los guardo en la variable result
         if not result:
         # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay alumnos") 
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={"message":"Aún no hay alumnos"}) 
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
     # CONSULTAR UN ALUMNO POR ID
@@ -29,14 +29,14 @@ class Alumnos_services:
         # obtengo los del primero que encuentre y los guardo en la variable result
         if not result:
             # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No existe ningún alumno con ese id')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'No existe ningún alumno con ese id'})
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
     # AGREGAR UN NUEVO ALUMNO
     def agregar_alumno(self, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.id_alumno).first()
         if alumno:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un alumno con este id")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'Ya existe un alumno con este id'})
 
         nuevo_alumno = Alumnos_model(**data.dict())
         #Le envío el nuevo alumno
@@ -50,7 +50,7 @@ class Alumnos_services:
     def editar_alumno(self, id: str, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
         if not alumno:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={"message":"No existe ningún alumno con ese id"})
 
         alumno.nombre_alumno = data.nombre_alumno
         alumno.apellido_alumno = data.apellido_alumno
@@ -67,7 +67,7 @@ class Alumnos_services:
     def borrar_alumno(self, id: str):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
         if not alumno:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'Ya existe un alumno con este id'})
         self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).delete()
         self.db.commit()
         return JSONResponse(status_code=200, content={"message": "Se ha eliminado el alumno"})
