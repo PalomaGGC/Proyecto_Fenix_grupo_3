@@ -10,9 +10,9 @@ class Packs_model(Base):
     id_pack = Column(Integer, primary_key=True,  autoincrement=True)
     nombre_pack =Column(String(100))
     precio_pack =Column(Float)
-    primer_descuento =Column(Integer)
-    segundo_descuento =Column(Integer)
+    primer_descuento =Column(Float)
+    segundo_descuento =Column(Float)
 
-    #clases = relationship("Clases_model", back_populates="packs")
+
     
     

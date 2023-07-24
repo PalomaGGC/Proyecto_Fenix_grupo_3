@@ -163,7 +163,7 @@ class Inscripciones_services:
     #EDITAR UNA INSCRIPCION
     def editar_inscripcion(self, id, data):
         try:
-            result = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripciones == id).first()
+            result = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
             if not result:
                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="inscripcion no encontrada")
            
@@ -171,7 +171,7 @@ class Inscripciones_services:
             result.descuento_inscripcion=data.descuento_inscripcion,
             result.descuento_familiar = data.descuento_familiar,
             result.precio_con_descuento=data.precio_con_descuento,
-            result.estado_inscripcion = data.estado_inscripcion
+            result.pagada= data.pagada
             self.db.commit() 
             return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Inscripción editada exitosamente"})
         except SQLAlchemyError as e:
@@ -186,7 +186,7 @@ class Inscripciones_services:
             if not result:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="inscripcion no encontrada")
             
-            self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripciones == id).delete()
+            self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).delete()
             self.db.commit()
             return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Inscripción borrada exitosamente"})
         except SQLAlchemyError as e:
