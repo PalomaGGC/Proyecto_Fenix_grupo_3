@@ -40,7 +40,7 @@ class Alumnos_services:
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.id_alumno).first()
 
         if alumno:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un alumno con este id")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un alumno con este id")
 
         nuevo_alumno = Alumnos_model(**data.dict())
         #Le envío el nuevo alumno

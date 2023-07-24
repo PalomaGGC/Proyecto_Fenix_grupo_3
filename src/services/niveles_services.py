@@ -13,14 +13,16 @@ class Niveles_services:
         self.db = Session()
         #ya puedo acceder a la base de datos desde otros métodos
 
+
     # CONSULTAR TODOS LOS NIVELES
     def consultar_niveles(self):
         result = self.db.query(Niveles_model).all()
         #obtengo todos los datos Niveles_model y los guardo en la variable result
         if not result:
         # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay niveles") 
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay niveles")
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 
     # CONSULTAR UN NIVEL
     def consultar_nivel(self, nombre):
@@ -32,11 +34,12 @@ class Niveles_services:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún nivel con ese id")
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
+
     # AGREGAR UN NIVEL
     def agregar_nivel(self, data):
         nivel = self.db.query(Niveles_model).filter(Niveles_model.nombre_nivel == data.nombre_nivel).first()
         if nivel:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un nivel con este nombre")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un nivel con este nombre")
 
         nuevo_nivel = Niveles_model(**data.dict())
         #Le envío el nuevo nivel
