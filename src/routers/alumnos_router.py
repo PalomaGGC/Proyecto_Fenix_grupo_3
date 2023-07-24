@@ -31,14 +31,14 @@ def consultar_alumno_por_id(id:str) -> Alumnos:
 #AGREGAR UN NUEVO ALUMNO
 @alumnos.post("/alumnos", response_model=dict)
 def agregar_alumno(alumno: Alumnos) -> dict:
-    result= Alumnos_services().agregar_alumno(alumno)
+    result = Alumnos_services().agregar_alumno(alumno)
     return result
 
 
 # EDITAR UN ALUMNO
 @alumnos.put('/alumnos/{id}', response_model=dict)
 def editar_alumno(id: str, data:Alumnos) -> dict:
-    result= Alumnos_services().editar_alumno(id, data)
+    result = Alumnos_services().editar_alumno(id, data)
     return result
 
 # BORRAR UN ALUMNO

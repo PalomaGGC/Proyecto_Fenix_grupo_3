@@ -29,7 +29,7 @@ class Alumnos_services:
         # obtengo los del primero que encuentre y los guardo en la variable result
         if not result:
             # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Alumno no encontrado')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No existe ningún alumno con ese id')
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
     # AGREGAR UN NUEVO ALUMNO
