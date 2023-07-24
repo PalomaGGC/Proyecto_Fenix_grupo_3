@@ -17,8 +17,8 @@ async def consultar_Inscripciones():
 # CONSULTAR UNA INSCRIPCIÓN POR ID
 @inscripciones.get("/inscripcion/{id}")
 async def consultar_una_inscripcion(id):
-    response = Inscripciones_services().consultar_una_inscripcion(id)
-    return JSONResponse(status_code=200, content=jsonable_encoder(response))
+    result = Inscripciones_services().consultar_una_inscripcion(id)
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 # CONSULTAR INSCRIPCIONES PAGADAS POR ID ALUMNO
 @inscripciones.get("/inscripciones_pagadas/{id}")
