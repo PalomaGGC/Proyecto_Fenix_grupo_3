@@ -5,6 +5,7 @@ from routers.profesor_clases_router import profesor_clases
 from routers.inscripciones_router import inscripciones
 from routers.profesores_router import profesores
 from services.incripcion_automatica_services import ejecutar_funcion_en_hora_especifica
+from routers.users_router import user
 from routers.alumnos_router import alumnos
 from routers.niveles_router import niveles
 from routers.clases_router import clases
@@ -24,6 +25,7 @@ port = config("PORT")
 app = FastAPI()
 
 app.add_middleware(ErrorHandler)
+app.include_router(user)
 app.include_router(profesor_clases)
 app.include_router(inscripciones)
 app.include_router(profesores)

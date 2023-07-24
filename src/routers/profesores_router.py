@@ -1,8 +1,9 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from schemas.profesores import Profesores
 from services.profesores_services import Profesores_services
 from config.db import Base, engine
+from middlewares.jwt_bearer import JWTBearer
 
 
 profesores = APIRouter(tags=["profesores"])
@@ -31,7 +32,7 @@ def consultar_profesor_por_nombre(nombre:str) -> Profesores:
 
 
 # AÑADIR UN NUEVO PROFESOR A LA TABLA
-@profesores.post("/profesores", response_model=dict)
+@profesores.post("/profesores", dependencies=[Depends(JWTBearer())], response_model=dict) #dependencies=[Depends(JWTBearer())]
 def agregar_profesor(profesor: Profesores) -> dict:
     result = Profesores_services().agregar_profesor(profesor)
     return result
