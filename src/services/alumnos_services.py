@@ -1,6 +1,5 @@
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from sqlalchemy.exc import SQLAlchemyError
 from models.alumnosModel import Alumnos_model
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
@@ -51,7 +50,7 @@ class Alumnos_services:
     def editar_alumno(self, id: str, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
         if not alumno:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Alumno no encontrado")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
 
         alumno.nombre_alumno = data.nombre_alumno
         alumno.apellido_alumno = data.apellido_alumno

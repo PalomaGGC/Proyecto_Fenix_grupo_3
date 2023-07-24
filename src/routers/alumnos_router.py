@@ -1,13 +1,10 @@
 from typing import List
 from fastapi import APIRouter
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
 from fastapi.testclient import TestClient
 from schemas.alumnos import Alumnos
-from sqlalchemy.exc import SQLAlchemyError
 from services.alumnos_services import Alumnos_services
-from config.db import Base, Session, engine
-from models.alumnosModel import Alumnos_model
+from config.db import Base, engine
+
 
 alumnos = APIRouter(tags=["alumnos"])
 
