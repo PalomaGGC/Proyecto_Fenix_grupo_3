@@ -22,11 +22,13 @@ def consultar_pago():
     result = Pagos_services().consultar_pagos()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-#CONSULTAR LOS PAGOS DE UN ALUMNO
+#CONSULTAR LOS PAGOS CON ID ALUMNO
 @pagos.get("/pagos/{id}", response_model=dict, status_code=200)
-def consultar_pagos_de_un_alumno(id_alumno: int):
+def consultar_pagos_con_id_alumno(id_alumno: int):
     result = Pagos_services().consultar_pago_por_id_del_alumno(id_alumno)
     return JSONResponse(status_code=200, content=result)
+
+
 
 #AGREGAR UN PAGO
 @pagos.post("/pagos", response_model=dict, status_code=201)

@@ -4,6 +4,7 @@ from services.incripcion_automatica_services import crear_nueva_inscripcion
 from routers.profesor_clases_router import profesor_clases
 from routers.inscripciones_router import inscripciones
 from routers.profesores_router import profesores
+from services.incripcion_automatica_services import ejecutar_funcion_en_hora_especifica
 from routers.alumnos_router import alumnos
 from routers.niveles_router import niveles
 from routers.clases_router import clases
@@ -34,17 +35,13 @@ app.include_router(pagos)
 
 Base.metadata.create_all(bind=engine)
 
-# #GENERAR NUEVAS INSCRIPCIONES AUTOMATICAMENTE
-# def programar_creacion_nueva_inscripcion():
-#     schedule.every().day.at("00:00:00").do(crear_nueva_inscripcion)
-#     # Programo la ejecución de la función "crear_nueva_inscripcion" cada día a la medianoche
-#     while True:
-#         schedule.run_pending()
-#         time.sleep(1)
-        
-# # Utilizo threading para ejecutar la función en un hilo separado
-# creacion_inscripciones_thread = threading.Thread(target=programar_creacion_nueva_inscripcion)
-# creacion_inscripciones_thread.start()
+# Define la hora y minuto específicos para la ejecución (ejemplo: 15:30)
+hora_especifica = 12
+minuto_especifico = 43
+segundos = 30
+
+# Ejecuta la función en la hora determinada
+ejecutar_funcion_en_hora_especifica(hora_especifica, minuto_especifico, segundos)
 
 # uvicorn app:app --host localhost --port 5000 --reload
 
