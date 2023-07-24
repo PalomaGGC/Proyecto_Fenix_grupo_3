@@ -1,52 +1,48 @@
 from fastapi import APIRouter
-from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from schemas.inscripciones import Incripciones
 from services.inscripciones_services import  Inscripciones_services
-from config.db import Base, engine
 
-#RUTAS
+# RUTAS
 inscripciones = APIRouter(tags=["inscripciones"])
 
 
-    
-#COSULTAR TODOS LAS INSCRIPCIONES
+# COSULTAR TODAS LAS INSCRIPCIONES
 @inscripciones.get("/inscripciones")
 async def consultar_Inscripciones():
-    response = Inscripciones_services().consultar_inscripciones()
-    return JSONResponse(status_code=200, content=jsonable_encoder(response))
+    result = Inscripciones_services().consultar_inscripciones()
+    return result
 
-#CONSULTAR UNA INSCRIPCION
+# CONSULTAR UNA INSCRIPCIÓN POR ID
 @inscripciones.get("/inscripcion/{id}")
 async def consultar_una_inscripcion(id):
     response = Inscripciones_services().consultar_una_inscripcion(id)
     return JSONResponse(status_code=200, content=jsonable_encoder(response))
 
-#CONSULTAR UNA INSCRIPCION
+# CONSULTAR INSCRIPCIONES PAGADAS POR ID ALUMNO
 @inscripciones.get("/inscripciones_pagadas/{id}")
 async def consultar_inscripciones_pagas( id:int, boleano: bool ):
     # Llamar al servicio para consultar la inscripción con el ID y el valor booleano
-    response = Inscripciones_services().consultar_inscripciones_pagadas(id, boleano)
-    # Devolver la respuesta en formato JSON
-    return JSONResponse(status_code=200, content=jsonable_encoder(response))
+    result = Inscripciones_services().consultar_inscripciones_pagadas(id, boleano)
+    return result
 
-
+# CREAR UNA NUEVA INSCRIPCIÓN
 @inscripciones.post("/inscripcion")
 async def crear_inscripcion(data:Incripciones):
     results = Inscripciones_services().crear_inscripcion(data)
-    return JSONResponse(status_code=200, content=jsonable_encoder(results))
+    return results
 
-    
-#EDITAR UNA INSCRIPCION
+
+# EDITAR UNA INSCRIPCIÓN
 @inscripciones.put("/inscripcion/{id}")
 async def editar_inscripcion(id, data:Incripciones):
-    response = Inscripciones_services().editar_inscripcion(id, data)
-    return response 
+    result = Inscripciones_services().editar_inscripcion(id, data)
+    return result
 
 
-# ELIMINAR INSCRIPCION
+# ELIMINAR UNA INSCRIPCIÓN
 @inscripciones.delete("/inscripcion/{id}")
 async def eliminar_inscripcion(id):
-    response = Inscripciones_services().eliminar_inscripcion(id)
-    return response 
+    result = Inscripciones_services().eliminar_inscripcion(id)
+    return result
