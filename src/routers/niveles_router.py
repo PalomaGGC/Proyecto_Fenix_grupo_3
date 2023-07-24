@@ -21,11 +21,13 @@ def consultar_niveles() -> List[Niveles]:
     result = Niveles_services().consultar_niveles()
     return result
 
+
 # CONSULTAR UN NIVEL POR EL NOMBRE
 @niveles.get('/nivel/{nombre}', response_model=Niveles)# nombre es el parámetro de ruta que es pero recibir cuanod el usuario acceda  a esta url
 def consultar_nivel_por_nombre(nombre:str) -> Niveles:
     result = Niveles_services().consultar_nivel(nombre)
     return result
+
 
 # AGREGAR UN NUEVO NIVEL
 @niveles.post("/niveles", response_model=dict)

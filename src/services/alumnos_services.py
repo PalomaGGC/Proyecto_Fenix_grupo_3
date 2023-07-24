@@ -13,6 +13,7 @@ class Alumnos_services:
         self.db = Session()
         #ya puedo acceder a la base de datos desde otros métodos
 
+
     # CONSULTAR TODOS LOS ALUMNOS
     def consultar_alumnos(self):
         result = self.db.query(Alumnos_model).all()
@@ -21,6 +22,7 @@ class Alumnos_services:
         # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={"message":"Aún no hay alumnos"}) 
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
 
     # CONSULTAR UN ALUMNO POR ID
     def consultar_alumno(self, id):
@@ -32,9 +34,11 @@ class Alumnos_services:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'No existe ningún alumno con ese id'})
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
+
     # AGREGAR UN NUEVO ALUMNO
     def agregar_alumno(self, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.id_alumno).first()
+
         if alumno:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'Ya existe un alumno con este id'})
 
@@ -49,6 +53,7 @@ class Alumnos_services:
     # EDITAR UN ALUMNO
     def editar_alumno(self, id: str, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
+
         if not alumno:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={"message":"No existe ningún alumno con ese id"})
 
@@ -66,6 +71,7 @@ class Alumnos_services:
     # BORRAR UN ALUMNO
     def borrar_alumno(self, id: str):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
+
         if not alumno:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'Ya existe un alumno con este id'})
         self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).delete()
