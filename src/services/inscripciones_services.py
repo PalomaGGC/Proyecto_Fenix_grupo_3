@@ -191,7 +191,7 @@ class Inscripciones_services:
             return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Inscripción borrada exitosamente"})
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
-        return
+        
     
     
     
