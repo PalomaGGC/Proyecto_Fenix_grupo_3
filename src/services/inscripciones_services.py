@@ -2,12 +2,14 @@ import datetime
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException, status
+from models.alumnosModel import Alumnos_model
 from models.incripcionesModel import Inscripciones_model
 from dateutil.relativedelta import relativedelta
 from config.db import Session
 from sqlalchemy import and_, text
 from services.alumnos_services import Alumnos_services
 from services.profesor_clases_services import Profesor_clases_services
+from fastapi.encoders import jsonable_encoder
 
 
 class Inscripciones_services:
@@ -106,7 +108,9 @@ class Inscripciones_services:
     def crear_inscripcion(self, data):
         try:
             # crear_nueva_inscripcion()
-            alumno = Alumnos_services().consultar_alumno(data.alumno_id)
+            alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.alumno_id).first()
+            if not alumno:
+                return "404"
             packs_repeticiones = self.repeticiones_pack(data.alumno_id, data.profesor_clase_id)
             data_pack = self.datos_pack(data.profesor_clase_id)
             num_veces_inscrito = packs_repeticiones[0]["repeticiones"]
@@ -114,6 +118,8 @@ class Inscripciones_services:
             segundo_descuento = data_pack[0]["segundo_descuento"]
             precio_pack = data_pack[0]["precio_pack"]
             descuento_familiar = alumno.descuento_familiar
+            fecha_inscripcion = data.fecha_inscripcion
+
 
             if(num_veces_inscrito == 0):
                 #Aplico el descuento correspondiente 35 - (35 * 0.1)
@@ -145,8 +151,8 @@ class Inscripciones_services:
                 descuento_familiar = descuento_familiar,
                 precio_con_descuento=precio_con_descuento,
                 pagada='true',
-                fecha_inscripcion=datetime.datetime.now(), #Fecha actual
-                fecha_fin=datetime.datetime.now() + relativedelta(months=1) 
+                fecha_inscripcion=fecha_inscripcion, #Fecha actual
+                fecha_fin=fecha_inscripcion + relativedelta(months=1)
                 #Con relativedelta(months=1) le sumo 1 mes automaticamente
             )
 
@@ -163,7 +169,7 @@ class Inscripciones_services:
     #EDITAR UNA INSCRIPCION
     def editar_inscripcion(self, id, data):
         try:
-            result = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripciones == id).first()
+            result = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
             if not result:
                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="inscripcion no encontrada")
            
@@ -171,7 +177,7 @@ class Inscripciones_services:
             result.descuento_inscripcion=data.descuento_inscripcion,
             result.descuento_familiar = data.descuento_familiar,
             result.precio_con_descuento=data.precio_con_descuento,
-            result.estado_inscripcion = data.estado_inscripcion
+            result.pagada = data.pagada
             self.db.commit() 
             return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Inscripción editada exitosamente"})
         except SQLAlchemyError as e:
@@ -186,7 +192,7 @@ class Inscripciones_services:
             if not result:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="inscripcion no encontrada")
             
-            self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripciones == id).delete()
+            self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).delete()
             self.db.commit()
             return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Inscripción borrada exitosamente"})
         except SQLAlchemyError as e:

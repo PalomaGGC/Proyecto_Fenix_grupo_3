@@ -27,10 +27,11 @@ class Alumnos_services:
         result = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
         # obtengo los datos de el alumno que quiero consultar filtrando por id,
         # obtengo los del primero que encuentre y los guardo en la variable result
+        alumno_dict = jsonable_encoder(result)
         if not result:
             # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Alumno no encontrado')
-        return JSONResponse(status_code=200, content=jsonable_encoder(result))
+        return JSONResponse(status_code=200, content=alumno_dict)
 
     # AGREGAR UN NUEVO ALUMNO
     def agregar_alumno(self, data):
