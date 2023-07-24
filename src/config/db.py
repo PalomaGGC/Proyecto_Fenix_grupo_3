@@ -4,6 +4,7 @@ from decouple import config
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.session import sessionmaker
 
+
 try:
     user= config("USER_NAME")
     host= config("HOST")
