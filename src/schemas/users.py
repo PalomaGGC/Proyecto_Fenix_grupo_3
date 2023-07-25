@@ -9,9 +9,9 @@ class Users(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "fullname": "Joe Doe",
-                "email": "joe@xyz.com",
-                "password": "any"
+                "fullname": "admin",
+                "email": "admin@gmail.com",
+                "password": "password"
             }
         }
 
@@ -22,7 +22,7 @@ class UsersLogin(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "email": "joe@xyz.com",
-                "password": "any"
+                "email": "admin@gmail.com",
+                "password": "password"
             }
         }

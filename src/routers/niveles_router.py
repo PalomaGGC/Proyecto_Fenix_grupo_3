@@ -1,7 +1,8 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from middlewares.jwt_bearer import JWTBearer
 from schemas.niveles import Niveles
 from services.niveles_services import Niveles_services
 from config.db import Base, engine
@@ -30,14 +31,14 @@ def consultar_nivel_por_nombre(nombre:str) -> Niveles:
 
 
 # AGREGAR UN NUEVO NIVEL
-@niveles.post("/niveles", response_model=dict)
+@niveles.post("/niveles", response_model=dict, dependencies=[Depends(JWTBearer())])
 def agregar_nivel(nivel: Niveles) -> dict:
     result = Niveles_services().agregar_nivel(nivel)
     return result
 
 
 # EDITAR UN NIVEL
-@niveles.put('/niveles/{nombre}', response_model=dict)
+@niveles.put('/niveles/{nombre}', response_model=dict, dependencies=[Depends(JWTBearer())])
 def editar_nivel(nombre: str, data:Niveles) -> dict:
     result = Niveles_services().editar_nivel(nombre, data)
     return result

@@ -1,7 +1,8 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from middlewares.jwt_bearer import JWTBearer
 from schemas.profesor_clases import Profesor_clases
 from schemas.profesor_clases import Profesor_clases
 from services.profesor_clases_services import Profesor_clases_services
@@ -46,21 +47,21 @@ def consultar_profesor_clase_nivel_por_nombre_profesor(nombre: str):
 
 
 # AÑADIR UNA NUEVA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.post("/profesor-clases", response_model=dict)
+@profesor_clases.post("/profesor-clases", response_model=dict, dependencies=[Depends(JWTBearer())])
 def agregar_profesor_clase_nivel(data: Profesor_clases) -> dict:
     result = Profesor_clases_services().agregar_profesor_clase_nivel(data)
     return result
 
 
 # MODIFICAR LOS DATOS DE UNA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.put('/profesor-clases/{id}', response_model=dict)
+@profesor_clases.put('/profesor-clases/{id}', response_model=dict, dependencies=[Depends(JWTBearer())])
 def editar_profesor_clase_nivel(id: int, data:Profesor_clases) -> dict:
     result = Profesor_clases_services().editar_profesor_clase_nivel(id, data)
     return result
 
 
 # BORRAR UNA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.delete('/profesor-clases/{id}', response_model=dict)
+@profesor_clases.delete('/profesor-clases/{id}', response_model=dict, dependencies=[Depends(JWTBearer())])
 def borrar_profesor_clase_nivel(id: int) -> dict:
     result = Profesor_clases_services().borrar_profesor_clase_nivel(id)
     return result

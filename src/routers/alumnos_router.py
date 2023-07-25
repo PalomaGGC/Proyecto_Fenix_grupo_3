@@ -1,6 +1,7 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.testclient import TestClient
+from middlewares.jwt_bearer import JWTBearer
 from schemas.alumnos import Alumnos
 from services.alumnos_services import Alumnos_services
 from config.db import Base, engine

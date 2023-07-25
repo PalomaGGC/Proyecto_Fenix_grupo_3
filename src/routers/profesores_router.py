@@ -32,21 +32,21 @@ def consultar_profesor_por_nombre(nombre:str) -> Profesores:
 
 
 # AÑADIR UN NUEVO PROFESOR A LA TABLA
-@profesores.post("/profesores", dependencies=[Depends(JWTBearer())], response_model=dict) #dependencies=[Depends(JWTBearer())]
+@profesores.post("/profesores", response_model=dict, dependencies=[Depends(JWTBearer())]) #dependencies=[Depends(JWTBearer())]
 def agregar_profesor(profesor: Profesores) -> dict:
     result = Profesores_services().agregar_profesor(profesor)
     return result
 
 
 # MODIFICAR LOS DATOS DE UN PROFESOR
-@profesores.put('/profesores/{nombre}', response_model=dict)
+@profesores.put('/profesores/{nombre}', response_model=dict, dependencies=[Depends(JWTBearer())])
 def editar_profesor(nombre: str, data:Profesores) -> dict:
     result = Profesores_services().editar_profesor(nombre, data)
     return result
 
 
 # BORRAR UN PROFESOR
-@profesores.delete('/profesores/{nombre}', response_model=dict)
+@profesores.delete('/profesores/{nombre}', response_model=dict, dependencies=[Depends(JWTBearer())])
 def borrar_profesor(nombre: str) -> dict:
     result = Profesores_services().borrar_profesor(nombre)
     return result

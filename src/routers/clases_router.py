@@ -1,5 +1,6 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from middlewares.jwt_bearer import JWTBearer
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
@@ -32,21 +33,21 @@ def consultar_clase_por_id(id: int) -> Clases:
 
 
 # AGREGAR UNA NUEVA CLASE
-@clases.post("/clases", response_model=dict)
+@clases.post("/clases", response_model=dict, dependencies=[Depends(JWTBearer())])
 def agregar_clase(clase: Clases)-> dict:
     result = Clases_services().agregar_clase(clase)
     return result
 
 
 # EDITAR UNA CLASE
-@clases.put("/clases/{id}", response_model=dict)
+@clases.put("/clases/{id}", response_model=dict, dependencies=[Depends(JWTBearer())])
 def editar_clase(id: int, data: Clases)-> dict:
     result = Clases_services().editar_clase(id, data)
     return result
 
 
 # BORRAR UNA CLASE
-@clases.delete('/clases/{id}', response_model=dict)
+@clases.delete('/clases/{id}', response_model=dict, dependencies=[Depends(JWTBearer())])
 def borrar_clase(id: int) -> dict:
     result = Clases_services().borrar_clase(id)
     return result
