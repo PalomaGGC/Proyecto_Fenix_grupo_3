@@ -1,6 +1,6 @@
 from models.incripcionesModel import Inscripciones_model
 from dateutil.relativedelta import relativedelta
-from config.db import Session, engine
+from config.db import Session
 from sqlalchemy import func
 import datetime
 import sched
@@ -29,7 +29,7 @@ def ejecutar_funcion_en_hora_especifica(hora, minuto, segundos):
     programador.run()
 
 
-
+# CREAR UNA NUEVA INSCRIPCIÓN
 def crear_nueva_inscripcion():
     try:
         db = Session()

@@ -25,7 +25,7 @@ class Alumnos_services:
         if not result:
             self.logger.warning('No se encontraron alumnos')
         # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay alumnos")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={"message":"Aún no hay alumnos"}) 
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
@@ -38,7 +38,7 @@ class Alumnos_services:
         if not result:
             self.logger.warning('No se encontró el alumno')
             # Si no se encuentra el alumno, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No existe ningún alumno con ese id')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'message':'No existe ningún alumno con ese id'})
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
@@ -64,7 +64,6 @@ class Alumnos_services:
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
 
         if not alumno:
-            self.logger.warning('No se encontró el alumno para editar')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
 
         alumno.nombre_alumno = data.nombre_alumno
@@ -84,7 +83,6 @@ class Alumnos_services:
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
 
         if not alumno:
-            self.logger.warning('No se encontró el alumno para borrar')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
 
         self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).delete()

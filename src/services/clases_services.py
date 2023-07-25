@@ -45,6 +45,7 @@ class Clases_services:
         self.logger.info("Se ha registrado un nuevo clase")
         return JSONResponse(status_code=201, content={"message": "Se ha registrado una nueva clase"})
 
+
     # EDITAR UNA CLASE
     def editar_clase(self, id: int, data):
         clase = self.db.query(Clases_model).filter(Clases_model.id_clase == id).first()
@@ -54,10 +55,11 @@ class Clases_services:
 
         clase.nombre_clase = data.nombre_clase
         clase.packs_id = data.packs_id
-    
+
         self.db.commit()
         self.logger.info('Se ha modificado el clase')
         return JSONResponse(status_code=200, content={"message": "Se ha actualizado la clase"})
+
 
     # BORRAR UNA CLASE
     def borrar_clase(self, id: int):

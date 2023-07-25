@@ -13,6 +13,7 @@ class Packs_services:
         self.db = Session()
         #ya puedo acceder a la base de datos desde otros métodos
 
+
     # CONSULTAR TODOS LOS PACKS
     def consultar_packs(self):
         result = self.db.query(Packs_model).all()
@@ -21,7 +22,6 @@ class Packs_services:
         # Si no se encuentran packs, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay packs") 
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
-
 
 
     # CONSULTAR UN PACK POR ID
@@ -39,7 +39,7 @@ class Packs_services:
     def agregar_pack(self, data):
         pack = self.db.query(Packs_model).filter(Packs_model.id_pack == data.id_pack).first()
         if pack:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ya existe un pack con este id")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un pack con este id")
 
         nuevo_pack = Packs_model(**data.dict())
         #Le envío el nuevo pack

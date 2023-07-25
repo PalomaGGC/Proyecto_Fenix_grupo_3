@@ -10,28 +10,29 @@ from config.db import Base, engine
 
 pagos = APIRouter(tags=["pagos"])
 
-
+# CREAR TABLA DE PAGOS
 @pagos.on_event("startup")
 def startup():
      # create db tables
     Base.metadata.create_all(bind=engine)
 
-#CONSULTAR TODOS LOS PAGOS
-@pagos.get('/pagos', response_model= list )
+
+# CONSULTAR TODOS LOS PAGOS
+@pagos.get('/pagos', response_model= list)
 def consultar_pago():
     result = Pagos_services().consultar_pagos()
-    return JSONResponse(status_code=200, content=jsonable_encoder(result))
+    return result
 
-#CONSULTAR LOS PAGOS CON ID ALUMNO
-@pagos.get("/pagos/{id}", response_model=dict, status_code=200)
+
+# CONSULTAR LOS PAGOS CON ID ALUMNO
+@pagos.get("/pagos/{id}", response_model=dict)
 def consultar_pagos_con_id_alumno(id_alumno: int):
     result = Pagos_services().consultar_pago_por_id_del_alumno(id_alumno)
-    return JSONResponse(status_code=200, content=result)
+    return result
 
 
-
-#AGREGAR UN PAGO
-@pagos.post("/pagos", response_model=dict, status_code=201)
+# AGREGAR UN PAGO
+@pagos.post("/pagos", response_model=dict)
 def agregar_pago(data:Pagos)-> dict:
     result = Pagos_services().agregar_pago(data)
-    return JSONResponse(status_code=201, content=result)
+    return result

@@ -29,20 +29,22 @@ def consultar_profesor_por_nombre(nombre:str) -> Profesores:
     #Consulto los datos de ProfesorModel y hago un filtrado por nombre, le digo que obtenga el primer resultado.
     return result
 
-# AÑADO UN NUEVO PROFESOR A LA TABLA
+
+# AÑADIR UN NUEVO PROFESOR A LA TABLA
 @profesores.post("/profesores", response_model=dict)
 def agregar_profesor(profesor: Profesores) -> dict:
     result = Profesores_services().agregar_profesor(profesor)
     return result
 
 
-# MODIFICO LOS DATOS DE UN PROFESOR
+# MODIFICAR LOS DATOS DE UN PROFESOR
 @profesores.put('/profesores/{nombre}', response_model=dict)
 def editar_profesor(nombre: str, data:Profesores) -> dict:
     result = Profesores_services().editar_profesor(nombre, data)
     return result
 
-# BORRO UN PROFESOR
+
+# BORRAR UN PROFESOR
 @profesores.delete('/profesores/{nombre}', response_model=dict)
 def borrar_profesor(nombre: str) -> dict:
     result = Profesores_services().borrar_profesor(nombre)
