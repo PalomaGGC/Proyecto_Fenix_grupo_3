@@ -99,7 +99,7 @@ class Inscripciones_services:
     # CREAR UNA NUEVA INSCRIPCIÓN
     def crear_inscripcion(self, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.alumno_id).first()
-        self.logger.info('No se encontró el alumno')
+        self.logger.warning('No se encontró el alumno')
         if not alumno:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con este id")
 
