@@ -64,6 +64,7 @@ class Alumnos_services:
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
 
         if not alumno:
+            self.logger.warning('No se encontró el alumno para editar')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
 
         alumno.nombre_alumno = data.nombre_alumno
@@ -83,6 +84,7 @@ class Alumnos_services:
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).first()
 
         if not alumno:
+            self.logger.warning('No se encontró el alumno para borrar')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con ese id")
 
         self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == id).delete()

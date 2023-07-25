@@ -15,28 +15,33 @@ class Inscripciones_services:
         self.db = Session()
         self.logger= Logs()
 
-    #CONSULTAR TODAS LAS INSCRIPCIONES
+    # CONSULTAR TODAS LAS INSCRIPCIONES
     def consultar_inscripciones(self):
-        try:
-            result = self.db.query(Inscripciones_model).all()
-            self.logger.debug('Consultando todos los inscripciones')
-            return result
-        except SQLAlchemyError as e:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
-    
+        result = self.db.query(Inscripciones_model).all()
+        if not result:
+        # Si no se encuentran alumnos, se lanza una excepción HTTP con el código de estado 404 y un mensaje de error
+            self.logger.error("Error consultando todos los inscriptiones")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aún no hay inscripciones")
+        self.logger.info("Consultando todos los inscriptiones")
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
     
     #CONSULTAR UNA INSCRIPCION
     def consultar_una_inscripcion(self, id):
+        self.logger.debug(f'Consultando inscripcion con id: {id}')
         result = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
         if not result:
+            self.logger.warning('No se encontró el inscripcion')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No existe ninguna inscripción con ese id')
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
     # CONSULTAR INSCRIPCIONES PAGADAS POR ID ALUMNO
     def consultar_inscripciones_pagadas(self, id, bolean):
+        self.logger.debug(f'Consultando inscripcion pagada con id de alumno: {id}')
         result =  self.db.query(Inscripciones_model).filter(and_(Inscripciones_model.alumno_id == id, Inscripciones_model.pagada == str(bolean))).all()
         if not result:
+            self.logger.warning(f'No se encontró el inscripcion con id de alumno:{id}')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No existe ninguna inscripción con ese id de alumno')
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
@@ -86,6 +91,7 @@ class Inscripciones_services:
 
         result = self.db.execute(text(query)).fetchall()
         if result:
+            self.logger.debug('Consultando el pack')
             result = [{"id_pack":data[0], "nombre_pack":data[1], "precio_pack":data[2], "primer_descuento":data[3], "segundo_descuento":data[4]} for data in result]
         return result
 
@@ -93,7 +99,7 @@ class Inscripciones_services:
     # CREAR UNA NUEVA INSCRIPCIÓN
     def crear_inscripcion(self, data):
         alumno = self.db.query(Alumnos_model).filter(Alumnos_model.id_alumno == data.alumno_id).first()
-
+        self.logger.info('No se encontró el alumno')
         if not alumno:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No existe ningún alumno con este id")
 
@@ -143,6 +149,7 @@ class Inscripciones_services:
 
         self.db.add(nueva_inscripcion)  # Agrega la nueva inscripción a la sesión
         self.db.commit()  # Confirma los cambios en la base de datos
+        self.logger.info("Se ha registrado la nueva inscripción") 
         self.db.close()
         return JSONResponse(status_code=201, content={"message": "Se ha registrado un nueva inscripción"})
 
@@ -151,6 +158,7 @@ class Inscripciones_services:
     def editar_inscripcion(self, id, data):
         inscripcion = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
         if not inscripcion:
+            self.logger.warning('No se encontró la inscripción para editar')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="inscripcion no encontrada")
 
         inscripcion.precio_clase=data.precio_clase,
@@ -159,6 +167,7 @@ class Inscripciones_services:
         inscripcion.precio_con_descuento=data.precio_con_descuento,
         inscripcion.pagada = data.pagada
         self.db.commit()
+        self.logger.info("Se ha modificado la inscripción")
         return JSONResponse(status_code=200, content={"message": "Se ha modificado la inscripción"})
 
 
@@ -166,8 +175,10 @@ class Inscripciones_services:
     def eliminar_inscripcion(self,id):
         inscripcion = self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).first()
         if not inscripcion:
+            self.logger.warning('No se encontró el alumno para borrar')
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Inscripción no encontrada")
 
         self.db.query(Inscripciones_model).filter(Inscripciones_model.id_inscripcion == id).delete()
         self.db.commit()
+        self.logger.info('Se ha eliminado la inscripción') 
         return JSONResponse(status_code=200, content={"message": "Se ha eliminado la inscripción"})
