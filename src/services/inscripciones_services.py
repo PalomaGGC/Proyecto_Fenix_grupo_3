@@ -10,17 +10,19 @@ from sqlalchemy import and_, text
 from services.alumnos_services import Alumnos_services
 from services.profesor_clases_services import Profesor_clases_services
 from fastapi.encoders import jsonable_encoder
-
+from logger import Logs
 
 class Inscripciones_services:
     #SESION
     def __init__(self):
         self.db = Session()
+        self.logger= Logs()
         
     #CONSULTAR TODAS LAS INSCRIPCIONES
     def consultar_inscripciones(self):
         try:
             result = self.db.query(Inscripciones_model).all()
+            self.logger.debug('Consultando todos los inscripciones')
             return result
         except SQLAlchemyError as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
