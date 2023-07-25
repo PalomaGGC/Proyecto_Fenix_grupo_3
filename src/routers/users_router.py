@@ -8,7 +8,7 @@ from middlewares.jwt_handler import signJWT
 
 
 
-user = APIRouter(tags=["users"])
+user = APIRouter(tags=["user"])
 
 users = []
 
