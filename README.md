@@ -30,3 +30,5 @@ Se presupuestan tres semanas para el prototipado. El programa no tiene por qué 
  <li>Trello y herramientas organizativas usadas.</li>
 </ul>
  
+<h2>DOCUMENTACIÓN EN NOTION:<h2>
+https://www.notion.so/Fenix-Api-d3a1d099b0f04c628d3639338472dffa?pvs=4
