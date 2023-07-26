@@ -1,0 +1,62 @@
+2023-07-26 10:21:48,162 [DEBUG] Consultando todos los alumnos
+2023-07-26 10:21:48,162 [WARNING] No se encontraron alumnos
+2023-07-26 10:21:48,185 [DEBUG] Consultando alumno con id: 1
+2023-07-26 10:21:48,356 [WARNING] No se encontró el alumno
+2023-07-26 10:21:48,732 [INFO] Se ha registrado un nuevo profesor
+2023-07-26 10:21:48,761 [DEBUG] Consultando todos los profesores
+2023-07-26 10:21:48,789 [DEBUG] Consultando profesor por id
+2023-07-26 10:21:49,049 [INFO] Se ha modificado el profesor
+2023-07-26 10:21:49,198 [INFO] Se ha registrado un nuevo nivel
+2023-07-26 10:21:49,216 [DEBUG] Consultando todos los niveles
+2023-07-26 10:21:49,231 [DEBUG] Consultando nivel por nombre
+2023-07-26 10:21:49,295 [INFO] Se ha registrado un nuevo pack
+2023-07-26 10:21:49,324 [DEBUG] Consultando todos los packs
+2023-07-26 10:21:49,344 [DEBUG] Consultando pack por id
+2023-07-26 10:21:49,507 [INFO] Se ha registrado un nuevo clase
+2023-07-26 10:21:49,536 [DEBUG] Consultando todos los clases
+2023-07-26 10:21:49,551 [DEBUG] Consultando clase con id: 1
+2023-07-26 10:21:49,602 [DEBUG] Consultando todos los profesores por clases
+2023-07-26 10:21:49,603 [WARNING] No se encontraron profesores por clases
+2023-07-26 10:21:49,685 [DEBUG] Consultando profesor por clases y nivel por id
+2023-07-26 10:21:49,685 [WARNING] No se encontró el profesor por clases y nivel
+2023-07-26 10:21:49,733 [WARNING] No se encontró el alumno
+2023-07-26 10:21:49,783 [ERROR] Error consultando todos los inscriptiones
+2023-07-26 10:21:49,796 [DEBUG] Consultando inscripcion pagada con id de alumno: 1
+2023-07-26 10:21:49,901 [WARNING] No se encontró el inscripcion con id de alumno:1
+2023-07-26 10:21:49,917 [DEBUG] Consultando inscripcion con id: 1
+2023-07-26 10:21:49,931 [WARNING] No se encontró el inscripcion
+2023-07-26 10:21:49,958 [WARNING] No se encontró la inscripción para editar
+2023-07-26 10:21:49,981 [WARNING] El pago ya existe con este id
+2023-07-26 10:21:50,008 [DEBUG] Consultando todos los pagos
+2023-07-26 10:21:50,008 [WARNING] No se encontraron pagos
+2023-07-26 10:31:48,129 [DEBUG] Consultando todos los alumnos
+2023-07-26 10:31:48,131 [WARNING] No se encontraron alumnos
+2023-07-26 10:31:48,151 [DEBUG] Consultando alumno con id: 1
+2023-07-26 10:31:48,173 [WARNING] No se encontró el alumno
+2023-07-26 10:31:48,234 [INFO] Se ha registrado un nuevo profesor
+2023-07-26 10:31:48,256 [DEBUG] Consultando todos los profesores
+2023-07-26 10:31:48,278 [DEBUG] Consultando profesor por id
+2023-07-26 10:31:48,295 [INFO] Se ha modificado el profesor
+2023-07-26 10:31:48,323 [INFO] Se ha registrado un nuevo nivel
+2023-07-26 10:31:48,346 [DEBUG] Consultando todos los niveles
+2023-07-26 10:31:48,364 [DEBUG] Consultando nivel por nombre
+2023-07-26 10:31:48,453 [INFO] Se ha registrado un nuevo pack
+2023-07-26 10:31:48,483 [DEBUG] Consultando todos los packs
+2023-07-26 10:31:48,506 [DEBUG] Consultando pack por id
+2023-07-26 10:31:48,598 [INFO] Se ha registrado un nuevo clase
+2023-07-26 10:31:48,621 [DEBUG] Consultando todos los clases
+2023-07-26 10:31:48,636 [DEBUG] Consultando clase con id: 1
+2023-07-26 10:31:48,716 [DEBUG] Consultando todos los profesores por clases
+2023-07-26 10:31:48,716 [WARNING] No se encontraron profesores por clases
+2023-07-26 10:31:48,736 [DEBUG] Consultando profesor por clases y nivel por id
+2023-07-26 10:31:48,736 [WARNING] No se encontró el profesor por clases y nivel
+2023-07-26 10:31:48,785 [WARNING] No se encontró el alumno
+2023-07-26 10:31:48,815 [ERROR] Error consultando todos los inscriptiones
+2023-07-26 10:31:48,831 [DEBUG] Consultando inscripcion pagada con id de alumno: 1
+2023-07-26 10:31:48,877 [WARNING] No se encontró el inscripcion con id de alumno:1
+2023-07-26 10:31:48,893 [DEBUG] Consultando inscripcion con id: 1
+2023-07-26 10:31:48,896 [WARNING] No se encontró el inscripcion
+2023-07-26 10:31:49,112 [WARNING] No se encontró la inscripción para editar
+2023-07-26 10:31:49,138 [WARNING] El pago ya existe con este id
+2023-07-26 10:31:49,339 [DEBUG] Consultando todos los pagos
+2023-07-26 10:31:49,340 [WARNING] No se encontraron pagos

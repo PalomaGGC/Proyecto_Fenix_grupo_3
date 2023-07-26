@@ -1,5 +1,4 @@
 from sqlalchemy import Boolean, Date, Float, ForeignKey, Column,String, Integer,func
-from dateutil.relativedelta import relativedelta
 from config.db import Base
 
 #MODELO DE LA TABLA

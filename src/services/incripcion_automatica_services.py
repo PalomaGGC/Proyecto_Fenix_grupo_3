@@ -35,13 +35,11 @@ def crear_nueva_inscripcion():
         db = Session()
         # Obtener la fecha actual sin la hora
         fecha_actual = datetime.datetime.now().date()
-        logger.info("Fecha actual: %s", fecha_actual)
-        # print("Fecha actual:", fecha_actual)
+        print("Fecha actual:", fecha_actual)
 
         # Filtrar las inscripciones donde la fecha de finalización (sin la hora) sea menor o igual a la fecha actual
         inscripciones = db.query(Inscripciones_model).filter(func.DATE(Inscripciones_model.fecha_fin) == fecha_actual).all()
-        logger.info("Número de inscripciones encontradas: %s", len(inscripciones))
-        # print("Número de inscripciones encontradas:", len(inscripciones))
+        print("Número de inscripciones encontradas:", len(inscripciones))
 
         nuevas_inscripciones = []  # Lista para almacenar las nuevas inscripciones
 
@@ -68,12 +66,11 @@ def crear_nueva_inscripcion():
         # Agregar todas las nuevas inscripciones a la sesión y confirmar los cambios en la base de datos
         db.add_all(nuevas_inscripciones)
         db.commit()
-        logger.info("Nuevas inscripciones creadas: %s", len(nuevas_inscripciones))
-        # print("Nuevas inscripciones creadas:", len(nuevas_inscripciones))
+        print("Nuevas inscripciones creadas:", len(nuevas_inscripciones))
 
     except Exception as e:
         # print(f"Error al crear las nuevas inscripciones: {e}")
-        logger.error("Error al crear las nuevas inscripciones: %s", e)
+        logger.error("Error al crear las nuevas inscripciones automaticas: %s", e)
 
 
     finally:
