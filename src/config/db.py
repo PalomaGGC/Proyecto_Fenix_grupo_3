@@ -1,8 +1,13 @@
+
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.exc import SQLAlchemyError
 from decouple import config
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.session import sessionmaker
+from logger import Logs
+
+logger = Logs()
+
 
 try:
     user= config("USER_NAME")
@@ -22,9 +27,11 @@ try:
     Session = sessionmaker(engine)
     
     Base = declarative_base()
+
     
 
 except SQLAlchemyError as e:
+    logger.error("Error al conectar a la base de datos:")
     print(f"Error al conectar a la base de datos: {e}")
     # Puedes agregar aquí el manejo de la excepción según tus necesidades
     

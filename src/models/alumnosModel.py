@@ -9,7 +9,6 @@ class Alumnos_model(Base):
     nombre_alumno = Column(String(100))
     apellido_alumno = Column(String(100))
     edad_alumno = Column(String(3))
-    nie_alumno = Column(String(10))
     telefono_alumno = Column(String(10))
     email_alumno = Column(String(30))
     descuento_familiar = Column(Float, default=0.0)

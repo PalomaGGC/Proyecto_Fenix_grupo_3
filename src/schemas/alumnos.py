@@ -7,7 +7,6 @@ class Alumnos(BaseModel):
     nombre_alumno:str
     apellido_alumno:str
     edad_alumno:str
-    nie_alumno:str
     email_alumno:str
     telefono_alumno:str
     descuento_familiar:float
