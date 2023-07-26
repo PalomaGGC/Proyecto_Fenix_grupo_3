@@ -44,8 +44,8 @@ async def editar_inscripcion(id, data:Incripciones):
     return result
 
 
-# ELIMINAR UNA INSCRIPCIÓN
+# ELIMINAR INSCRIPCION
 @inscripciones.delete("/inscripcion/{id}")
 async def eliminar_inscripcion(id):
-    result = Inscripciones_services().eliminar_inscripcion(id)
-    return result
+    response = Inscripciones_services().eliminar_inscripcion(id)
+    return response 

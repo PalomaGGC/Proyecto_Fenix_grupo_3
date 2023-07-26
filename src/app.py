@@ -1,4 +1,3 @@
-
 from models.pagosModel import Pagos_model
 from services.incripcion_automatica_services import crear_nueva_inscripcion
 from routers.profesor_clases_router import profesor_clases
@@ -44,7 +43,6 @@ segundos = 00
 ejecutar_funcion_en_hora_especifica(hora_especifica, minuto_especifico, segundos)
 
 # uvicorn app:app --host localhost --port 5000 --reload
-
 
 
 
