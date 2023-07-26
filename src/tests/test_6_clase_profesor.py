@@ -9,12 +9,13 @@ client = TestClient(app)
 #TEST AGREGAR UN NUEVO CLASE_PROFESOR
 def test_agregar_clase_profesor():
     data = {
+            "id_clase_profesor": 0,
             "clase_id": 1,
             "profesor_id": 1,
             "nivel_id": 1
             }
 
-    response = client.post("/profesor-clases", json=data)
+    response = client.post("/profesores-clases", json=data)
     assert response.status_code == 201
     assert response.json() == {"message": "Se ha registrado una nueva relación 'profesor - clase -nivel' "}
 
@@ -41,6 +42,7 @@ def test_editar_clase_profesor():
     id = 1
     url = f"/profesor-clases/{id}"
     data = {
+            "id_clase_profesor": 0,
             "clase_id": 1,
             "profesor_id": 1,
             "nivel_id": 1

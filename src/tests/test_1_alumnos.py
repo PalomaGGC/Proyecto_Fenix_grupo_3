@@ -64,7 +64,8 @@ def test_editar_un_alumno():
     id = 1
     url = f"/alumnos/{id}"
     data = {
-            "nombre_alumno": "catalina",
+            "id_alumno": 0,
+            "nombre_alumno": "string",
             "apellido_alumno": "string",
             "edad_alumno": "string",
             "email_alumno": "string",

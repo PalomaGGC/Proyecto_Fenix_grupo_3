@@ -45,7 +45,7 @@ def test_consultar_una_clase():
 def test_editar_una_clase():
     id = 1
     url = f"/clases/{id}"
-    data = {
+    data = {"id_clase":0,
             "nombre_clase": "bachata",
             "packs_id": 1
             }
