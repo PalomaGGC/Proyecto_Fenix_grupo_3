@@ -36,11 +36,13 @@ def agregar_alumno(alumno: Alumnos) -> dict:
     return result
 
 
-# EDITAR UN ALUMNO
+
+# Corrección del decorador
 @alumnos.put('/alumnos/{id}', response_model=dict)
-def editar_alumno(id: str, data:Alumnos) -> dict:
+def editar_alumno(id: str, data: Alumnos) -> dict:
     result = Alumnos_services().editar_alumno(id, data)
     return result
+
 
 
 # BORRAR UN ALUMNO

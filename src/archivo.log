@@ -61,3 +61,150 @@
 2023-07-26 00:34:44,284 [INFO] Fecha actual: 2023-07-26
 2023-07-26 00:34:44,310 [INFO] NÃºmero de inscripciones encontradas: 0
 2023-07-26 00:34:44,311 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:39:50,579 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:39:50,611 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:39:50,611 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:39:50,660 [INFO] Se ha registrado un nuevo alumno
+2023-07-26 10:39:50,671 [DEBUG] Consultando todos los alumnos
+2023-07-26 10:39:50,680 [DEBUG] Consultando alumno con id: 1
+2023-07-26 10:39:50,943 [INFO] Se ha registrado un nuevo profesor
+2023-07-26 10:39:50,952 [DEBUG] Consultando todos los profesores
+2023-07-26 10:39:50,963 [DEBUG] Consultando profesor por id
+2023-07-26 10:39:50,974 [INFO] Se ha modificado el profesor
+2023-07-26 10:39:50,990 [INFO] Se ha registrado un nuevo nivel
+2023-07-26 10:39:51,000 [DEBUG] Consultando todos los niveles
+2023-07-26 10:39:51,010 [DEBUG] Consultando nivel por nombre
+2023-07-26 10:39:51,038 [INFO] Se ha registrado un nuevo pack
+2023-07-26 10:39:51,050 [DEBUG] Consultando todos los packs
+2023-07-26 10:39:51,062 [DEBUG] Consultando pack por id
+2023-07-26 10:39:51,090 [INFO] Se ha registrado un nuevo clase
+2023-07-26 10:39:51,100 [DEBUG] Consultando todos los clases
+2023-07-26 10:39:51,136 [DEBUG] Consultando clase con id: 1
+2023-07-26 10:39:51,167 [DEBUG] Consultando todos los profesores por clases
+2023-07-26 10:39:51,167 [WARNING] No se encontraron profesores por clases
+2023-07-26 10:39:51,181 [DEBUG] Consultando profesor por clases y nivel por id
+2023-07-26 10:39:51,181 [WARNING] No se encontró el profesor por clases y nivel
+2023-07-26 10:39:51,203 [WARNING] No se encontró el alumno
+2023-07-26 10:39:51,208 [DEBUG] Consultando profesor por clases y nivel por id
+2023-07-26 10:39:51,208 [WARNING] No se encontró el profesor por clases y nivel
+2023-07-26 10:39:51,220 [ERROR] Error consultando todos los inscriptiones
+2023-07-26 10:39:51,232 [DEBUG] Consultando inscripcion pagada con id de alumno: 1
+2023-07-26 10:39:51,234 [WARNING] No se encontró el inscripcion con id de alumno:1
+2023-07-26 10:39:51,246 [DEBUG] Consultando inscripcion con id: 1
+2023-07-26 10:39:51,248 [WARNING] No se encontró el inscripcion
+2023-07-26 10:39:51,262 [WARNING] No se encontró la inscripción para editar
+2023-07-26 10:39:51,280 [WARNING] El pago ya existe con este id
+2023-07-26 10:39:51,298 [DEBUG] Consultando todos los pagos
+2023-07-26 10:39:51,298 [WARNING] No se encontraron pagos
+2023-07-26 10:43:27,120 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:43:27,120 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:43:27,120 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:43:27,167 [INFO] Se ha registrado un nuevo alumno
+2023-07-26 10:43:27,183 [DEBUG] Consultando todos los alumnos
+2023-07-26 10:43:27,183 [DEBUG] Consultando alumno con id: 1
+2023-07-26 10:43:27,419 [INFO] Se ha registrado un nuevo profesor
+2023-07-26 10:43:27,419 [DEBUG] Consultando todos los profesores
+2023-07-26 10:43:27,450 [DEBUG] Consultando profesor por id
+2023-07-26 10:43:27,466 [INFO] Se ha modificado el profesor
+2023-07-26 10:43:27,482 [INFO] Se ha registrado un nuevo nivel
+2023-07-26 10:43:27,482 [DEBUG] Consultando todos los niveles
+2023-07-26 10:43:27,497 [DEBUG] Consultando nivel por nombre
+2023-07-26 10:43:27,513 [INFO] Se ha registrado un nuevo pack
+2023-07-26 10:43:27,529 [DEBUG] Consultando todos los packs
+2023-07-26 10:43:27,560 [DEBUG] Consultando pack por id
+2023-07-26 10:43:27,591 [INFO] Se ha registrado un nuevo clase
+2023-07-26 10:43:27,591 [DEBUG] Consultando todos los clases
+2023-07-26 10:43:27,607 [DEBUG] Consultando clase con id: 1
+2023-07-26 10:43:27,647 [DEBUG] Consultando todos los profesores por clases
+2023-07-26 10:43:27,647 [WARNING] No se encontraron profesores por clases
+2023-07-26 10:43:27,654 [DEBUG] Consultando profesor por clases y nivel por id
+2023-07-26 10:43:27,654 [WARNING] No se encontró el profesor por clases y nivel
+2023-07-26 10:43:27,686 [WARNING] No se encontró el alumno
+2023-07-26 10:43:27,701 [DEBUG] Consultando profesor por clases y nivel por id
+2023-07-26 10:43:27,701 [WARNING] No se encontró el profesor por clases y nivel
+2023-07-26 10:43:27,717 [ERROR] Error consultando todos los inscriptiones
+2023-07-26 10:43:27,717 [DEBUG] Consultando inscripcion pagada con id de alumno: 1
+2023-07-26 10:43:27,717 [WARNING] No se encontró el inscripcion con id de alumno:1
+2023-07-26 10:43:27,732 [DEBUG] Consultando inscripcion con id: 1
+2023-07-26 10:43:27,732 [WARNING] No se encontró el inscripcion
+2023-07-26 10:43:27,764 [WARNING] No se encontró la inscripción para editar
+2023-07-26 10:43:27,795 [WARNING] El pago ya existe con este id
+2023-07-26 10:43:27,819 [DEBUG] Consultando todos los pagos
+2023-07-26 10:43:27,819 [WARNING] No se encontraron pagos
+2023-07-26 10:44:23,414 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:44:23,414 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:44:23,414 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:44:41,056 [DEBUG] Consultando todos los alumnos
+2023-07-26 10:44:54,304 [INFO] Se ha modificado el alumno
+2023-07-26 10:49:18,885 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:49:18,891 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:49:18,892 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:55:05,467 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:55:05,474 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:55:05,475 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:57:01,577 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:57:01,577 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:57:01,577 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:57:15,565 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:57:15,581 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:57:15,581 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:57:28,297 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:57:28,313 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:57:28,313 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:57:39,334 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:57:39,341 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:57:39,341 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:57:51,527 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:57:51,543 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:57:51,543 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:58:05,624 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:58:05,631 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:58:05,632 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:58:16,007 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:58:16,013 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:58:16,014 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 10:58:36,055 [INFO] Fecha actual: 2023-07-26
+2023-07-26 10:58:36,062 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 10:58:36,063 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:00:24,918 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:00:24,933 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:00:24,933 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:01:03,314 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:01:03,323 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:01:03,324 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:01:21,160 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:01:21,176 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:01:21,176 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:02:56,209 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:02:56,225 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:02:56,225 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:04:25,332 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:04:25,338 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:04:25,339 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:04:46,926 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:04:46,933 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:04:46,933 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:04:56,932 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:04:56,939 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:04:56,940 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:05:36,786 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:05:36,793 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:05:36,793 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:06:24,404 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:06:24,411 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:06:24,412 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:08:53,705 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:08:53,712 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:08:53,713 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:09:18,155 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:09:18,163 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:09:18,164 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:10:31,424 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:10:31,431 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:10:31,432 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:11:08,243 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:11:08,259 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:11:08,259 [INFO] Nuevas inscripciones creadas: 0
+2023-07-26 11:12:00,535 [INFO] Fecha actual: 2023-07-26
+2023-07-26 11:12:00,535 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:12:00,535 [INFO] Nuevas inscripciones creadas: 0

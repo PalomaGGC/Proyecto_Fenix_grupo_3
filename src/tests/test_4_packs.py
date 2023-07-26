@@ -48,6 +48,7 @@ def test_editar_un_pack():
     id = 1
     url = f"/packs/{id}"
     data = {
+            "id_pack":0,
             "nombre_pack": nombre_pack + " esditado",
             "precio_pack": 0,
             "primer_descuento": 0,

@@ -44,10 +44,11 @@ def test_consultar_un_nivel():
      
     
 #TEST EDITAR UN NIVEL
-def test_editar_un_profesor():
+def test_editar_un_():
     nombre = nombre_nivel
     url = f"/niveles/{nombre}"
     data = {
+            "id_nivel":0,
             "nombre_nivel":nombre_nivel
            }
     response = client.put(url, json=data)
