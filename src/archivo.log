@@ -212,3 +212,12 @@
 2023-07-26 11:11:08,259 [INFO] Nuevas inscripciones creadas: 0
 2023-07-26 11:12:00,535 [INFO] Fecha actual: 2023-07-26
 2023-07-26 11:12:00,535 [INFO] Número de inscripciones encontradas: 0
+2023-07-26 11:58:06,918 [INFO] Se ha registrado un nuevo alumno
+2023-07-26 11:58:23,810 [DEBUG] Consultando todos los alumnos
+2023-07-26 11:58:59,644 [DEBUG] Consultando alumno con id: 7
+2023-07-26 12:12:45,905 [INFO] Se ha registrado un nuevo alumno
+2023-07-26 12:16:15,986 [DEBUG] Consultando todos los alumnos
+2023-07-26 12:16:40,566 [INFO] Se ha eliminado el alumno
+2023-07-26 12:22:04,796 [DEBUG] Consultando todos los alumnos
+2023-07-26 12:22:04,797 [WARNING] No se encontraron alumnos
+2023-07-26 12:30:00,043 [INFO] Se ha registrado un nuevo alumno
