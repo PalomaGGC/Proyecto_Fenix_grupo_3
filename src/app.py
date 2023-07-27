@@ -1,4 +1,3 @@
-
 from models.pagosModel import Pagos_model
 from services.incripcion_automatica_services import crear_nueva_inscripcion
 from routers.profesor_clases_router import profesor_clases
@@ -38,9 +37,9 @@ app.include_router(pagos)
 Base.metadata.create_all(bind=engine)
 
 # Define la hora y minuto específicos para la ejecución (ejemplo: 15:30)
-hora_especifica = 12
-minuto_especifico = 43
-segundos = 30
+hora_especifica = 00
+minuto_especifico = 00
+segundos = 00
 
 # Ejecuta la función en la hora determinada
 ejecutar_funcion_en_hora_especifica(hora_especifica, minuto_especifico, segundos)

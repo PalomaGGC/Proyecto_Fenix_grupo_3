@@ -47,7 +47,7 @@ def consultar_profesor_clase_nivel_por_nombre_profesor(nombre: str):
 
 
 # AÑADIR UNA NUEVA RELACIÓN 'PROFESOR - CLASE - NIVEL'
-@profesor_clases.post("/profesor-clases", response_model=dict, dependencies=[Depends(JWTBearer())])
+@profesor_clases.post("/profesor-clases", response_model=dict)
 def agregar_profesor_clase_nivel(data: Profesor_clases) -> dict:
     result = Profesor_clases_services().agregar_profesor_clase_nivel(data)
     return result

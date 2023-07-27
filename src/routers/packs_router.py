@@ -44,7 +44,7 @@ def editar_pack(id: int, data: Packs)-> dict:
 
 
 # BORRAR UN PACK
-@packs.delete('/packs/{id}', response_model=dict, status_code=200, dependencies=[Depends(JWTBearer())])
+@packs.delete('/pack/{id}', response_model=dict, status_code=200)
 def borrar_pack(id: int) -> dict:
     result = Packs_services().borrar_pack(id)
     return result

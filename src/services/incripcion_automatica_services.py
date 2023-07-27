@@ -5,6 +5,10 @@ from sqlalchemy import func
 import datetime
 import sched
 import time
+from logger import Logs
+
+
+logger= Logs()
 
 def ejecutar_funcion_en_hora_especifica(hora, minuto, segundos):
     # Crea un objeto scheduler
@@ -62,11 +66,12 @@ def crear_nueva_inscripcion():
         # Agregar todas las nuevas inscripciones a la sesión y confirmar los cambios en la base de datos
         db.add_all(nuevas_inscripciones)
         db.commit()
-
         print("Nuevas inscripciones creadas:", len(nuevas_inscripciones))
 
     except Exception as e:
-        print(f"Error al crear las nuevas inscripciones: {e}")
+        # print(f"Error al crear las nuevas inscripciones: {e}")
+        logger.error("Error al crear las nuevas inscripciones automaticas: %s", e)
+
 
     finally:
         db.close()
